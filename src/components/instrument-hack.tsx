@@ -14,8 +14,8 @@ export class InstrumentHack extends React.Component<InstrumentHackProps> {
 
     render() {
         //console.log('the selected instr ', this.props.selectedInstrument);
-        const childrenWithProps = React.Children.map(this.props.children, (child) => {
-            if (typeof child === "object") {
+        const childrenWithProps = React.Children.map(this.props.children, (child: any) => {
+            if (child && typeof child === "object") {
                 if (child.key === this.props.selectedInstrument) {
                     return React.cloneElement(child, { steps: this.props.steps, selected: true })
                 } else {
