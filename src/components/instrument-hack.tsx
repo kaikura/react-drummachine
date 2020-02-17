@@ -1,37 +1,34 @@
-import * as React from 'react';
+import * as React from "react"
 
-export type Instruments = 'Kick' | 'Snare' | 'HiHat' | 'Clap' | 'Cymbal'
+export type Instruments = "Kick" | "Snare" | "HiHat" | "Clap" | "Cymbal"
 
 export interface InstrumentHackProps {
-    steps: boolean[];
+    steps: boolean[]
     selectedInstrument: Instruments
 }
 
 export class InstrumentHack extends React.Component<InstrumentHackProps> {
     constructor(props) {
-        super(props);
+        super(props)
     }
 
     render() {
         //console.log('the selected instr ', this.props.selectedInstrument);
         const childrenWithProps = React.Children.map(this.props.children, (child) => {
-            if (typeof child === 'object') {
+            if (typeof child === "object") {
                 if (child.key === this.props.selectedInstrument) {
-                    return React.cloneElement(child, { steps: this.props.steps, selected: true });
+                    return React.cloneElement(child, { steps: this.props.steps, selected: true })
                 } else {
-                    return React.cloneElement(child, { steps: null, selected: true });
+                    return React.cloneElement(child, { steps: null, selected: true })
                 }
             }
-            return child;
-        });
+            return child
+        })
 
         return (
-           
-            <div style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
+            <div style={{ flex: 1, flexDirection: "row", justifyContent: "space-between" }}>
                 {childrenWithProps}
-            
-       
-        </div>
+            </div>
         )
     }
 }

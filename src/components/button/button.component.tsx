@@ -17,11 +17,11 @@ export class Button extends React.Component<IProps, any> {
                 <button type="submit" className={`btn btn-${type}`} disabled={loading} {...rest}>
                     {!loading && (
                         <>
-                            {icon && <Icon className={`fa fa-${icon}`}/>}
+                            {icon && <Icon className={`fa fa-${icon}`} />}
                             <span>{text}</span>
                         </>
                     )}
-                    {loading && <i className="fas fa-spin fa-circle-notch"/>}
+                    {loading && <i className="fas fa-spin fa-circle-notch" />}
                 </button>
             </>
         )
