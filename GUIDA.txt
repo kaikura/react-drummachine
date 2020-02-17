@@ -18,8 +18,7 @@ For TIME SIGNATURE=3/2 -> possible number of grains: [3, 6, 9, 12, 15, 18]
 The chosen value for the number of grains has to be passed to the variable nGrain which gives the number of grains for the first layer.
 
 3) There should be a window "Polyrhythm for the first layer: A/B" where A is the number of sides of the first shape 
-and B is the number of sides of the second shape always for the first layer. 
-[PROBLEM TO BE SOLVED: correct notation if we have three shapes]
+and B is the number of sides of the second shape always for the first layer, C for the third and going on. 
 
             Points 4) and 5) should come up whenever the user adds a second layer:
 
