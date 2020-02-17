@@ -10,11 +10,11 @@ export class Step extends React.Component<StepProps> {
  
     render() {
         const style = {
-            width: '2.2em',
+            width: '3em',
             height: '5em',
             backgroundColor: this.props.on ? '#2AC7DC' : '#CBCBCB',
             borderRadius: '10px',
-            margin: 2,
+            margin: 5,
             display: 'inline-block'
         }
         return (

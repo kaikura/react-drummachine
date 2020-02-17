@@ -17,7 +17,7 @@ export class BPM extends React.Component<BPMProps>{
     render() {
         return (
 
-            <input value={this.props.value} onInput={this.handleChange} className="bpm" />
+            <input onChange={this.handleChange} className="bpm"  />
         )
     }
 }

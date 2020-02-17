@@ -5,11 +5,9 @@
     color: white;
     padding: 1em;
     border-radius: 10px;
-    width: 4em;
+    width: 3em;
     display: inline-block;
-    
-    left: 850px;
-    top: 0px;
+    top: 5px;
     margin-right: 2em;
 }
 
