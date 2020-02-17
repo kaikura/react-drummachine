@@ -13,12 +13,7 @@ export class Drawer extends React.Component<any, any> {
     }
 
     public render() {
-        return (
-            <Sketch
-                setup={this.setup as any}
-                draw={this.draw as any}
-            />
-        )
+        return <Sketch setup={this.setup as any} draw={this.draw as any} />
     }
 
     private setup = (p5: P5, canvasParentRef: "centralSquare") => {

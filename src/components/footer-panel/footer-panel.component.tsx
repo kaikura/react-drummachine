@@ -6,8 +6,6 @@ import { Container } from "./footer-panel.style"
 
 export class FooterPanel extends React.Component<any, any> {
     public render() {
-        
-        
         return (
             <div style={{ marginTop: "12px" }}>
                 <h5>Footer panel</h5>
@@ -15,18 +13,45 @@ export class FooterPanel extends React.Component<any, any> {
                     Use the following buttons to control the behavior of the shape
                 </div>
                 <Container>
-                    <Button text="Layer" icon="plus" onMouseDown={this.onLayerClick} onMouseUp={this.onMouseReleased} style={{ marginBottom: "12px" }}/>
-                    <Button text="Track" icon="vector-square" onMouseDown={this.onTrackClick} onMouseUp={this.onMouseReleased} style={{ marginBottom: "12px" }}/>
-                    <Button text="Shape" icon="shapes" onMouseDown={this.onShapeClick} onMouseUp={this.onMouseReleased} style={{ marginBottom: "12px" }}/>
-                    <Button text="Rotate" icon="sync" onClick={this.onRotateClick} style={{ marginBottom: "12px" }}/>
-                    <Button text="Delete shape" icon="times" type="danger" onClick={this.onShapeDeleteClick} style={{ marginBottom: "12px" }}/>
-                    <Button text="Encoder" onClick={this.encoderClick} style={{ marginBottom: "12px" }}/>
-                    <Button text="+1" onClick={this.plusOneClick} style={{ marginBottom: "12px" }}/>
-                    <Button text="-1" onClick={this.minusOneClick} style={{ marginBottom: "12px" }}/>
+                    <Button
+                        text="Layer"
+                        icon="plus"
+                        onMouseDown={this.onLayerClick}
+                        onMouseUp={this.onMouseReleased}
+                        style={{ marginBottom: "12px" }}
+                    />
+                    <Button
+                        text="Track"
+                        icon="vector-square"
+                        onMouseDown={this.onTrackClick}
+                        onMouseUp={this.onMouseReleased}
+                        style={{ marginBottom: "12px" }}
+                    />
+                    <Button
+                        text="Shape"
+                        icon="shapes"
+                        onMouseDown={this.onShapeClick}
+                        onMouseUp={this.onMouseReleased}
+                        style={{ marginBottom: "12px" }}
+                    />
+                    <Button
+                        text="Rotate"
+                        icon="sync"
+                        onClick={this.onRotateClick}
+                        style={{ marginBottom: "12px" }}
+                    />
+                    <Button
+                        text="Delete shape"
+                        icon="times"
+                        type="danger"
+                        onClick={this.onShapeDeleteClick}
+                        style={{ marginBottom: "12px" }}
+                    />
+                    <Button text="Encoder" onClick={this.encoderClick} style={{ marginBottom: "12px" }} />
+                    <Button text="+1" onClick={this.plusOneClick} style={{ marginBottom: "12px" }} />
+                    <Button text="-1" onClick={this.minusOneClick} style={{ marginBottom: "12px" }} />
                 </Container>
             </div>
-
-             
         )
     }
 
@@ -36,7 +61,7 @@ export class FooterPanel extends React.Component<any, any> {
 
     private onTrackClick = () => {
         //console.log("yes")
-       MainSketch.selectShape()
+        MainSketch.selectShape()
     }
 
     private onShapeClick = () => {
@@ -46,7 +71,6 @@ export class FooterPanel extends React.Component<any, any> {
     private onRotateClick = () => {
         MainSketch.rotateShape()
     }
-
 
     private onShapeDeleteClick = () => {
         MainSketch.deleteShape()
@@ -67,6 +91,4 @@ export class FooterPanel extends React.Component<any, any> {
     private onMouseReleased = () => {
         MainSketch.mouseReleased()
     }
-
-    
 }

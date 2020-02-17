@@ -11,26 +11,32 @@ export class RootComponent extends React.Component<any, any> {
     public render() {
         return (
             <div className="App">
-                <Navbar/>
+                <Navbar />
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-2 control-column">
-                            <ControlPanel/>
+                            <ControlPanel />
                         </div>
-                        <div id="centralSquare" className="col-8"   style={{ position:"relative", backgroundColor: "#81A094" }}>
-                            <Drawer/>
+                        <div
+                            id="centralSquare"
+                            className="col-8"
+                            style={{ position: "relative", backgroundColor: "#81A094" }}
+                        >
+                            <Drawer />
                         </div>
                         <div className="col-2 control-column">
-                            <RightPanel/>
+                            <RightPanel />
                         </div>
                     </div>
                     <div className="row" style={{ padding: "20px" }}>
-                        <FooterPanel/>
-                        <div className="trnsp" style={{ padding: "20px" }}> <TransportComponent/></div>
+                        <FooterPanel />
+                        <div className="trnsp" style={{ padding: "20px" }}>
+                            {" "}
+                            <TransportComponent />
+                        </div>
                     </div>
                 </div>
             </div>
         )
     }
 }
-

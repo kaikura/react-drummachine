@@ -1,18 +1,33 @@
-import * as React from 'react';
+import * as React from "react"
 
-export class InstrumentHack extends React.Component<any> {
-    // eslint-disable-next-line @typescript-eslint/no-useless-constructor
-    constructor(props: any) {
-        super(props);
+export type Instruments = "Kick" | "Snare" | "HiHat" | "Clap" | "Cymbal"
+
+export interface InstrumentHackProps {
+    steps: boolean[]
+    selectedInstrument: Instruments
+}
+
+export class InstrumentHack extends React.Component<InstrumentHackProps> {
+    constructor(props) {
+        super(props)
     }
 
     render() {
-        console.log('the selected instr ', this.props.selectedInstrument);
-     
+        //console.log('the selected instr ', this.props.selectedInstrument);
+        const childrenWithProps = React.Children.map(this.props.children, (child: any) => {
+            if (child && typeof child === "object") {
+                if (child.key === this.props.selectedInstrument) {
+                    return React.cloneElement(child, { steps: this.props.steps, selected: true })
+                } else {
+                    return React.cloneElement(child, { steps: null, selected: true })
+                }
+            }
+            return child
+        })
 
         return (
-            <div style={{  justifyContent: 'space-between' }}>
-                {this.props.children}
+            <div style={{ flex: 1, flexDirection: "row", justifyContent: "space-between" }}>
+                {childrenWithProps}
             </div>
         )
     }
