@@ -1,4 +1,5 @@
 import React from "react"
+import * as P5 from "p5"
 import { Button } from "../button/button.component"
 import { MainSketch } from "../../sketches/sketch"
 import { Container } from "./footer-panel.style"
@@ -14,11 +15,14 @@ export class FooterPanel extends React.Component<any, any> {
                     Use the following buttons to control the behavior of the shape
                 </div>
                 <Container>
-                    <Button text="Shape" icon="shapes" onClick={this.onShapeClick} style={{ marginBottom: "12px" }}/>
-                    <Button text="Track" icon="vector-square" onClick={this.onTrackClick} style={{ marginBottom: "12px" }}/>
+                    <Button text="Layer" icon="plus" onMouseDown={this.onLayerClick} onMouseUp={this.onMouseReleased} style={{ marginBottom: "12px" }}/>
+                    <Button text="Track" icon="vector-square" onMouseDown={this.onTrackClick} onMouseUp={this.onMouseReleased} style={{ marginBottom: "12px" }}/>
+                    <Button text="Shape" icon="shapes" onMouseDown={this.onShapeClick} onMouseUp={this.onMouseReleased} style={{ marginBottom: "12px" }}/>
                     <Button text="Rotate" icon="sync" onClick={this.onRotateClick} style={{ marginBottom: "12px" }}/>
-                    <Button text="Layer" icon="plus" onClick={this.onLayerClick} style={{ marginBottom: "12px" }}/>
                     <Button text="Delete shape" icon="times" type="danger" onClick={this.onShapeDeleteClick} style={{ marginBottom: "12px" }}/>
+                    <Button text="Encoder" onClick={this.encoderClick} style={{ marginBottom: "12px" }}/>
+                    <Button text="+1" onClick={this.plusOneClick} style={{ marginBottom: "12px" }}/>
+                    <Button text="-1" onClick={this.minusOneClick} style={{ marginBottom: "12px" }}/>
                 </Container>
             </div>
 
@@ -26,23 +30,43 @@ export class FooterPanel extends React.Component<any, any> {
         )
     }
 
-    private onShapeClick = () => {
-        MainSketch.changeShape()
+    private onLayerClick = () => {
+        MainSketch.createNewLayer()
     }
 
     private onTrackClick = () => {
-        MainSketch.selectShape()
+        //console.log("yes")
+       MainSketch.selectShape()
+    }
+
+    private onShapeClick = () => {
+        MainSketch.changeShape()
     }
 
     private onRotateClick = () => {
         MainSketch.rotateShape()
     }
 
-    private onLayerClick = () => {
-        MainSketch.createNewLayer()
-    }
 
     private onShapeDeleteClick = () => {
         MainSketch.deleteShape()
     }
+
+    private encoderClick = () => {
+        MainSketch.encoderButt()
+    }
+
+    private plusOneClick = () => {
+        MainSketch.encoderInc()
+    }
+
+    private minusOneClick = () => {
+        MainSketch.encoderDec()
+    }
+
+    private onMouseReleased = () => {
+        MainSketch.mouseReleased()
+    }
+
+    
 }

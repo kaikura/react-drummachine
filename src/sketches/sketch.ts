@@ -1,4 +1,10 @@
 import * as P5 from "p5"
+import {render} from "react-dom"
+import $ from "jquery"
+import { ControlPanel } from "src/components/control-panel/control-panel.component"
+import { RightPanel } from "src/components/right-panel/right-panel.component"
+import { FooterPanel } from "src/components/footer-panel/footer-panel.component"
+import { Component } from "react"
 
 export interface P5Sketch {
     setup(p5: P5, canvasParentRef: "centralSquare"): void
@@ -6,6 +12,7 @@ export interface P5Sketch {
 }
 
 class MainSketchClass implements P5Sketch {
+    private myTimeout
     private comboBox = 0
     private canvasWidth = 800
     private canvasHeight = 600
@@ -14,8 +21,8 @@ class MainSketchClass implements P5Sketch {
     private kindOfShape: number = 0
     private selectedShape: number = 0
     private selectedShape2: number = 0
-    private maxNumShapes = 1
-    private maxNumShape2 = 2
+    private maxNumShapes = 0
+    private maxNumShape2 = 0
     private numCustShapes = 0
     private circleLandW = 500
     private clockCircleScaleSize = 1
@@ -35,6 +42,10 @@ class MainSketchClass implements P5Sketch {
         this.initializeArrays()
         this.initializePolygonArrays()
     }
+
+    //public assignNumGrain() {
+        //this.nGrain=Component.numberGrains.value()
+    //}
 
     private initializePolygonArrays() {
         //LOOP TO GENERATE DIFFERENT SHAPES
@@ -74,9 +85,9 @@ class MainSketchClass implements P5Sketch {
     public setup(p5: P5, canvasParentRef: "centralSquare"): void {
         p5.createCanvas(p5.width=this.canvasWidth, p5.height=this.canvasHeight).parent(canvasParentRef) // use parent to render canvas in this ref (without that p5 render this canvas outside your component)
         
-        p5.background(100, 150, 100)
+        //p5.background(100, 150, 100)
 
-        const buttondx = p5.createButton('+1')
+        /*const buttondx = p5.createButton('+1')
         buttondx.position(p5.width * 0.87, p5.height * 0.8)
 
         const buttonsx = p5.createButton("-1")
@@ -113,7 +124,7 @@ class MainSketchClass implements P5Sketch {
 
         const buttonRotate = p5.createButton("Rotate")
         buttonRotate.position(p5.width * 0.62, p5.height * 0.9)
-        buttonRotate.mousePressed(this.rotateShape.bind(this))
+        buttonRotate.mousePressed(this.rotateShape.bind(this))*/
     }
 
     public draw(p5: P5): void {
@@ -142,7 +153,7 @@ class MainSketchClass implements P5Sketch {
         //END NODES
 
         //Custom Shape Mode
-        if (this.instrumentMode == 7) {
+        if (this.instrumentMode == 7 && this.layerNumber==1) {
             p5.push()
             let selGrainX = this.canvasWidth / 2 + (p5.cos(angle + (step * this.currentGrain)) * (this.firstLayerLandW / 2))
             let selGrainY = this.canvasHeight / 2 + (p5.sin(angle + (step * this.currentGrain)) * (this.firstLayerLandW / 2))
@@ -210,17 +221,43 @@ class MainSketchClass implements P5Sketch {
         if (this.layerNumber == 2) {
             p5.fill(250, 250, 250, 70)
             p5.stroke(0)
-            p5.ellipse(this.canvasWidth / 2, this.canvasHeight / 2, 600, 600)
+            p5.ellipse(this.canvasWidth / 2, this.canvasHeight / 2, this.circleLandW, this.circleLandW)
+
+            //CLOCK RING
+  p5.noFill()
+  p5.strokeWeight(17)
+  p5.stroke(250,250,250,70)
+  p5.ellipse(this.canvasWidth/2,this.canvasHeight/2, 550 *this.clockCircleScaleSize, 550 *this.clockCircleScaleSize)
+  p5.strokeWeight(1)
+
+  p5.stroke(.5)
+  p5.ellipse(this.canvasWidth/2,this.canvasHeight/2, 570 *this.clockCircleScaleSize, 570 *this.clockCircleScaleSize)
+  p5.ellipse(this.canvasWidth/2,this.canvasHeight/2, 560 *this.clockCircleScaleSize, 560 *this.clockCircleScaleSize)
+  p5.ellipse(this.canvasWidth/2,this.canvasHeight/2, 550 *this.clockCircleScaleSize, 550 *this.clockCircleScaleSize)
+  p5.ellipse(this.canvasWidth/2,this.canvasHeight/2, 540 *this.clockCircleScaleSize, 540 *this.clockCircleScaleSize)
+  p5.ellipse(this.canvasWidth/2,this.canvasHeight/2, 530 *this.clockCircleScaleSize, 530 *this.clockCircleScaleSize)
+
+  //CLOCK RING "GRAINS"
+  p5.push()
+  let angle2 = (p5.TWO_PI / 4) * 3
+  let step2 = p5.TWO_PI / this.nGrain
+
+  for (let j = 0; j < this.nGrain; j++) {
+    var grainX2 = this.canvasWidth/2 + (p5.cos(angle2) * 266 *this.clockCircleScaleSize) //320 effects how much bigger the second circle is should be half the width and height of the elipse
+    var grainY2 = this.canvasHeight/2 + (p5.sin(angle2) * 266 *this.clockCircleScaleSize)
+    p5.strokeWeight(3)
+    p5.line(grainX2, grainY2, grainX2 + (p5.cos(angle2)*18), grainY2 + (p5.sin(angle2)*18))
+    angle2 += step2
+  }
+  p5.pop()
 
 
             //Grains for Layer 2
             p5.push()
-            let angle2 = (p5.TWO_PI / 4) * 3
-            let step2 = p5.TWO_PI / this.nGrain
 
             for (let j = 0; j < this.nGrain; j++) {
-                let grainX2 = this.canvasWidth / 2 + (p5.cos(angle2) * 300) //320 effects how much bigger the second circle is should be half the width and height of the elipse
-                let grainY2 = this.canvasHeight / 2 + (p5.sin(angle2) * 300)
+                let grainX2 = this.canvasWidth / 2 + (p5.cos(angle2) * 250) //320 effects how much bigger the second circle is should be half the width and height of the elipse
+                let grainY2 = this.canvasHeight / 2 + (p5.sin(angle2) * 250)
                 let grains2 = p5.createVector(grainX2, grainY2)
                 //vertices.push(grains2);
                 p5.strokeWeight(10)
@@ -228,6 +265,21 @@ class MainSketchClass implements P5Sketch {
                 angle2 += step2
             }
             p5.pop()
+            //Custom Shape Mode 
+            if (this.instrumentMode == 7 && this.layerNumber==2) {
+                p5.push()
+                let grainX2 = this.canvasWidth / 2 + (p5.cos(angle2) * 300) //320 effects how much bigger the second circle is should be half the width and height of the elipse
+                let grainY2 = this.canvasHeight / 2 + (p5.sin(angle2) * 300)
+                let selGrainX2 = this.canvasWidth / 2 + (p5.cos(angle + (step * this.currentGrain)) * (this.firstLayerLandW / 2))
+                let selGrainY2 = this.canvasHeight / 2 + (p5.sin(angle + (step * this.currentGrain)) * (this.firstLayerLandW / 2))
+                let grains = p5.createVector(grainX2, grainY2)
+                //vertices.p5.push(grains);
+                p5.strokeWeight(10)
+                p5.stroke("red")
+                p5.point(selGrainX2, selGrainY2)
+                p5.pop()
+            }
+    
 
             //POLYGON_SPEC2, defining SECOND LAYERRRRRR!
             p5.push()
@@ -283,7 +335,7 @@ class MainSketchClass implements P5Sketch {
         }
     }
 
-    private encoderInc() {
+    public encoderInc() {
         //INC LAYER SELECTION MODE
         if (this.instrumentMode == 1 && this.layerNumber == 1) {
             this.layerNumber = 2
@@ -293,39 +345,64 @@ class MainSketchClass implements P5Sketch {
         }
 
         //INC TRACK SELECTION MODE
-        if (this.instrumentMode == 2 && this.selectedShape != 0) {
+        if (this.instrumentMode == 2 && this.selectedShape != 0 && this.layerNumber==1) {
             //change track
             this.selectedShape++
         }
+        if (this.instrumentMode == 2 && this.layerNumber ==2){
+            this.selectedShape = 0
+            this.selectedShape2++
+          }
+        
 
 
         //INC CHANGE SHAPE MODE
-        if (this.instrumentMode == 3 && this.shp1[this.selectedShape - 1] != this.polygon_array.length) {
+        if (this.layerNumber == 1 && this.instrumentMode == 3 && this.shp1[this.selectedShape - 1] != this.polygon_array.length) {
             //this.polygon_array_ALL[this.selectedShape-1][kindOfShape]=this.polygon_array_ALL[this.selectedShape-1][kindOfShape++];
             this.shp1[this.selectedShape - 1] = this.shp1[this.selectedShape - 1] + 1
 
         }
-        if (this.instrumentMode == 3 && this.shp1[this.selectedShape - 1] == this.polygon_array.length) {
+        if (this.layerNumber == 1 && this.instrumentMode == 3 && this.shp1[this.selectedShape - 1] == this.polygon_array.length) {
             this.shp1[this.selectedShape - 1] = 0
         }
 
+        if (this.layerNumber == 2 && this.instrumentMode == 3 && this.shp2[this.selectedShape2 - 1] != this.polygon_array2.length) {
+            //this.polygon_array_ALL[this.selectedShape-1][kindOfShape]=this.polygon_array_ALL[this.selectedShape-1][kindOfShape++];
+            this.shp2[this.selectedShape2 - 1] = this.shp2[this.selectedShape2 - 1] + 1
+
+        }
+        if (this.layerNumber == 2 && this.instrumentMode == 3 && this.shp2[this.selectedShape2 - 1] == this.polygon_array2.length) {
+            this.shp2[this.selectedShape2 - 1] = 0
+        }
+
         //INC CUSTOM SHAPE MODE
-        if (this.instrumentMode == 7) {
+        if (this.layerNumber==1 && this.instrumentMode == 7) {
             if (this.currentGrain == this.nGrain - 1) {
                 this.currentGrain = 0
             } else {
                 this.currentGrain++
             }
         }
+        if (this.layerNumber==2 && this.instrumentMode == 7) {
+            if (this.currentGrain2 == this.nGrain - 1) {
+                this.currentGrain2 = 0
+            } else {
+                this.currentGrain2++
+            }
+        }
 
         //INC CHANGE ROTATION MODE
-        if (this.instrumentMode == 4 && this.selectedShape != 0) {
+        if (this.layerNumber==1 && this.instrumentMode == 4 && this.selectedShape != 0) {
             //rotate the selected shape
             this.rot1[this.selectedShape - 1] = this.rot1[this.selectedShape - 1] + 1
         }
+        if (this.layerNumber==2 && this.instrumentMode == 4 && this.selectedShape != 0) {
+            //rotate the selected shape
+            this.rot2[this.selectedShape2 - 1] = this.rot2[this.selectedShape2 - 1] + 1
+        }
     }
 
-    private encoderDec() {
+    public encoderDec() {
         //LAYER SELECTION MODE
         if (this.instrumentMode == 1 && this.layerNumber == 1) {
             this.layerNumber = 2
@@ -335,22 +412,32 @@ class MainSketchClass implements P5Sketch {
         }
 
         //TRACK SELECTION MODE
-        if (this.instrumentMode == 2 && this.selectedShape != (0 || 1)) {
+        if (this.layerNumber==1 && this.instrumentMode == 2 && this.selectedShape != (0 || 1)) {
             this.selectedShape--
         } else if (this.instrumentMode == 2 && this.selectedShape == 1) {
             this.selectedShape = this.maxNumShapes
         }
+        if (this.layerNumber==2 && this.instrumentMode == 2 && this.selectedShape2 != (0 || 1)) {
+            this.selectedShape2--
+        } else if (this.instrumentMode == 2 && this.selectedShape2 == 1) {
+            this.selectedShape2 = this.maxNumShape2
+        }
 
         //then CHANGE SHAPE MODE
-        if (this.instrumentMode == 3 && this.shp1[this.selectedShape - 1] != 0) {
+        if (this.layerNumber==1 && this.instrumentMode == 3 && this.shp1[this.selectedShape - 1] != 0) {
             this.shp1[this.selectedShape - 1] = this.shp1[this.selectedShape - 1] - 1
         } else if (this.instrumentMode == 3 && this.shp1[this.selectedShape - 1] == 0) {
             this.shp1[this.selectedShape - 1] = this.polygon_array.length - 1
         }
+        if (this.layerNumber==2 && this.instrumentMode == 3 && this.shp1[this.selectedShape - 1] != 0) {
+            this.shp2[this.selectedShape2 - 1] = this.shp2[this.selectedShape2 - 1] - 1
+        } else if (this.instrumentMode == 3 && this.shp2[this.selectedShape2 - 1] == 0) {
+            this.shp2[this.selectedShape2 - 1] = this.polygon_array2.length - 1
+        }
 
 
         //CUSTOM SHAPE MODE
-        if (this.instrumentMode == 7) {
+        if (this.layerNumber==1 && this.instrumentMode == 7) {
             if (this.currentGrain == 0) {
                 this.currentGrain = this.nGrain - 1
             } else {
@@ -358,15 +445,26 @@ class MainSketchClass implements P5Sketch {
             }
 
         }
+        if (this.layerNumber==2 && this.instrumentMode == 7) {
+            if (this.currentGrain2 == 0) {
+                this.currentGrain2 = this.nGrain - 1
+            } else {
+                this.currentGrain2--
+            }
+
+        }
 
         //the CHANGE ROTATION MODE
-        if (this.instrumentMode == 4 && this.selectedShape != 0) {
+        if (this.layerNumber==1 && this.instrumentMode == 4 && this.selectedShape != 0) {
             this.rot1[this.selectedShape - 1] = this.rot1[this.selectedShape - 1] - 1
+        }
+        if (this.layerNumber==2 && this.instrumentMode == 4 && this.selectedShape != 0) {
+            this.rot2[this.selectedShape2 - 1] = this.rot2[this.selectedShape2 - 1] - 1
         }
     }
 
-    private encoderButt() {
-        if (this.instrumentMode == 7) {
+    public encoderButt() {
+        if (this.layerNumber==1 && this.instrumentMode == 7) {
             if (this.polygon_array_c.includes(this.currentGrain)) {
                 for (let i = 0; i < this.polygon_array_c.length; i++) {
                     if (this.polygon_array_c[i] === this.currentGrain) {
@@ -381,12 +479,28 @@ class MainSketchClass implements P5Sketch {
             })
 
         }
+        if (this.layerNumber==2 && this.instrumentMode == 7) {
+            if (this.polygon_array_c.includes(this.currentGrain2)) {
+                for (let i = 0; i < this.polygon_array_c.length; i++) {
+                    if (this.polygon_array_c[i] === this.currentGrain2) {
+                        this.polygon_array_c.splice(i, 1)
+                    }
+                }
+            } else {
+                this.polygon_array_c.push(this.currentGrain2)
+            }
+            this.polygon_array_c.sort(function(a, b) {
+                return a - b
+            })
+
+        }
     }
 
     public deleteShape() {
         if (this.instrumentMode == 7) {
             this.instrumentMode = 2
         }
+        if (this.layerNumber==1){
         this.shp1.splice(this.selectedShape - 1, 1)
         this.rot1.splice(this.selectedShape - 1, 1)
         this.maxNumShapes--
@@ -396,34 +510,70 @@ class MainSketchClass implements P5Sketch {
         }
         this.selectedShape = this.maxNumShapes
     }
+    if (this.layerNumber==2){
+        this.shp2.splice(this.selectedShape2 - 1, 1)
+        this.rot1.splice(this.selectedShape2 - 1, 1)
+        this.maxNumShape2--
+        //start from skratch
+        if (this.maxNumShape2 == 0) {
+            this.instrumentMode = 0
+        }
+        this.selectedShape2 = this.maxNumShape2
+    }
+    }
 
     //CREATE NEW LAYER FUNCTION
     public createNewLayer() {
         this.instrumentMode = 1
 
-        // myTimeout = setTimeout(function() {
+        this.myTimeout=setTimeout(() => {
         this.layerNumber++
 
-        //, 2000);
+        }, 2000)
     }
 
     //TRACK SELECTION/ADD TRACK FUNCTION
     public selectShape() {
         this.instrumentMode = 2 // we are in track_mode!
+        if (this.layerNumber==1){
+            console.log("yes")
         this.selectedShape = this.maxNumShapes
         //if you press for 2 seconds you create a new track
-        if (this.instrumentMode != 0) {
-            setTimeout(() => {
+        //if (this.instrumentMode != 0) {
+            this.myTimeout=setTimeout(() => {
+                
                 this.maxNumShapes = this.maxNumShapes + 1
                 this.updateArrays()
-            }, 2000)
-        }
+                
+            }, 2000) 
+
+             //}  
+       
+        
     }
+        if (this.layerNumber == 2){
+            this.selectedShape2 = this.maxNumShape2
+            if (this.instrumentMode != 0){
+                this.myTimeout=setTimeout(() => {
+                this.maxNumShape2 = this.maxNumShape2 + 1
+                this.updateArrays()
+              }, 2000)
+              
+            }
+          }
+        
+    }
+
+    
+    /*public myStopFunction() {
+        clearTimeout(this.myTimeout);
+      }*/
 
     ///CHANGE SHAPE AND GO INTO CUSTOM SHAPE FUNCTION
     public changeShape() {
         this.instrumentMode = 3 // we are in change_shape_mode!
-        const myTimeout = setTimeout(() => {
+        this.myTimeout=setTimeout(() => {
+            if (this.layerNumber == 1){
             this.instrumentMode = 7
             this.maxNumShapes++
             this.numCustShapes++
@@ -437,12 +587,37 @@ class MainSketchClass implements P5Sketch {
             this.polygon_array.push(this.polygon_array_c)
             this.shp1.push(this.polygon_array.length - 1)
             this.updateArrays()
+        }
+            if (this.layerNumber == 2){
+    
+                this.instrumentMode = 7
+                this.maxNumShape2++
+                this.numCustShapes++
+                this.selectedShape2=this.maxNumShape2
+                
+                if (this.numCustShapes>0){ //resets current grain to 0 
+                  this.currentGrain=0
+                }
+                this.polygon_array_c = new Array()
+                //splice(maxNumShapes, 0, polygon_array_c)
+                this.polygon_array2.push(this.polygon_array_c)
+                this.shp2.push(this.polygon_array2.length-1)
+                this.updateArrays()
+              
+            }
+          
         }, 2000)
+       
+    
     }
 
     //ROTATE SHAPE FUNCTION
     public rotateShape() {
         this.instrumentMode = 4 // we are in rotation_mode!
+    }
+
+    public mouseReleased() {
+        clearTimeout(this.myTimeout)
     }
 
     //UPDATE ARRAYS
@@ -472,7 +647,10 @@ class MainSketchClass implements P5Sketch {
         this.shp1.push(polygon_array.length)
         }*/
     }
+
+    
 }
+
 
 
 export const MainSketch = new MainSketchClass()
