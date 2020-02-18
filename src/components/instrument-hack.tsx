@@ -8,12 +8,7 @@ export interface InstrumentHackProps {
 }
 
 export class InstrumentHack extends React.Component<InstrumentHackProps> {
-    constructor(props) {
-        super(props)
-    }
-
     render() {
-        //console.log('the selected instr ', this.props.selectedInstrument);
         const childrenWithProps = React.Children.map(this.props.children, (child: any) => {
             if (child && typeof child === "object") {
                 if (child.key === this.props.selectedInstrument) {

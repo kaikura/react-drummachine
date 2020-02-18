@@ -1,8 +1,6 @@
 import React from "react"
 import { Transport } from "tone"
 import { BPM } from "../bpm-component"
-import { TransportComponent } from "../transport"
-//import { MainSketch } from "../../sketches/sketch"
 import { Container } from "./right-panel.style"
 import { PlayPause } from "../play-pause"
 
