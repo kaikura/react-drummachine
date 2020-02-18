@@ -21,8 +21,8 @@ class MainSketchClass implements P5Sketch {
     private clockCircleScaleSize = 1.05
     private currentGrain = 0
     private currentGrain2 = 0
-    private nGrain = 5
-    private nGrain2 = 10
+    private nGrain = 1
+    private nGrain2 = 1
     private firstLayerLandW = 500
 
     private rot1 = new Array(this.maxNumShapes)
@@ -647,6 +647,7 @@ class MainSketchClass implements P5Sketch {
         clearTimeout(this.myTimeout)
     }
 
+    //To set the number of grains from the panel
     public setNGrain(value: number) {
         this.nGrain = value
 
