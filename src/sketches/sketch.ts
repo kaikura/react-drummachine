@@ -1,4 +1,10 @@
 import * as P5 from "p5"
+import { render } from "react-dom"
+import $ from "jquery"
+import { ControlPanel } from "src/components/control-panel/control-panel.component"
+import { RightPanel } from "src/components/right-panel/right-panel.component"
+import { FooterPanel } from "src/components/footer-panel/footer-panel.component"
+import { Component } from "react"
 
 export interface P5Sketch {
     setup(p5: P5, canvasParentRef: "centralSquare"): void
@@ -132,7 +138,7 @@ class MainSketchClass implements P5Sketch {
     public draw(p5: P5): void {
         p5.fill(255)
         p5.ellipse(this.canvasWidth / 2, this.canvasHeight / 2, this.firstLayerLandW, this.firstLayerLandW)
-        //if (layerNumber === 2) {
+        //if (layerNumber == 2) {
         //  p5.stroke(195, 195, 195);
         //}
         //DRAW NODES
@@ -155,7 +161,7 @@ class MainSketchClass implements P5Sketch {
         //END NODES
 
         //Custom Shape Mode
-        if (this.instrumentMode === 7 && this.layerNumber === 1) {
+        if (this.instrumentMode == 7 && this.layerNumber == 1) {
             p5.push()
             let selGrainX =
                 this.canvasWidth / 2 + p5.cos(angle + step * this.currentGrain) * (this.firstLayerLandW / 2)
@@ -184,7 +190,7 @@ class MainSketchClass implements P5Sketch {
                 let count = 0
 
                 for (let a = 0; a < p5.TWO_PI; a += angle) {
-                    if (count === corr_node) {
+                    if (count == corr_node) {
                         let sx = windowWidth + p5.cos(a - p5.TWO_PI / 4) * radius
                         let sy = windowHeight + p5.sin(a - p5.TWO_PI / 4) * radius
                         p5.vertex(sx, sy)
@@ -208,7 +214,7 @@ class MainSketchClass implements P5Sketch {
             p5.colorMode(p5.RGB)
             p5.fill(i * 50, i * 20, i * 10, 100)
 
-            if (this.selectedShape === i) {
+            if (this.selectedShape == i) {
                 p5.strokeWeight(3)
             }
             p5.rotate((p5.TWO_PI * this.rot1[i - 1]) / this.nGrain)
@@ -218,7 +224,7 @@ class MainSketchClass implements P5Sketch {
             p5.pop()
         }
 
-        if (this.layerNumber === 2) {
+        if (this.layerNumber == 2) {
             p5.fill(250, 250, 250, 70)
             p5.stroke(0)
             p5.ellipse(this.canvasWidth / 2, this.canvasHeight / 2, this.circleLandW, this.circleLandW)
@@ -295,7 +301,7 @@ class MainSketchClass implements P5Sketch {
             }
             p5.pop()
             //Custom Shape Mode
-            if (this.instrumentMode === 7 && this.layerNumber === 2) {
+            if (this.instrumentMode == 7 && this.layerNumber == 2) {
                 p5.push()
                 let grainX2 = this.canvasWidth / 2 + p5.cos(angle2) * 300 //320 effects how much bigger the second circle is should be half the width and height of the elipse
                 let grainY2 = this.canvasHeight / 2 + p5.sin(angle2) * 300
@@ -326,7 +332,7 @@ class MainSketchClass implements P5Sketch {
                     let corr_node = vert[i]
                     let count = 0
                     for (let a = 0; a < p5.TWO_PI; a += angle) {
-                        if (count === corr_node) {
+                        if (count == corr_node) {
                             let sx = this.canvasWidth + p5.cos(a - p5.TWO_PI / 4) * radius
                             let sy = this.canvasHeight + p5.sin(a - p5.TWO_PI / 4) * radius
                             p5.vertex(sx, sy)
@@ -351,7 +357,7 @@ class MainSketchClass implements P5Sketch {
                 p5.colorMode(p5.RGB)
                 p5.fill(i * 50, i * 20, i * 10, 100)
 
-                if (this.selectedShape2 === i) {
+                if (this.selectedShape2 == i) {
                     p5.strokeWeight(3)
                 }
                 p5.rotate((p5.TWO_PI * this.rot2[i - 1]) / this.nGrain)
@@ -365,65 +371,65 @@ class MainSketchClass implements P5Sketch {
 
     public encoderInc() {
         //INC LAYER SELECTION MODE
-        if (this.instrumentMode === 1 && this.layerNumber === 1) {
+        if (this.instrumentMode == 1 && this.layerNumber == 1) {
             this.layerNumber = 2
-        } else if (this.instrumentMode === 1 && this.layerNumber === 2) {
+        } else if (this.instrumentMode == 1 && this.layerNumber == 2) {
             this.layerNumber = 1
         }
 
         //INC TRACK SELECTION MODE
-        if (this.instrumentMode === 2 && this.selectedShape !== 0 && this.layerNumber === 1) {
+        if (this.instrumentMode == 2 && this.selectedShape != 0 && this.layerNumber == 1) {
             //change track
             this.selectedShape++
         }
-        if (this.instrumentMode === 2 && this.layerNumber===2) {
+        if (this.instrumentMode == 2 && this.layerNumber == 2) {
             this.selectedShape = 0
             this.selectedShape2++
         }
 
         //INC CHANGE SHAPE MODE
         if (
-            this.layerNumber===1 &&
-            this.instrumentMode===3 &&
-            this.shp1[this.selectedShape - 1] !== this.polygon_array.length
+            this.layerNumber == 1 &&
+            this.instrumentMode == 3 &&
+            this.shp1[this.selectedShape - 1] != this.polygon_array.length
         ) {
             //this.polygon_array_ALL[this.selectedShape-1][kindOfShape]=this.polygon_array_ALL[this.selectedShape-1][kindOfShape++];
             this.shp1[this.selectedShape - 1] = this.shp1[this.selectedShape - 1] + 1
         }
         if (
-            this.layerNumber===1 &&
-            this.instrumentMode === 3 &&
-            this.shp1[this.selectedShape - 1] === this.polygon_array.length
+            this.layerNumber == 1 &&
+            this.instrumentMode == 3 &&
+            this.shp1[this.selectedShape - 1] == this.polygon_array.length
         ) {
             this.shp1[this.selectedShape - 1] = 0
         }
 
         if (
-            this.layerNumber === 2 &&
-            this.instrumentMode === 3 &&
-            this.shp2[this.selectedShape2 - 1] !== this.polygon_array2.length
+            this.layerNumber == 2 &&
+            this.instrumentMode == 3 &&
+            this.shp2[this.selectedShape2 - 1] != this.polygon_array2.length
         ) {
             //this.polygon_array_ALL[this.selectedShape-1][kindOfShape]=this.polygon_array_ALL[this.selectedShape-1][kindOfShape++];
             this.shp2[this.selectedShape2 - 1] = this.shp2[this.selectedShape2 - 1] + 1
         }
         if (
-            this.layerNumber === 2 &&
-            this.instrumentMode === 3 &&
-            this.shp2[this.selectedShape2 - 1] === this.polygon_array2.length
+            this.layerNumber == 2 &&
+            this.instrumentMode == 3 &&
+            this.shp2[this.selectedShape2 - 1] == this.polygon_array2.length
         ) {
             this.shp2[this.selectedShape2 - 1] = 0
         }
 
         //INC CUSTOM SHAPE MODE
-        if (this.layerNumber === 1 && this.instrumentMode === 7) {
-            if (this.currentGrain === this.nGrain - 1) {
+        if (this.layerNumber == 1 && this.instrumentMode == 7) {
+            if (this.currentGrain == this.nGrain - 1) {
                 this.currentGrain = 0
             } else {
                 this.currentGrain++
             }
         }
-        if (this.layerNumber === 2 && this.instrumentMode === 7) {
-            if (this.currentGrain2 === this.nGrain - 1) {
+        if (this.layerNumber == 2 && this.instrumentMode == 7) {
+            if (this.currentGrain2 == this.nGrain - 1) {
                 this.currentGrain2 = 0
             } else {
                 this.currentGrain2++
@@ -431,11 +437,11 @@ class MainSketchClass implements P5Sketch {
         }
 
         //INC CHANGE ROTATION MODE
-        if (this.layerNumber === 1 && this.instrumentMode === 4 && this.selectedShape !== 0) {
+        if (this.layerNumber == 1 && this.instrumentMode == 4 && this.selectedShape != 0) {
             //rotate the selected shape
             this.rot1[this.selectedShape - 1] = this.rot1[this.selectedShape - 1] + 1
         }
-        if (this.layerNumber === 2 && this.instrumentMode === 4 && this.selectedShape !== 0) {
+        if (this.layerNumber == 2 && this.instrumentMode == 4 && this.selectedShape != 0) {
             //rotate the selected shape
             this.rot2[this.selectedShape2 - 1] = this.rot2[this.selectedShape2 - 1] + 1
         }
@@ -443,46 +449,46 @@ class MainSketchClass implements P5Sketch {
 
     public encoderDec() {
         //LAYER SELECTION MODE
-        if (this.instrumentMode === 1 && this.layerNumber === 1) {
+        if (this.instrumentMode == 1 && this.layerNumber == 1) {
             this.layerNumber = 2
-        } else if (this.instrumentMode === 1 && this.layerNumber === 2) {
+        } else if (this.instrumentMode == 1 && this.layerNumber == 2) {
             this.layerNumber = 1
         }
 
         //TRACK SELECTION MODE
-        if (this.layerNumber === 1 && this.instrumentMode === 2 && this.selectedShape !== (0 || 1)) {
+        if (this.layerNumber == 1 && this.instrumentMode == 2 && this.selectedShape != (0 || 1)) {
             this.selectedShape--
-        } else if (this.instrumentMode === 2 && this.selectedShape === 1) {
+        } else if (this.instrumentMode == 2 && this.selectedShape == 1) {
             this.selectedShape = this.maxNumShapes
         }
-        if (this.layerNumber === 2 && this.instrumentMode === 2 && this.selectedShape2 !== (0 || 1)) {
+        if (this.layerNumber == 2 && this.instrumentMode == 2 && this.selectedShape2 != (0 || 1)) {
             this.selectedShape2--
-        } else if (this.instrumentMode === 2 && this.selectedShape2 === 1) {
+        } else if (this.instrumentMode == 2 && this.selectedShape2 == 1) {
             this.selectedShape2 = this.maxNumShape2
         }
 
         //then CHANGE SHAPE MODE
-        if (this.layerNumber === 1 && this.instrumentMode === 3 && this.shp1[this.selectedShape - 1] !== 0) {
+        if (this.layerNumber == 1 && this.instrumentMode == 3 && this.shp1[this.selectedShape - 1] != 0) {
             this.shp1[this.selectedShape - 1] = this.shp1[this.selectedShape - 1] - 1
-        } else if (this.instrumentMode === 3 && this.shp1[this.selectedShape - 1] === 0) {
+        } else if (this.instrumentMode == 3 && this.shp1[this.selectedShape - 1] == 0) {
             this.shp1[this.selectedShape - 1] = this.polygon_array.length - 1
         }
-        if (this.layerNumber === 2 && this.instrumentMode === 3 && this.shp1[this.selectedShape - 1] !== 0) {
+        if (this.layerNumber == 2 && this.instrumentMode == 3 && this.shp1[this.selectedShape - 1] != 0) {
             this.shp2[this.selectedShape2 - 1] = this.shp2[this.selectedShape2 - 1] - 1
-        } else if (this.instrumentMode === 3 && this.shp2[this.selectedShape2 - 1] === 0) {
+        } else if (this.instrumentMode == 3 && this.shp2[this.selectedShape2 - 1] == 0) {
             this.shp2[this.selectedShape2 - 1] = this.polygon_array2.length - 1
         }
 
         //CUSTOM SHAPE MODE
-        if (this.layerNumber === 1 && this.instrumentMode === 7) {
-            if (this.currentGrain === 0) {
+        if (this.layerNumber == 1 && this.instrumentMode == 7) {
+            if (this.currentGrain == 0) {
                 this.currentGrain = this.nGrain - 1
             } else {
                 this.currentGrain--
             }
         }
-        if (this.layerNumber === 2 && this.instrumentMode === 7) {
-            if (this.currentGrain2 === 0) {
+        if (this.layerNumber == 2 && this.instrumentMode == 7) {
+            if (this.currentGrain2 == 0) {
                 this.currentGrain2 = this.nGrain - 1
             } else {
                 this.currentGrain2--
@@ -490,16 +496,16 @@ class MainSketchClass implements P5Sketch {
         }
 
         //the CHANGE ROTATION MODE
-        if (this.layerNumber === 1 && this.instrumentMode === 4 && this.selectedShape !== 0) {
+        if (this.layerNumber == 1 && this.instrumentMode == 4 && this.selectedShape != 0) {
             this.rot1[this.selectedShape - 1] = this.rot1[this.selectedShape - 1] - 1
         }
-        if (this.layerNumber === 2 && this.instrumentMode === 4 && this.selectedShape !== 0) {
+        if (this.layerNumber == 2 && this.instrumentMode == 4 && this.selectedShape != 0) {
             this.rot2[this.selectedShape2 - 1] = this.rot2[this.selectedShape2 - 1] - 1
         }
     }
 
     public encoderButt() {
-        if (this.layerNumber === 1 && this.instrumentMode === 7) {
+        if (this.layerNumber == 1 && this.instrumentMode == 7) {
             if (this.polygon_array_c.includes(this.currentGrain)) {
                 for (let i = 0; i < this.polygon_array_c.length; i++) {
                     if (this.polygon_array_c[i] === this.currentGrain) {
@@ -513,7 +519,7 @@ class MainSketchClass implements P5Sketch {
                 return a - b
             })
         }
-        if (this.layerNumber === 2 && this.instrumentMode === 7) {
+        if (this.layerNumber == 2 && this.instrumentMode == 7) {
             if (this.polygon_array_c.includes(this.currentGrain2)) {
                 for (let i = 0; i < this.polygon_array_c.length; i++) {
                     if (this.polygon_array_c[i] === this.currentGrain2) {
@@ -530,25 +536,25 @@ class MainSketchClass implements P5Sketch {
     }
 
     public deleteShape() {
-        if (this.instrumentMode === 7) {
+        if (this.instrumentMode == 7) {
             this.instrumentMode = 2
         }
-        if (this.layerNumber === 1) {
+        if (this.layerNumber == 1) {
             this.shp1.splice(this.selectedShape - 1, 1)
             this.rot1.splice(this.selectedShape - 1, 1)
             this.maxNumShapes--
             //start from skratch
-            if (this.maxNumShapes === 0) {
+            if (this.maxNumShapes == 0) {
                 this.instrumentMode = 0
             }
             this.selectedShape = this.maxNumShapes
         }
-        if (this.layerNumber === 2) {
+        if (this.layerNumber == 2) {
             this.shp2.splice(this.selectedShape2 - 1, 1)
             this.rot1.splice(this.selectedShape2 - 1, 1)
             this.maxNumShape2--
             //start from skratch
-            if (this.maxNumShape2 === 0) {
+            if (this.maxNumShape2 == 0) {
                 this.instrumentMode = 0
             }
             this.selectedShape2 = this.maxNumShape2
@@ -567,11 +573,11 @@ class MainSketchClass implements P5Sketch {
     //TRACK SELECTION/ADD TRACK FUNCTION
     public selectShape() {
         this.instrumentMode = 2 // we are in track_mode!
-        if (this.layerNumber === 1) {
+        if (this.layerNumber == 1) {
             console.log("yes")
             this.selectedShape = this.maxNumShapes
             //if you press for 2 seconds you create a new track
-            //if (this.instrumentMode !== 0) {
+            //if (this.instrumentMode != 0) {
             this.myTimeout = setTimeout(() => {
                 this.maxNumShapes = this.maxNumShapes + 1
                 this.updateArrays()
@@ -579,9 +585,9 @@ class MainSketchClass implements P5Sketch {
 
             //}
         }
-        if (this.layerNumber === 2) {
+        if (this.layerNumber == 2) {
             this.selectedShape2 = this.maxNumShape2
-            if (this.instrumentMode !== 0) {
+            if (this.instrumentMode != 0) {
                 this.myTimeout = setTimeout(() => {
                     this.maxNumShape2 = this.maxNumShape2 + 1
                     this.updateArrays()
@@ -598,7 +604,7 @@ class MainSketchClass implements P5Sketch {
     public changeShape() {
         this.instrumentMode = 3 // we are in change_shape_mode!
         this.myTimeout = setTimeout(() => {
-            if (this.layerNumber === 1) {
+            if (this.layerNumber == 1) {
                 this.instrumentMode = 7
                 this.maxNumShapes++
                 this.numCustShapes++
@@ -614,7 +620,7 @@ class MainSketchClass implements P5Sketch {
                 this.shp1.push(this.polygon_array.length - 1)
                 this.updateArrays()
             }
-            if (this.layerNumber === 2) {
+            if (this.layerNumber == 2) {
                 this.instrumentMode = 7
                 this.maxNumShape2++
                 this.numCustShapes++
@@ -647,24 +653,24 @@ class MainSketchClass implements P5Sketch {
         // this is the rotation array, containing all the rotation indexes for just the FIRST layer. Its length is equal to the maximum number of shapes created in the related layer.
         this.rot1.push(0)
 
-        if (this.layerNumber === 2) {
+        if (this.layerNumber == 2) {
             this.rot2.push(0)
         }
 
         //kind of shape index array relative to the first layer. here are stored the kind of shape of tracks. i set up this number to be 1,2,3...maxNumofShapes just to make the user distinguish between and avoid graphic overlap.
 
-        if (this.instrumentMode === 2) {
+        if (this.instrumentMode == 2) {
             this.shp1.push(this.maxNumShapes - 1)
         }
 
-        if (this.instrumentMode === 2 && this.layerNumber === 2) {
+        if (this.instrumentMode == 2 && this.layerNumber == 2) {
             this.shp2.push(this.maxNumShape2 - 1)
         }
 
         this.selectedShape = this.maxNumShapes
         this.selectedShape2 = this.maxNumShape2
 
-        /*if (instrumentMode === 7) {
+        /*if (instrumentMode == 7) {
         this.shp1.push(polygon_array.length)
         }*/
     }
