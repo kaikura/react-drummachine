@@ -115,6 +115,7 @@ class MainSketchClass implements P5Sketch {
     }
 
     public draw(p5: P5): void {
+        console.log("draw")
         p5.fill(255)
         p5.ellipse(this.canvasWidth / 2, this.canvasHeight / 2, this.firstLayerLandW, this.firstLayerLandW)
         //if (layerNumber === 2) {

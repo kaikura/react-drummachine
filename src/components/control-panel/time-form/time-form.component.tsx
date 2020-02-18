@@ -15,9 +15,7 @@ export class TimeForm extends React.Component<IProps, IState> {
         selectedTimeSignature: "",
         selectedNumberOfGrains: ""
     }
-
     private timeSignature = ["4/4", "3/4", "9/8", "7/8", "5/4", "3/2"]
-
     private numberOfGrains = {
         "4/4": [2, 4, 8, 12, 16, 20, 24, 28],
         "3/4": [3, 6, 9, 12, 15, 18, 21, 24, 27, 30],
