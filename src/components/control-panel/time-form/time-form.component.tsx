@@ -11,14 +11,7 @@ export class TimeForm extends React.Component<any, IState> {
         selectedNumberOfGrains: undefined
     }
 
-    private timeSignature = [
-        "4/4",
-        "3/4",
-        "9/8",
-        "7/8",
-        "5/4",
-        "3/2",
-    ]
+    private timeSignature = ["4/4", "3/4", "9/8", "7/8", "5/4", "3/2"]
 
     private numberOfGrains = {
         "4/4": [2, 4, 8, 12, 16, 20, 24, 28],
@@ -44,7 +37,7 @@ export class TimeForm extends React.Component<any, IState> {
                         value={selectedTimeSignature}
                     >
                         <option> </option>
-                        {this.timeSignature.map(o => (
+                        {this.timeSignature.map((o) => (
                             <option key={`option-${o}`}>{o}</option>
                         ))}
                     </select>
@@ -58,12 +51,15 @@ export class TimeForm extends React.Component<any, IState> {
                         value={selectedNumberOfGrains}
                         onChange={this.onSelectNumberOfGrains}
                     >
-                        {selectedTimeSignature && this.numberOfGrains[(selectedTimeSignature as unknown) as string].map(o => (
-                            <option key={`option-${o}`}>{o}</option>
-                        ))}
+                        {selectedTimeSignature &&
+                            this.numberOfGrains[(selectedTimeSignature as unknown) as string].map((o) => (
+                                <option key={`option-${o}`}>{o}</option>
+                            ))}
                     </select>
                 </div>
-                <button type="submit" className="btn btn-primary btn-block">Confirm</button>
+                <button type="submit" className="btn btn-primary btn-block">
+                    Confirm
+                </button>
             </form>
         )
     }
@@ -79,6 +75,8 @@ export class TimeForm extends React.Component<any, IState> {
     private onSubmit = (event) => {
         event.preventDefault()
         console.log("submit")
-        alert(`Selected time signature: ${this.state.selectedTimeSignature}, selected number of grains: ${this.state.selectedNumberOfGrains}`)
+        alert(
+            `Selected time signature: ${this.state.selectedTimeSignature}, selected number of grains: ${this.state.selectedNumberOfGrains}`
+        )
     }
 }

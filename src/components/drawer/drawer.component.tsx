@@ -20,7 +20,7 @@ export class Drawer extends React.Component<any, any> {
         this.sketches[0].setup(p5, canvasParentRef)
     }
 
-    private draw = (p5: P5) => {
-        this.sketches[0].draw(p5)
+    private draw = (p5: P5, canvasParentRef: "centralSquare") => {
+        this.sketches[0].draw(p5, canvasParentRef)
     }
 }

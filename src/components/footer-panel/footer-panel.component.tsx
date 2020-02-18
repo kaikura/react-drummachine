@@ -47,8 +47,8 @@ export class FooterPanel extends React.Component<any, any> {
                         style={{ marginBottom: "12px" }}
                     />
                     <Button text="Encoder" onClick={this.encoderClick} style={{ marginBottom: "12px" }} />
-                    <Button text="+1" onClick={this.plusOneClick} style={{ marginBottom: "12px" }} />
                     <Button text="-1" onClick={this.minusOneClick} style={{ marginBottom: "12px" }} />
+                    <Button text="+1" onClick={this.plusOneClick} style={{ marginBottom: "12px" }} />
                 </Container>
             </div>
         )
