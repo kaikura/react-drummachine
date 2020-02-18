@@ -1,5 +1,4 @@
 import React from "react"
-import * as P5 from "p5"
 import { Button } from "../button/button.component"
 import { MainSketch } from "../../sketches/sketch"
 import { Container } from "./footer-panel.style"
