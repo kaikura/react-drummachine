@@ -1,14 +1,19 @@
 import React from "react"
+import { MainSketch } from "../../../sketches/sketch"
 
 interface IState {
-    selectedTimeSignature: string | undefined
-    selectedNumberOfGrains: string | undefined
+    selectedTimeSignature: string
+    selectedNumberOfGrains: string
 }
 
-export class TimeForm extends React.Component<any, IState> {
+interface IProps {
+    layer: 1 | 2
+}
+
+export class TimeForm extends React.Component<IProps, IState> {
     public state = {
-        selectedTimeSignature: undefined,
-        selectedNumberOfGrains: undefined
+        selectedTimeSignature: "",
+        selectedNumberOfGrains: ""
     }
 
     private timeSignature = ["4/4", "3/4", "9/8", "7/8", "5/4", "3/2"]
@@ -23,13 +28,14 @@ export class TimeForm extends React.Component<any, IState> {
     }
 
     public render() {
+        const { layer } = this.props
         const { selectedTimeSignature, selectedNumberOfGrains } = this.state
         const disabledNumberOfGrains = selectedTimeSignature === undefined
 
         return (
             <form onSubmit={this.onSubmit}>
                 <div className="form-group row">
-                    <label htmlFor="polyrhytm" className="col-sm-2 col-form-label">Polyrhytm</label>
+                    <label htmlFor="polyrhytm" className="col-sm-2 col-form-label">Polyrhytm Layer{layer}</label>
                     <div className="col-sm-10">
                         <input type="text" readOnly className="form-control-plaintext" id="polyrhytm"
                                value="1/1"/>
@@ -72,7 +78,10 @@ export class TimeForm extends React.Component<any, IState> {
     }
 
     private onSelectTimeSignature = (event) => {
-        this.setState({ selectedTimeSignature: event.target.value || undefined })
+        this.setState({
+            selectedTimeSignature: event.target.value || undefined,
+            selectedNumberOfGrains: this.numberOfGrains[event.target.value][0]
+        })
     }
 
     private onSelectNumberOfGrains = (event) => {
@@ -80,10 +89,20 @@ export class TimeForm extends React.Component<any, IState> {
     }
 
     private onSubmit = (event) => {
+        const { selectedNumberOfGrains } = this.state
+        const { layer } = this.props
+
+        if (selectedNumberOfGrains) {
+            switch (layer) {
+                case 1:
+                    MainSketch.setNGrain(Number(this.state.selectedNumberOfGrains))
+                    break
+                case 2:
+                    MainSketch.setNGrain2(Number(this.state.selectedNumberOfGrains))
+                    break
+            }
+        }
+
         event.preventDefault()
-        console.log("submit")
-        alert(
-            `Selected time signature: ${this.state.selectedTimeSignature}, selected number of grains: ${this.state.selectedNumberOfGrains}`
-        )
     }
 }

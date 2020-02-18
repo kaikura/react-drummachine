@@ -645,6 +645,18 @@ class MainSketchClass implements P5Sketch {
     public mouseReleased() {
         clearTimeout(this.myTimeout)
     }
+
+    public setNGrain(value: number) {
+        this.nGrain = value
+
+        return this
+    }
+
+    public setNGrain2(value: number) {
+        this.nGrain2 = value
+
+        return this
+    }
 }
 
 export const MainSketch = new MainSketchClass()
