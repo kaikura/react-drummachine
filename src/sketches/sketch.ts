@@ -21,7 +21,7 @@ class MainSketchClass implements P5Sketch {
     private clockCircleScaleSize = 1.05
     private currentGrain = 0
     private currentGrain2 = 0
-    private nGrain = 1
+    private nGrain = 4
     private nGrain2 = 1
     private firstLayerLandW = 500
 
@@ -159,7 +159,7 @@ class MainSketchClass implements P5Sketch {
 
         //POLYGON_SPEC, defining
         p5.push()
-
+        
         const polygon_spec = (canvasWidth: any, canvasHeight: any, radius: any, vert: any) => {
             let angle = p5.TWO_PI / this.nGrain
 
