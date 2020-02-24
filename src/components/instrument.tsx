@@ -2,7 +2,7 @@ import * as React from "react"
 import { Time, Transport } from "tone"
 import { Snare, Kick, HiHat } from "../engines"
 import { areEqual } from "../utils/array-comparator"
-import { Instruments } from "./instrument-hack"
+
 import { Slider } from "./slider"
 import { Clap } from "../engines/clap"
 import { Cymbal } from "../engines/cymbal"
@@ -125,8 +125,8 @@ export class Instrument extends React.Component<InstrumentProps, any> {
     render() {
         const InstrumentStyle = {
             height: "3em",
-            width: "7,5em",
-            margin: "0.1em",
+            width: "4em",
+            margin: "1",
             borderRadius: 10,
             padding: 5,
             backgroundColor: this.props.selected ? "#2AC7DC" : "#696969",
@@ -134,7 +134,7 @@ export class Instrument extends React.Component<InstrumentProps, any> {
             boxShadow: "2px 2px 5px #222"
         }
         return (
-            <div style={{ display: "inline-block", width: "6em", alignContent: "center", padding: "2em" }}>
+            <div style={{ display: "inline-block", width: "1em", alignContent: "center", padding: "2em" }}>
                 <div style={InstrumentStyle} onClick={this.handleClick}>
                     <p>{this.props.engine}</p>
                 </div>

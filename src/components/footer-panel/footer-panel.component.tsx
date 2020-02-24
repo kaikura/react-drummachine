@@ -4,56 +4,6 @@ import { MainSketch } from "../../sketches/sketch"
 import { Container } from "./footer-panel.style"
 
 export class FooterPanel extends React.Component<any, any> {
-    public render() {
-        return (
-            <div style={{ marginTop: "12px" }}>
-                <h5>Footer panel</h5>
-                <div className="alert alert-primary">
-                    Use the following buttons to control the behavior of the shape
-                </div>
-                <Container>
-                    <Button
-                        text="Layer"
-                        icon="plus"
-                        onMouseDown={this.onLayerClick}
-                        onMouseUp={this.onMouseReleased}
-                        style={{ marginBottom: "12px" }}
-                    />
-                    <Button
-                        text="Track"
-                        icon="vector-square"
-                        onMouseDown={this.onTrackClick}
-                        onMouseUp={this.onMouseReleased}
-                        style={{ marginBottom: "12px" }}
-                    />
-                    <Button
-                        text="Shape"
-                        icon="shapes"
-                        onMouseDown={this.onShapeClick}
-                        onMouseUp={this.onMouseReleased}
-                        style={{ marginBottom: "12px" }}
-                    />
-                    <Button
-                        text="Rotate"
-                        icon="sync"
-                        onClick={this.onRotateClick}
-                        style={{ marginBottom: "12px" }}
-                    />
-                    <Button
-                        text="Delete shape"
-                        icon="times"
-                        type="danger"
-                        onClick={this.onShapeDeleteClick}
-                        style={{ marginBottom: "12px" }}
-                    />
-                    <Button text="Encoder" onClick={this.encoderClick} style={{ marginBottom: "12px" }} />
-                    <Button text="-1" onClick={this.minusOneClick} style={{ marginBottom: "12px" }} />
-                    <Button text="+1" onClick={this.plusOneClick} style={{ marginBottom: "12px" }} />
-                </Container>
-            </div>
-        )
-    }
-
     private onLayerClick = () => {
         MainSketch.createNewLayer()
     }
@@ -90,4 +40,13 @@ export class FooterPanel extends React.Component<any, any> {
     private onMouseReleased = () => {
         MainSketch.mouseReleased()
     }
+    public render() {
+        return (
+            <div style={{ marginTop: "12px" }}>
+                
+            </div>
+        )
+    }
+
+    
 }
