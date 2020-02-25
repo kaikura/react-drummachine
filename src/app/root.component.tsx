@@ -31,7 +31,7 @@ export class RootComponent extends React.Component<any, any> {
                         <div
                             id="centralSquare"
                             className="col-8"
-                            style={{ position: "relative", backgroundColor: "#81A094" }}
+                            style={{ position: "relative", backgroundColor: "#51757a" }}
                         >
                             <Drawer />
                         </div>
@@ -42,7 +42,11 @@ export class RootComponent extends React.Component<any, any> {
                     
                         <div className="trnsp" style={{ padding: "20px" }}>
                             {" "}
+<<<<<<< HEAD
                             This is the timer value: {this.state.timestamp}
+=======
+                            
+>>>>>>> e463111f245399371d54fdde9da1f93ee484e5df
                         
                     </div>
                 </div>
