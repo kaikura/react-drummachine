@@ -20,7 +20,7 @@ export class RootComponent extends React.Component<any, any> {
                         <div
                             id="centralSquare"
                             className="col-8"
-                            style={{ position: "relative", backgroundColor: "#81A094" }}
+                            style={{ position: "relative", backgroundColor: "#51757a" }}
                         >
                             <Drawer />
                         </div>
@@ -31,7 +31,7 @@ export class RootComponent extends React.Component<any, any> {
                     
                         <div className="trnsp" style={{ padding: "20px" }}>
                             {" "}
-                            <TransportComponent />
+                            
                         
                     </div>
                 </div>
