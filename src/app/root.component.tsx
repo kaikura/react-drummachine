@@ -6,8 +6,19 @@ import { ControlPanel } from "../components/control-panel/control-panel.componen
 import { FooterPanel } from "../components/footer-panel/footer-panel.component"
 import { RightPanel } from "../components/right-panel/right-panel.component"
 import { TransportComponent } from "src/components/transport"
+import { subscribeToTimer } from '../api';
 
 export class RootComponent extends React.Component<any, any> {
+    constructor(props) {
+        super(props);
+        subscribeToTimer((err, timestamp) => this.setState({ 
+          timestamp 
+        }));
+        
+      }
+      state = {
+        timestamp: 'no timestamp yet'
+      };
     public render() {
         return (
             <div className="App">
@@ -31,7 +42,7 @@ export class RootComponent extends React.Component<any, any> {
                     
                         <div className="trnsp" style={{ padding: "20px" }}>
                             {" "}
-                            <TransportComponent />
+                            This is the timer value: {this.state.timestamp}
                         
                     </div>
                 </div>
