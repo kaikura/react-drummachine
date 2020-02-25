@@ -560,7 +560,7 @@ class MainSketchClass implements P5Sketch {
             //rotate the selected shape
             this.rot1[this.selectedShape - 1] = this.rot1[this.selectedShape - 1] + 1
         }
-        if (this.layerNumber === 2 && this.instrumentMode === 4 && this.selectedShape !== 0) {
+        if (this.layerNumber === 2 && this.instrumentMode === 4 && this.selectedShape2 !== 0) {
             //rotate the selected shape
             this.rot2[this.selectedShape2 - 1] = this.rot2[this.selectedShape2 - 1] + 1
         }
@@ -618,7 +618,7 @@ class MainSketchClass implements P5Sketch {
         if (this.layerNumber === 1 && this.instrumentMode === 4 && this.selectedShape !== 0) {
             this.rot1[this.selectedShape - 1] = this.rot1[this.selectedShape - 1] - 1
         }
-        if (this.layerNumber === 2 && this.instrumentMode === 4 && this.selectedShape !== 0) {
+        if (this.layerNumber === 2 && this.instrumentMode === 4 && this.selectedShape2 !== 0) {
             this.rot2[this.selectedShape2 - 1] = this.rot2[this.selectedShape2 - 1] - 1
         }
     }
