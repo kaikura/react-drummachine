@@ -65,4 +65,7 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 and use 
 
-###'node server.js' and ###'npm start' in order to run the server first and then our application
+### 'node server.js' 
+and 
+### 'npm start' 
+in order to run the server first and then our application
