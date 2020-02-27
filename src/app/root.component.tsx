@@ -15,7 +15,7 @@ export class RootComponent extends React.Component<any, any> {
           timestamp 
         }));
         
-      }
+    }
       state = {
         timestamp: 'no timestamp yet'
       };

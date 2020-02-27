@@ -1,4 +1,5 @@
 import * as P5 from "p5"
+import {Transport} from 'tone'
 
 export interface P5Sketch {
     setup(p5: P5, canvasParentRef: "centralSquare"): void
@@ -26,8 +27,8 @@ class MainSketchClass implements P5Sketch {
     private firstLayerLandW = 500
     private trig1 : any[];
     private trig2 : any[];
-    private compact_shp1 : any [];
-    private compact_shp2 : any [];
+    private compact_shp1 = new Array();
+    private compact_shp2 = new Array ();
     
     
 
@@ -76,6 +77,13 @@ class MainSketchClass implements P5Sketch {
     private div_integer;
 
     private nGrain_string
+    private index1: number =0;
+    private index2: number =0;
+
+    private drumKit :any = [];
+  private sounds1 = [];
+  private sounds2 = [];
+  
 
 
 
@@ -83,12 +91,41 @@ class MainSketchClass implements P5Sketch {
 
 
     constructor() {
+  var kick = new Audio("./samples/kick.wav");
+  var snare1 = new Audio("./samples/snare1.wav");
+  var snare2 = new Audio("./samples/snare2.wav");
+  var clap = new Audio("./samples/clap.wav");
+  var blastBlock = new Audio("./samples/blastBlock.wav");
+  var closedHH = new Audio("./samples/closedHH.wav");
+  var cowbell = new Audio("./samples/cowbell.wav");
+  var egg = new Audio("./samples/egg.wav");
+  var openHH = new Audio("./samples/openHH.wav");
+  var stick = new Audio("./samples/stick.wav");
+  var tomFloor = new Audio("./samples/tomFloor.wav");
+  var tomHigh = new Audio("./samples/tomHigh.wav");
+  var tomMid = new Audio("./samples/tomMid.wav");
+  this.drumKit[0] = kick;
+  this.drumKit[1] = snare1;
+  this.drumKit[2] = snare2;
+  this.drumKit[3] = clap;
+  this.drumKit[4] = blastBlock;
+  this.drumKit[5] = closedHH;
+  this.drumKit[6] = cowbell;
+  this.drumKit[7] = egg;
+  this.drumKit[7] = openHH;
+  this.drumKit[8] = stick;
+  this.drumKit[9] = tomFloor;
+  this.drumKit[10] = tomHigh;
+  this.drumKit[11] = tomMid;
+  this.drumKit[12] = tomFloor;
+  
         this.trig1 = [];
         this.trig2 = [];
         this.compact_shp1 = [];
         this.compact_shp2 = [];
         this.initializeArrays()
         this.initializePolygonArrays()
+        this.generateShapes();
     }
 
     private initializeArrays() {
@@ -110,6 +147,21 @@ class MainSketchClass implements P5Sketch {
             this.shp2[i] = i
         }
     }
+    public generateShapes(){
+        for (let i = 2; i <= this.nGrain; i++) { //starts from 2 since we need a line as the simplest shape possible
+          this.polygon_array[i - 2] = new Array(i);
+          for (let h = 0; h < this.polygon_array[i - 2].length; h++) {
+            this.polygon_array[i - 2][h] = Math.round(this.nGrain * h / this.polygon_array[i - 2].length);
+          }
+        }
+        
+        for (let i = 2; i <= this.nGrain2; i++) { //starts from 2 since we need a line as the simplest shape possible
+          this.polygon_array2[i - 2] = new Array(i);
+          for (let h = 0; h < this.polygon_array2[i - 2].length; h++) {
+            this.polygon_array2[i - 2][h] = Math.round(this.nGrain2 * h / this.polygon_array2[i - 2].length);
+          }
+        }
+        }
 
     private initializePolygonArrays() {
         //INITIALIZES SHAPE ARRAYS GIVEN # GRAIN 
@@ -158,7 +210,7 @@ class MainSketchClass implements P5Sketch {
             this.shp2.push(this.maxNumShape2 - 1)
             this.selectedShape2 = this.maxNumShape2
         }
-        this.numSides1 = new Array
+        this.numSides1 = new Array()
 
         for (let i=0; i <= this.shp1.length-1; i++){
             this.numSides1.push(this.shp1[i] +2)
@@ -198,7 +250,7 @@ class MainSketchClass implements P5Sketch {
             this.selectedShape2 = this.maxNumShape2
         }
         this.updateArrays();
-        //this.trigger();
+        this.triggerer();
     }
 
     //SETUP
@@ -217,6 +269,8 @@ class MainSketchClass implements P5Sketch {
 
         let angle = (p5.TWO_PI / 4) * 3
         let step = p5.TWO_PI / this.nGrain
+
+       
 
         //First Layer Arc
         if (this.counter>0){
@@ -569,6 +623,7 @@ class MainSketchClass implements P5Sketch {
             //rotate the selected shape
             this.rot2[this.selectedShape2 - 1] = this.rot2[this.selectedShape2 - 1] + 1
         }
+        this.triggerer();
     }
 
     public encoderDec() {
@@ -626,6 +681,7 @@ class MainSketchClass implements P5Sketch {
         if (this.layerNumber === 2 && this.instrumentMode === 4 && this.selectedShape2 !== 0) {
             this.rot2[this.selectedShape2 - 1] = this.rot2[this.selectedShape2 - 1] - 1
         }
+        this.triggerer();
     }
 
     public encoderButt() {
@@ -668,6 +724,7 @@ class MainSketchClass implements P5Sketch {
         this.myTimeout = setTimeout(() => {
             this.layerNumber++
         }, 2000)
+        this.triggerer();
     }
 
     //TRACK SELECTION/ADD TRACK FUNCTION
@@ -685,14 +742,17 @@ class MainSketchClass implements P5Sketch {
             if (this.layerNumber === 1) {
                 this.maxNumShapes++
                 this.updateArrays()
+                this.triggerer();
                 console.log(this.maxNumShapes)
             }
             if (this.layerNumber === 2) {
                 this.maxNumShape2++
                 this.updateArrays()
+                this.triggerer();
                 console.log(this.maxNumShape2)
             }
         }, 2000)
+        this.triggerer();
     }
 
     // clearTimeout(this.myTimeout)
@@ -734,6 +794,7 @@ class MainSketchClass implements P5Sketch {
                 this.updateArrays()
             }
         }, 2000)
+        this.triggerer();
     }
 
     //ROTATE SHAPE FUNCTION
@@ -757,11 +818,32 @@ class MainSketchClass implements P5Sketch {
 
         return this
     }
-    public triggerer() {
+
+    //FUNCTIONS FILE
+    
+      
+    
+      
+      
+     
+    
+     
+    
+    public stop_sequencer() {
+        //active_seq = false;
+        this.counter = -1;
+        this.counter2 =-1;
+        this.numMeasures = 0;
+        this.numMeasure2 = 0;
+        Transport.stop();
+        Transport.cancel();
+        this.index1 = 0;
+        this.index2 = 0;
+      }
+    
+      public triggerer() {
         //clears all the previous trigs
-        
-        this.trig1 = [];
-        
+        this.trig1 = new Array();
         for(let j = 1; j <= this.shp1.length; j++){
           this.trig1[j-1] = [];
           
@@ -777,7 +859,7 @@ class MainSketchClass implements P5Sketch {
          }
         }
     
-         this.trig2 = [];
+         this.trig2 = new Array();
          for(let j = 1; j <= this.shp2.length; j++){
            this.trig2[j-1] = [];
            
@@ -796,7 +878,7 @@ class MainSketchClass implements P5Sketch {
     
     //reading and shifting the trig1 array accorging to rot1
     for(let k = 0; k < this.rot1.length; k++){
-      if(this.rot1[k] !== 0){
+      if(this.rot1[k] != 0){
         if(this.rot1[k] > 0){
       for(let i = 0; i < this.rot1[k] ; i++){
         this.compact_shp1 = this.trig1[k].pop();
@@ -813,7 +895,7 @@ class MainSketchClass implements P5Sketch {
       }
     
       for(let k = 0; k < this.rot2.length; k++){
-        if(this.rot2[k] !== 0){
+        if(this.rot2[k] != 0){
           if(this.rot2[k] > 0){
         for(let i = 0; i < this.rot2[k] ; i++){
           this.compact_shp2 = this.trig2[k].pop();
@@ -846,6 +928,139 @@ class MainSketchClass implements P5Sketch {
       }
       */
     }
+    
+    //read input for grains
+   
+    
+    
+    
+    
+    
+    public chooseSound(){
+      this.instrumentMode = 6;
+    }
+    
+    public clock_sounds1(){
+      this.CK_1_bool = !this.CK_1_bool;
+    }
+    
+    public clock_sounds2(){
+      this.CK_2_bool = !this.CK_2_bool;
+    }
+//SEQUENCER
+/*
+document.documentElement.addEventListener('mousedown', () => {
+    if (Tone.context.state !== 'running') Tone.context.resume();
+  });
+  */
+  // TIME SIGNATURE _ Layer 1
+  
+  
+  
+  
+ 
+  
+  //drumkit
+  
+  
+  
+  /*
+  var new_BPM = 60;
+  var showed_BPM = 60;
+  let nGrain_string = '8n';
+  Transport.timeSignature = [this.TS_Num, this.TS_Den];
+  Transport.bpm.value = showed_BPM; 
+  */
+  
+ 
+  
+  
+  
+  
+  public updateGrains(){
+   this.stop_sequencer();
+   Transport.scheduleRepeat(function(){}, '0n');
+   Transport.scheduleRepeat(this.repeat, this.nGrain_string);
+   Transport.start();
+  }
+  
+  // change time signature
+
+  /*
+  //COMPUTATION FOR SECOND LAYER
+  function setGrains_secondLayer(){
+     if(TS_Num_2 <= TS_Num)
+         return nGrain2 = Math.ceil(nGrain/TS_Num_2) * TS_Num_2;
+  else if(TS_Num_2 > TS_Num && Number.isInteger(div_integer) != true)
+         return nGrain2 = Math.ceil(nGrain/TS_Num_2) * TS_Num_2;
+  else if(TS_Num_2 > TS_Num && Number.isInteger(div_integer) == true)
+         return console.log("aiuto");
+    }
+    */
+  
+     //COMPUTATION FOR SECOND LAYER ------- BACKUP
+ 
+  
+  
+  
+  
+  
+  
+  
+  // actual audio engine
+  
+  public repeat(time) {
+   let step = this.index1 % this.nGrain;
+   let step_2 = this.index2 % (this.nGrain2); // POLYMETRICS!
+  
+   this.counter++
+    this.counter2++
+  console.log(this.counter);
+  if (this.counter === this.nGrain+1){
+    console.log("CIAo");
+      this.counter=1;
+      this.numMeasures ++
+      //console.log(numMeasures);
+    }
+    if (this.layerNumber===2 && this.counter2 === this.nGrain2+1){
+      this.counter2=1;
+      this.numMeasure2 ++
+      //console.log(numMeasure2);
+    }
+    if (this.layerNumber === 2 && this.numMeasures === this.nGrain2+1){
+      this.numMeasures = 1;
+    }
+    if (this.layerNumber === 1 && this.numMeasure2 === this.nGrain+1){
+      this.numMeasure2 = 1;
+    }
+   for(let i = 1; i <= this.shp1.length; i++){
+   if(this.trig1[i-1][step] === true)
+   {
+     
+     //synths[2].triggerAttackRelease(notes[i], '30n', time);
+     this.drumKit[this.sounds1[i-1]].play();
+     //DrumKit[i-1].trigger(time);
+     }
+   }
+  
+   for(let i = 1; i <= this.shp2.length; i++){
+     if(this.trig2[i-1][step_2] === true)
+     {
+       //synths[2].triggerAttackRelease(notes[i], '30n', time);
+       this.drumKit[this.sounds2[i-1]].play(time);
+       }
+     }
+  
+  
+   // CLOCK
+   // with polymeters
+  
+   this.index1++;
+   if(this.TS_Num > this.TS_Num_2){
+   this.index2 = this.index2 + 1 + Math.floor(this.TS_Num/this.TS_Num_2);
+   } else {this.index2++}
+  }
+    
 }
 
 export const MainSketch = new MainSketchClass()

@@ -8,6 +8,7 @@ import { Container } from "./right-panel.style"
 
 export class RightPanel extends React.Component<any, any> {
     private onLayerClick = () => {
+       
         MainSketch.createNewLayer()
     }
 
@@ -26,6 +27,10 @@ export class RightPanel extends React.Component<any, any> {
 
     private onShapeDeleteClick = () => {
         MainSketch.deleteShape()
+    }
+    private onPlayClick = () => {
+        MainSketch.updateGrains()
+        MainSketch.generateShapes()
     }
 
     private encoderClick = () => {
@@ -47,10 +52,15 @@ export class RightPanel extends React.Component<any, any> {
         return (
             <div style={{ marginTop: "12px" }}>
                 <h5>Groove Shapes Control</h5>
-                <div className="alert alert-primary">
-                    Control the behavior of the shape
-                </div>
+                
                 <Container>
+                <Button
+                        text="Play"
+                        icon="play"
+                        onMouseDown={this.onPlayClick}
+                        onMouseUp={this.onMouseReleased}
+                        style={{ marginBottom: "12px" }}
+                    />
                     <Button
                         text="Layer"
                         icon="plus"

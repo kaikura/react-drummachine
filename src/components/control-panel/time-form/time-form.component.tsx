@@ -106,9 +106,13 @@ export class TimeForm extends React.Component<IProps, IState> {
             switch (layer) {
                 case 1:
                     MainSketch.setNGrain(Number(this.state.selectedNumberOfGrains))
+                    MainSketch.generateShapes();
+                    MainSketch.updateArrays();
                     break
                 case 2:
                     MainSketch.setNGrain2(Number(this.state.selectedNumberOfGrains))
+                    MainSketch.generateShapes();
+                    MainSketch.updateArrays();
                     break
             }
         }
