@@ -15,19 +15,21 @@ class MainSketchClass implements P5Sketch {
     private selectedShape: number = 0
     private selectedShape2: number = 0
     private maxNumShapes = 0
-    private maxNumShape2 = 1
+    private maxNumShape2 = 0
     private numCustShapes = 0
-    private circleLandW = 500
-    private clockCircleScaleSize = 1.05
+    private circleLandW = 400
+    private clockCircleScaleSize = 0.95
     private currentGrain = 0
     private currentGrain2 = 0
     private nGrain = 4
-    private nGrain2 = 1
+    private nGrain2 = 4
     private firstLayerLandW = 500
     private trig1 : any[];
     private trig2 : any[];
     private compact_shp1 : any [];
     private compact_shp2 : any [];
+    
+    
 
     private rot1 = new Array(this.maxNumShapes)
     private shp1 = new Array(this.maxNumShapes)
@@ -39,6 +41,47 @@ class MainSketchClass implements P5Sketch {
     private polygon_array2 = new Array(this.nGrain2 - 1)
     private myTimeout
 
+    
+
+    private secondLayer_activated = false
+
+    private degree = 0
+    
+    private input_grains
+    private input_BPM
+    private input_my_TS_Num
+    private input_my_TS_2_Num
+    private input_my_TS_Den
+    private canvas
+    private counter =  -1
+    private counter2 = -1 
+    private numMeasures
+    private numMeasure2
+    private numSides1 = new Array()
+    private verRegular = false
+    private ver = 0
+    private active_seq = false
+    private rotation_element = 0
+    
+
+    // TIME SIGNATURE _ Layer 1
+   
+    private TS_Num = 4
+    private TS_Den = 4
+    private TS_Num_2 = 4
+
+    private CK_1_bool = false
+    private CK_2_bool = false
+
+    private div_integer;
+
+    private nGrain_string
+
+
+
+
+
+
     constructor() {
         this.trig1 = [];
         this.trig2 = [];
@@ -48,8 +91,28 @@ class MainSketchClass implements P5Sketch {
         this.initializePolygonArrays()
     }
 
+    private initializeArrays() {
+        //LAYER 1 ARRAYS (missing "Trig1" "Trig2" "Sounds1" from Old Version)
+        for (let i = 0; i < this.rot1.length; i++) {
+            this.rot1[i] = 0
+        }
+
+        for (let i = 0; i < this.shp1.length; i++) {
+            this.shp1[i] = i
+        }
+
+        //LAYER 2 ARRAYS
+        for (let i = 0; i < this.rot2.length; i++) {
+            this.rot2[i] = 0
+        }
+
+        for (let i = 0; i < this.shp2.length; i++) {
+            this.shp2[i] = i
+        }
+    }
+
     private initializePolygonArrays() {
-        //LOOP TO GENERATE DIFFERENT SHAPES
+        //INITIALIZES SHAPE ARRAYS GIVEN # GRAIN 
         for (let i = 2; i <= this.nGrain; i++) {
             //starts from 2 since we need a line as the simplest shape possible
             this.polygon_array[i - 2] = new Array(i)
@@ -71,39 +134,21 @@ class MainSketchClass implements P5Sketch {
         }
     }
 
-    private initializeArrays() {
-        for (let i = 0; i < this.rot1.length; i++) {
-            this.rot1[i] = 0
-        }
 
-        for (let i = 0; i < this.rot2.length; i++) {
-            this.rot2[i] = 0
-        }
-
-        for (let i = 0; i < this.shp1.length; i++) {
-            this.shp1[i] = i
-        }
-
-        for (let i = 0; i < this.shp2.length; i++) {
-            this.shp2[i] = i
-        }
-    }
 
     //UPDATE ARRAYS
     public updateArrays() {
         // this is the rotation array, containing all the rotation indexes for just the FIRST layer. Its length is equal to the maximum number of shapes created in the related layer.
-        if (this.layerNumber === 1) {
+        if (this.layerNumber === 1 && this.instrumentMode == 2) {
             this.rot1.push(0)
-            console.log("updateArraysL1")
         }
 
-        if (this.layerNumber === 2) {
+        if (this.layerNumber === 2 && this.instrumentMode == 2) {
             this.rot2.push(0)
-            console.log("updateArraysL2")
         }
 
         //kind of shape index array relative to the first layer. here are stored the kind of shape of tracks. i set up this number to be 1,2,3...maxNumofShapes just to make the user distinguish between and avoid graphic overlap.
-
+        //MISSING "Sounds1" and "Sounds2 from Old Version"
         if (this.instrumentMode === 2 && this.layerNumber === 1) {
             this.shp1.push(this.maxNumShapes - 1)
             this.selectedShape = this.maxNumShapes
@@ -112,10 +157,51 @@ class MainSketchClass implements P5Sketch {
         if (this.instrumentMode === 2 && this.layerNumber === 2) {
             this.shp2.push(this.maxNumShape2 - 1)
             this.selectedShape2 = this.maxNumShape2
-            console.log("updatearray2")
+        }
+        this.numSides1 = new Array
+
+        for (let i=0; i <= this.shp1.length-1; i++){
+            this.numSides1.push(this.shp1[i] +2)
+        }
+
+        this.ver = 0 
+        for (let i=0; i <= this.numSides1.length-1; i++){
+            if ((this.nGrain % this.numSides1[i]) == 0) {
+                this.ver++;
+              }
         }
     }
 
+    public deleteShape() {
+        //This was to fix a bug if in custom shape mode
+        if (this.instrumentMode === 7) {
+            this.instrumentMode = 2
+        }
+        if (this.layerNumber === 1) {
+            this.shp1.splice(this.selectedShape - 1, 1)
+            this.rot1.splice(this.selectedShape - 1, 1)
+            this.maxNumShapes--
+            //start from skratch
+            if (this.maxNumShapes === 0) {
+                this.instrumentMode = 0
+            }
+            this.selectedShape = this.maxNumShapes
+        }
+        if (this.layerNumber === 2) {
+            this.shp2.splice(this.selectedShape2 - 1, 1)
+            this.rot1.splice(this.selectedShape2 - 1, 1)
+            this.maxNumShape2--
+            //start from skratch
+            if (this.maxNumShape2 === 0) {
+                this.instrumentMode = 0
+            }
+            this.selectedShape2 = this.maxNumShape2
+        }
+        this.updateArrays();
+        //this.trigger();
+    }
+
+    //SETUP
     public setup(p5: P5, canvasParentRef: "centralSquare"): void {
         p5.createCanvas((p5.width = this.canvasWidth), (p5.height = this.canvasHeight)).parent(
             canvasParentRef
@@ -123,57 +209,122 @@ class MainSketchClass implements P5Sketch {
     }
 
     public draw(p5: P5): void {
-        p5.fill(255)
-        p5.ellipse(this.canvasWidth / 2, this.canvasHeight / 2, this.firstLayerLandW, this.firstLayerLandW)
+        p5.fill(250,250,250,70)
+        p5.ellipse(this.canvasWidth / 2, this.canvasHeight / 2, this.circleLandW, this.circleLandW)
         //if (layerNumber === 2) {
         //  p5.stroke(195, 195, 195);
         //}
-        //DRAW NODES
+
         let angle = (p5.TWO_PI / 4) * 3
         let step = p5.TWO_PI / this.nGrain
+
+        //First Layer Arc
+        if (this.counter>0){
+            p5.noFill()
+            p5.push()
+            p5.stroke("pink")
+            p5.arc(this.canvasWidth/2, this.canvasHeight/2, this.circleLandW+20, this.circleLandW+20, 3*p5.HALF_PI, 3*p5.HALF_PI+((p5.TWO_PI/this.nGrain)*(this.counter)))
+            p5.pop()
+            //Second Layer Arc
+            if (this.layerNumber === 2){
+                p5.push()
+                p5.stroke("darkslategrey")
+                if (this.TS_Num <= this.TS_Num_2){
+                    p5.arc(this.canvasWidth/2, this.canvasHeight/2, this.circleLandW+40, this.circleLandW+40, 3*p5.HALF_PI, 3*p5.HALF_PI+((p5.TWO_PI/this.nGrain2)*(this.counter2)));
+                } else { p5.arc(this.canvasWidth/2, this.canvasHeight/2,this.circleLandW+40,this.circleLandW+40, 3*p5.HALF_PI, 3*p5.HALF_PI+(((p5.TWO_PI/this.nGrain2) * Math.ceil(this.TS_Num/this.TS_Num_2))*(this.counter2)))
+                }
+                p5.pop();
+            } 
+        }
+        //draw ellipse on last connection first layer arc
+        if (this.counter === this.nGrain){
+            p5.noFill();
+            p5.push();
+            p5.stroke("pink");
+            p5.ellipse(this.canvasWidth/2,this.canvasHeight/2, this.circleLandW+20, this.circleLandW+20)
+            p5.pop();  
+        }
+
+        //draw ellipse on last connection second layer arc
+        if (this.layerNumber === 2 && this.counter2 === this.nGrain2){
+            p5.stroke("darkslategrey");
+            p5.ellipse(this.canvasWidth/2,this.canvasHeight/2, this.circleLandW+40,this.circleLandW+40) 
+        }
+
+        //Clock Ring Arcs
+        if (this.layerNumber === 2 && this.numMeasures > 0){
+            p5.noFill();
+            p5.strokeWeight(4);
+            p5.push();
+            p5.stroke("pink");
+            if(this.TS_Num <= this.TS_Num_2){
+            p5.arc(this.canvasWidth/2, this.canvasHeight/2, 530*this.clockCircleScaleSize, 530*this.clockCircleScaleSize, 3*p5.HALF_PI, 3*p5.HALF_PI+((p5.TWO_PI/this.TS_Num_2)*(this.numMeasures)));
+            } else {p5.arc(this.canvasWidth/2, this.canvasHeight/2, 530*this.clockCircleScaleSize, 530*this.clockCircleScaleSize, 3*p5.HALF_PI, 3*p5.HALF_PI+(((p5.TWO_PI/this.TS_Num_2)*Math.ceil(this.TS_Num/this.TS_Num_2))*(this.numMeasures)));}
+            p5.pop();
+        }
+        if (this.layerNumber === 2 && this.numMeasure2 > 0){
+            p5.noFill();
+            p5.strokeWeight(4);
+            p5.push();
+            p5.stroke("darkslategrey");
+            p5.arc(this.canvasWidth/2, this.canvasHeight/2, 570*this.clockCircleScaleSize, 570*this.clockCircleScaleSize, 3*p5.HALF_PI, 3*p5.HALF_PI+((p5.TWO_PI/this.TS_Num)*(this.numMeasure2)));
+            p5.pop();
+          
+        }
+
+        //draw ellipse for last connection clock ring arcs
+        if (this.layerNumber === 2 && this.numMeasures === this.nGrain2){
+            p5.push();
+            p5.stroke("pink");
+            p5.strokeWeight(4);
+            p5.ellipse(this.canvasWidth/2,this.canvasHeight/2, 530*this.clockCircleScaleSize, 530*this.clockCircleScaleSize);
+            p5.pop();
+        }
+        if (this.layerNumber === 2 && this.numMeasure2 === this.nGrain){
+            p5.push();
+            p5.stroke("darkslategrey");
+            p5.strokeWeight(4);
+            p5.ellipse(this.canvasWidth/2,this.canvasHeight/2, 570*this.clockCircleScaleSize, 570*this.clockCircleScaleSize);
+            p5.pop();
+        }
+          
+
+        //Draws Layer 1 Grains
         p5.push()
         let grainX
         let grainY
         for (let i = 0; i < this.nGrain; i++) {
-            grainX = this.canvasWidth / 2 + p5.cos(angle) * (this.firstLayerLandW / 2)
-            grainY = this.canvasHeight / 2 + p5.sin(angle) * (this.firstLayerLandW / 2)
-            //var grains = p5.createVector(grainX, grainY);
-            //vertices.p5.push(grains);
+            grainX = this.canvasWidth / 2 + p5.cos(angle) * (this.circleLandW / 2)
+            grainY = this.canvasHeight / 2 + p5.sin(angle) * (this.circleLandW / 2)
             p5.strokeWeight(10)
-            p5.stroke("purple")
+            p5.stroke("pink")
             p5.point(grainX, grainY)
             angle += step
         }
-
         p5.pop()
-        //END NODES
 
         //Custom Shape Mode
         if (this.instrumentMode === 7 && this.layerNumber === 1) {
             p5.push()
             let selGrainX =
-                this.canvasWidth / 2 + p5.cos(angle + step * this.currentGrain) * (this.firstLayerLandW / 2)
+                this.canvasWidth / 2 + p5.cos(angle + step * this.currentGrain) * (this.circleLandW / 2)
             let selGrainY =
-                this.canvasHeight / 2 + p5.sin(angle + step * this.currentGrain) * (this.firstLayerLandW / 2)
+                this.canvasHeight / 2 + p5.sin(angle + step * this.currentGrain) * (this.circleLandW / 2)
             let grains = p5.createVector(grainX, grainY)
-            //vertices.p5.push(grains);
             p5.strokeWeight(10)
             p5.stroke("red")
             p5.point(selGrainX, selGrainY)
             p5.pop()
         }
 
-        //vert is defined as vert=createVector(n1,n2,...,nn) with nn --number/id of the grain
-
-        //POLYGON_SPEC, defining
+        //defining POLYGON_SPEC drawing shapes
         p5.push()
-        
         const polygon_spec = (canvasWidth: any, canvasHeight: any, radius: any, vert: any) => {
             let angle = p5.TWO_PI / this.nGrain
 
             //draws first layer shapes
             p5.beginShape()
-            p5.stroke("purple")
+            p5.stroke("pink")
             for (let i = 0; i <= vert.length; i++) {
                 let corr_node = vert[i]
                 let count = 0
@@ -189,8 +340,8 @@ class MainSketchClass implements P5Sketch {
             }
             p5.endShape(p5.CLOSE)
         }
-
         p5.pop()
+
         if (this.selectedShape > this.maxNumShapes) {
             this.selectedShape = 1
         }
@@ -209,13 +360,15 @@ class MainSketchClass implements P5Sketch {
             p5.rotate((p5.TWO_PI * this.rot1[i - 1]) / this.nGrain)
             // TO BE FIXED! the circular array is useless, we can use polygon_array_ALL as a database of all the possible shapes. Then, with shp1, shp2, etc. we point the shape we need. For now i set it to polygon_array_ALL[0];
 
-            polygon_spec(0, 0, this.firstLayerLandW / 2, this.polygon_array[this.shp1[i - 1]])
+            polygon_spec(0, 0, this.circleLandW / 2, this.polygon_array[this.shp1[i - 1]])
             p5.pop()
         }
+
         // THIS IS EVERYTHING DRAWN IF LAYER NUMBER 2
         if (this.layerNumber === 2) {
-            p5.fill(250, 250, 250, 70)
+            p5.fill(250, 250, 250,70)
             p5.stroke(0)
+            p5.strokeWeight(2)
             p5.ellipse(this.canvasWidth / 2, this.canvasHeight / 2, this.circleLandW, this.circleLandW)
             let angle2 = (p5.TWO_PI / 4) * 3
             let step2 = p5.TWO_PI / this.nGrain2
@@ -223,26 +376,63 @@ class MainSketchClass implements P5Sketch {
             //Grains for Layer 2
             p5.push()
             for (let j = 0; j < this.nGrain2; j++) {
-                let grainX2 = this.canvasWidth / 2 + p5.cos(angle2) * 250 //320 effects how much bigger the second circle is should be half the width and height of the elipse
-                let grainY2 = this.canvasHeight / 2 + p5.sin(angle2) * 250
+                let grainX2 = this.canvasWidth / 2 + p5.cos(angle2) * this.circleLandW/2 //320 effects how much bigger the second circle is should be half the width and height of the elipse
+                let grainY2 = this.canvasHeight / 2 + p5.sin(angle2) * this.circleLandW/2
                 //let grains2 = p5.createVector(grainX2, grainY2)
                 p5.strokeWeight(10)
-                p5.stroke("blue")
+                p5.stroke("darkslategrey")
                 p5.point(grainX2, grainY2)
                 angle2 += step2
             }
             p5.pop()
+
+            //CLOCK RING
+            p5.noFill();
+            p5.strokeWeight(17);
+            p5.stroke(250,250,250,80);
+            p5.ellipse(this.canvasWidth/2,this.canvasHeight/2, 550 *this.clockCircleScaleSize, 550 *this.clockCircleScaleSize);
+            p5.strokeWeight(1);
+
+            p5.stroke(.5);
+            p5.ellipse(this.canvasWidth/2,this.canvasHeight/2, 570 *this.clockCircleScaleSize, 570 *this.clockCircleScaleSize);
+            p5.ellipse(this.canvasWidth/2,this.canvasHeight/2, 560 *this.clockCircleScaleSize, 560 *this.clockCircleScaleSize);
+            p5.ellipse(this.canvasWidth/2,this.canvasHeight/2, 550 *this.clockCircleScaleSize, 550 *this.clockCircleScaleSize);
+            p5.ellipse(this.canvasWidth/2,this.canvasHeight/2, 540 *this.clockCircleScaleSize, 540 *this.clockCircleScaleSize);
+            p5.ellipse(this.canvasWidth/2,this.canvasHeight/2, 530 *this.clockCircleScaleSize, 530 *this.clockCircleScaleSize);
+
+            //CLOCK RING "GRAINS"
+            p5.push();
+            step2 = p5.TWO_PI / this.TS_Num_2;
+            step = p5.TWO_PI / this.TS_Num;
+
+            for (let j = 0; j < this.TS_Num_2; j++) {
+            grainX2 = this.canvasWidth/2 + (p5.cos(angle2) * 266 * this.clockCircleScaleSize) //320 effects how much bigger the second circle is should be half the width and height of the elipse
+            grainY2 = this.canvasHeight/2 + (p5.sin(angle2) * 266 * this.clockCircleScaleSize)
+            p5.strokeWeight(3)
+            p5.stroke("pink")
+            p5.line(grainX2, grainY2, grainX2 + (p5.cos(angle2)*9), grainY2 + (p5.sin(angle2)*9))
+            angle2 += step2
+            }
+            for (let j = 0; j < this.TS_Num; j++) {
+            var grainX2 = this.canvasWidth/2 + (p5.cos(angle) * 275 * this.clockCircleScaleSize) //320 effects how much bigger the second circle is should be half the width and height of the elipse
+            var grainY2 = this.canvasHeight/2 + (p5.sin(angle) * 275 * this.clockCircleScaleSize)
+            p5.strokeWeight(3)
+            p5.stroke("darkslategrey")
+            p5.line(grainX2, grainY2, grainX2 + (p5.cos(angle)*9), grainY2 + (p5.sin(angle)*9))
+            angle += step
+            }
+            p5.pop();
+
+
             //Custom Shape Mode LAYER 2
             if (this.instrumentMode === 7 && this.layerNumber === 2) {
                 p5.push()
                 let selGrainX2 =
                     this.canvasWidth / 2 +
-                    p5.cos(angle2 + step2 * this.currentGrain2) * (this.firstLayerLandW / 2)
+                    p5.cos(angle2 + step2 * this.currentGrain2) * (this.circleLandW / 2)
                 let selGrainY2 =
                     this.canvasHeight / 2 +
-                    p5.sin(angle2 + step2 * this.currentGrain2) * (this.firstLayerLandW / 2)
-                //let grains = p5.createVector(grainX2, grainY2)
-                //vertices.p5.push(grains);
+                    p5.sin(angle2 + step2 * this.currentGrain2) * (this.circleLandW / 2)
                 p5.strokeWeight(10)
                 p5.stroke("red")
                 p5.point(selGrainX2, selGrainY2)
@@ -257,7 +447,7 @@ class MainSketchClass implements P5Sketch {
 
                 //draws second layer shapes
                 p5.beginShape()
-                p5.stroke("blue")
+                p5.stroke("darkslategrey")
                 for (let i = 0; i <= vert.length; i++) {
                     let corr_node = vert[i]
                     let count = 0
@@ -273,8 +463,8 @@ class MainSketchClass implements P5Sketch {
 
                 p5.endShape(p5.CLOSE)
             }
-
             p5.pop()
+
             if (this.selectedShape2 > this.maxNumShape2) {
                 this.selectedShape2 = 1
             }
@@ -293,88 +483,13 @@ class MainSketchClass implements P5Sketch {
                 p5.rotate((p5.TWO_PI * this.rot2[i - 1]) / this.nGrain2)
                 // TO BE FIXED! the circular array is useless, we can use polygon_array_ALL as a database of all the possible shapes. Then, with shp1, shp2, etc. we point the shape we need. For now i set it to polygon_array_ALL[0];
 
-                polygon_spec2(0, 0, this.firstLayerLandW / 2, this.polygon_array2[this.shp2[i - 1]])
+                polygon_spec2(0, 0, this.circleLandW / 2, this.polygon_array2[this.shp2[i - 1]])
                 p5.pop()
             }
 
-            //CLOCK RING
-            p5.push()
-            p5.noFill()
-            p5.strokeWeight(17)
-            p5.stroke(250, 250, 250, 70)
-            p5.ellipse(
-                this.canvasWidth / 2,
-                this.canvasHeight / 2,
-                550 * this.clockCircleScaleSize,
-                550 * this.clockCircleScaleSize
-            )
-            p5.strokeWeight(1)
-
-            p5.stroke(0.5)
-            p5.ellipse(
-                this.canvasWidth / 2,
-                this.canvasHeight / 2,
-                570 * this.clockCircleScaleSize,
-                570 * this.clockCircleScaleSize
-            )
-            p5.ellipse(
-                this.canvasWidth / 2,
-                this.canvasHeight / 2,
-                560 * this.clockCircleScaleSize,
-                560 * this.clockCircleScaleSize
-            )
-            p5.ellipse(
-                this.canvasWidth / 2,
-                this.canvasHeight / 2,
-                550 * this.clockCircleScaleSize,
-                550 * this.clockCircleScaleSize
-            )
-            p5.ellipse(
-                this.canvasWidth / 2,
-                this.canvasHeight / 2,
-                540 * this.clockCircleScaleSize,
-                540 * this.clockCircleScaleSize
-            )
-            p5.ellipse(
-                this.canvasWidth / 2,
-                this.canvasHeight / 2,
-                530 * this.clockCircleScaleSize,
-                530 * this.clockCircleScaleSize
-            )
-            p5.pop()
-            //CLOCK RING DIVISION
-            p5.push()
-            //this wont be ngrain 2 but probably whichever gain number is larger
-            for (let j = 0; j < this.nGrain2; j++) {
-                var grainX2 = this.canvasWidth / 2 + p5.cos(angle2) * 266 * this.clockCircleScaleSize //320 effects how much bigger the second circle is should be half the width and height of the elipse
-                var grainY2 = this.canvasHeight / 2 + p5.sin(angle2) * 266 * this.clockCircleScaleSize
-                p5.strokeWeight(3)
-                p5.line(grainX2, grainY2, grainX2 + p5.cos(angle2) * 18, grainY2 + p5.sin(angle2) * 18)
-                angle2 += step2
-            }
-            //Layer ONE INDICATER OF HOW MANY TIMES TO REPEAT (DEPENDED ON LAYER 2 SHAPE)
-            for (let i = 0; i < this.nGrain2; i++) {
-                var grainX2 = this.canvasWidth / 2 + p5.cos(angle2) * 266 * this.clockCircleScaleSize //320 effects how much bigger the second circle is should be half the width and height of the elipse
-                var grainY2 = this.canvasHeight / 2 + p5.sin(angle2) * 266 * this.clockCircleScaleSize
-                //var grains = p5.createVector(grainX, grainY);
-                //vertices.p5.push(grains);
-                p5.strokeWeight(10)
-                p5.stroke("purple")
-                p5.point(grainX2, grainY2)
-                angle2 += step2
-            }
-            for (let k = 0; k < this.nGrain; k++) {
-                var grainX2 = this.canvasWidth / 2 + p5.cos(angle) * 266 * this.clockCircleScaleSize * 1.05 //320 effects how much bigger the second circle is should be half the width and height of the elipse
-                var grainY2 = this.canvasHeight / 2 + p5.sin(angle) * 266 * this.clockCircleScaleSize * 1.05
-                //var grains = p5.createVector(grainX, grainY);
-                //vertices.p5.push(grains);
-                p5.strokeWeight(10)
-                p5.stroke("blue")
-                p5.point(grainX2, grainY2)
-                angle += step
-            }
-            p5.pop()
+            
         }
+        this.nGrain_string = this.nGrain.toString()+'n';
     }
 
     public encoderInc() {
@@ -450,7 +565,7 @@ class MainSketchClass implements P5Sketch {
             //rotate the selected shape
             this.rot1[this.selectedShape - 1] = this.rot1[this.selectedShape - 1] + 1
         }
-        if (this.layerNumber === 2 && this.instrumentMode === 4 && this.selectedShape !== 0) {
+        if (this.layerNumber === 2 && this.instrumentMode === 4 && this.selectedShape2 !== 0) {
             //rotate the selected shape
             this.rot2[this.selectedShape2 - 1] = this.rot2[this.selectedShape2 - 1] + 1
         }
@@ -508,7 +623,7 @@ class MainSketchClass implements P5Sketch {
         if (this.layerNumber === 1 && this.instrumentMode === 4 && this.selectedShape !== 0) {
             this.rot1[this.selectedShape - 1] = this.rot1[this.selectedShape - 1] - 1
         }
-        if (this.layerNumber === 2 && this.instrumentMode === 4 && this.selectedShape !== 0) {
+        if (this.layerNumber === 2 && this.instrumentMode === 4 && this.selectedShape2 !== 0) {
             this.rot2[this.selectedShape2 - 1] = this.rot2[this.selectedShape2 - 1] - 1
         }
     }
@@ -544,31 +659,7 @@ class MainSketchClass implements P5Sketch {
         }
     }
 
-    public deleteShape() {
-        if (this.instrumentMode === 7) {
-            this.instrumentMode = 2
-        }
-        if (this.layerNumber === 1) {
-            this.shp1.splice(this.selectedShape - 1, 1)
-            this.rot1.splice(this.selectedShape - 1, 1)
-            this.maxNumShapes--
-            //start from skratch
-            if (this.maxNumShapes === 0) {
-                this.instrumentMode = 0
-            }
-            this.selectedShape = this.maxNumShapes
-        }
-        if (this.layerNumber === 2) {
-            this.shp2.splice(this.selectedShape2 - 1, 1)
-            this.rot1.splice(this.selectedShape2 - 1, 1)
-            this.maxNumShape2--
-            //start from skratch
-            if (this.maxNumShape2 === 0) {
-                this.instrumentMode = 0
-            }
-            this.selectedShape2 = this.maxNumShape2
-        }
-    }
+    
 
     //CREATE NEW LAYER FUNCTION
     public createNewLayer() {
