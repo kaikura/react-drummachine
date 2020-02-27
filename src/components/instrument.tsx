@@ -2,11 +2,12 @@ import * as React from "react"
 import { Time, Transport } from "tone"
 import { Snare, Kick, HiHat } from "../engines"
 import { areEqual } from "../utils/array-comparator"
-
+import { MainSketch } from "../sketches/sketch"
 import { Slider } from "./slider"
 import { Clap } from "../engines/clap"
 import { Cymbal } from "../engines/cymbal"
 import {Synth} from "tone"
+import {TimeForm} from "../components/control-panel/time-form/time-form.component"
  
 
 export interface InstrumentProps {
@@ -92,6 +93,16 @@ export class Instrument extends React.Component<InstrumentProps, any> {
         }
         this.loopId = Transport.schedule(loop, "0")
     }
+  
+
+    private onMouseReleased = () => {
+        
+        MainSketch.mouseReleased()
+    }
+    private onTrackClick = () => {
+        //console.log("yes")
+        MainSketch.selectShape()
+    }
 
     handleClick = () => {
         /*
@@ -101,7 +112,7 @@ export class Instrument extends React.Component<InstrumentProps, any> {
         this.isFirst=false;
         }
         */
-        
+        //MainSketch.selectShape();
         if (this.props.handleClick) this.props.handleClick(this.props.engine, this.state.steps.slice(0))
     }
 
@@ -120,7 +131,8 @@ export class Instrument extends React.Component<InstrumentProps, any> {
         }
         return (
             <div style={{ display: "inline-block", width: "1em", alignContent: "center", padding: "2em" }}>
-                <div style={InstrumentStyle} onClick={this.handleClick}>
+                <div style={InstrumentStyle} onClick={this.handleClick} onMouseDown={this.onTrackClick}
+                        onMouseUp={this.onMouseReleased}>
                     <p>{this.props.engine}</p>
                 </div>
             </div>

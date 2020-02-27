@@ -6,6 +6,7 @@ import { ControlPanel } from "../components/control-panel/control-panel.componen
 import { FooterPanel } from "../components/footer-panel/footer-panel.component"
 import { RightPanel } from "../components/right-panel/right-panel.component"
 import { TransportComponent } from "src/components/transport"
+import { PlayPause } from "src/components/play-pause"
 
 export class RootComponent extends React.Component<any, any> {
     public render() {
@@ -31,7 +32,7 @@ export class RootComponent extends React.Component<any, any> {
                     
                         <div className="trnsp" style={{ padding: "20px" }}>
                             {" "}
-                            <TransportComponent />
+                           <PlayPause/>
                         
                     </div>
                 </div>

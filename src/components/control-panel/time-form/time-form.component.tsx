@@ -1,12 +1,13 @@
 import React from "react"
 import { MainSketch } from "../../../sketches/sketch"
+import { Sequencer } from "src/sketches/sequencer"
 
-interface IState {
+export interface IState {
     selectedTimeSignature: string
     selectedNumberOfGrains: string
 }
 
-interface IProps {
+export interface IProps {
     layer: 1 | 2
 }
 
@@ -27,12 +28,21 @@ export class TimeForm extends React.Component<IProps, IState> {
         "3/2": [3, 6, 9, 12, 15, 18]
     }
 
+    public getTS = () => {
+    return this.state.selectedTimeSignature;
+    }
+    public getnG = () => {
+        return this.state.selectedNumberOfGrains;
+        }
+    
+
     public render() {
         const { layer } = this.props
         const { selectedTimeSignature, selectedNumberOfGrains } = this.state
         const disabledNumberOfGrains = selectedTimeSignature === undefined
 
         return (
+        
             <form onSubmit={this.onSubmit}>
                 <div className="form-group row">
                     <label htmlFor="polyrhytm" className="col-sm-2 col-form-label">Polyrhytm Layer{layer}</label>
@@ -106,3 +116,4 @@ export class TimeForm extends React.Component<IProps, IState> {
         event.preventDefault()
     }
 }
+

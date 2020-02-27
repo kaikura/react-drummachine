@@ -33,6 +33,7 @@ export class TransportComponent extends React.Component<any, any> {
             selected: null,
             bpm: 120
         }
+        Transport.TimeSignature = 3
         Transport.loop = true
         Transport.loopEnd = "1m"
     }

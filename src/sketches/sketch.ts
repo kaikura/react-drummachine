@@ -24,6 +24,10 @@ class MainSketchClass implements P5Sketch {
     private nGrain = 4
     private nGrain2 = 1
     private firstLayerLandW = 500
+    private trig1 : any[];
+    private trig2 : any[];
+    private compact_shp1 : any [];
+    private compact_shp2 : any [];
 
     private rot1 = new Array(this.maxNumShapes)
     private shp1 = new Array(this.maxNumShapes)
@@ -36,6 +40,10 @@ class MainSketchClass implements P5Sketch {
     private myTimeout
 
     constructor() {
+        this.trig1 = [];
+        this.trig2 = [];
+        this.compact_shp1 = [];
+        this.compact_shp2 = [];
         this.initializeArrays()
         this.initializePolygonArrays()
     }
@@ -657,6 +665,95 @@ class MainSketchClass implements P5Sketch {
         this.nGrain2 = value
 
         return this
+    }
+    public triggerer() {
+        //clears all the previous trigs
+        
+        this.trig1 = [];
+        
+        for(let j = 1; j <= this.shp1.length; j++){
+          this.trig1[j-1] = [];
+          
+          for(let l = 0; l < this.nGrain; l++){
+      
+            this.trig1[j-1][l] = false;
+          }
+        }
+      
+       for(let i = 0; i < this.shp1.length; i++){
+         for(let k = 0; k < this.polygon_array[this.shp1[i]].length; k++){
+           this.trig1[i][this.polygon_array[this.shp1[i]][k]] = true;
+         }
+        }
+    
+         this.trig2 = [];
+         for(let j = 1; j <= this.shp2.length; j++){
+           this.trig2[j-1] = [];
+           
+           for(let l = 0; l < this.nGrain2; l++){
+       
+             this.trig2[j-1][l] = false;
+           }
+         }
+       
+        for(let i = 0; i < this.shp2.length; i++){
+          for(let k = 0; k < this.polygon_array2[this.shp2[i]].length; k++){
+            this.trig2[i][this.polygon_array2[this.shp2[i]][k]] = true;
+          }
+       }
+    
+    
+    //reading and shifting the trig1 array accorging to rot1
+    for(let k = 0; k < this.rot1.length; k++){
+      if(this.rot1[k] !== 0){
+        if(this.rot1[k] > 0){
+      for(let i = 0; i < this.rot1[k] ; i++){
+        this.compact_shp1 = this.trig1[k].pop();
+        this.trig1[k].unshift(this.compact_shp1);
+      }
+    } else {
+        for(let i = 0; i < Math.abs(this.rot1[k]); i++){
+          this.compact_shp1 = this.trig1[k].shift();
+          this.trig1[k].push(this.compact_shp1);
+          }
+        }
+      }
+      
+      }
+    
+      for(let k = 0; k < this.rot2.length; k++){
+        if(this.rot2[k] !== 0){
+          if(this.rot2[k] > 0){
+        for(let i = 0; i < this.rot2[k] ; i++){
+          this.compact_shp2 = this.trig2[k].pop();
+          this.trig2[k].unshift(this.compact_shp2);
+        }
+      } else {
+          for(let i = 0; i < Math.abs(this.rot2[k]); i++){
+            this.compact_shp2 = this.trig2[k].shift();
+            this.trig2[k].push(this.compact_shp2);
+            }
+          }
+        }
+        
+        }
+      
+    //BACKUPROTATION
+    /*
+      if(rot1[0] != 0){
+        if(rot1[0] > 0){
+      for(i = 0; i < rot1[0] ; i++){
+        compact_shp1 = trig1.pop();
+        trig1.unshift(compact_shp1);
+      }
+    } else {
+        for(i = 0; i < Math.abs(rot1[0]); i++){
+          compact_shp1 = trig1.shift();
+          trig1.push(compact_shp1);
+          }
+        }
+      }
+      */
     }
 }
 

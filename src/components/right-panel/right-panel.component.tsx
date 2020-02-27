@@ -48,7 +48,7 @@ export class RightPanel extends React.Component<any, any> {
             <div style={{ marginTop: "12px" }}>
                 <h5>Groove Shapes Control</h5>
                 <div className="alert alert-primary">
-                    Use the following buttons to control the behavior of the shape
+                    Control the behavior of the shape
                 </div>
                 <Container>
                     <Button
