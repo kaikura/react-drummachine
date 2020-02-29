@@ -9,7 +9,7 @@ export interface InstrumentHackProps {
 
 export class InstrumentHack extends React.Component<InstrumentHackProps> {
     render() {
-        const childrenWithProps = React.Children.map(this.props.children, (child: any) => {
+        const childrenWithProps = React.Children.map(this.props.children, (child:any) => {
             if (child && typeof child === "object") {
                 if (child.key === this.props.selectedInstrument) {
                     return React.cloneElement(child, { steps: this.props.steps, selected: true })

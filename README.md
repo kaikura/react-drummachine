@@ -54,3 +54,18 @@ I would recommend doing the same for `noUnusedLocals` as I think it is a bit unn
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+## For the encoder
+
+### `npm install express --save` 
+
+### `npm install  socket.io socket.io-client --save` 
+
+### `npm install  johnny-five --save` 
+
+and use 
+
+### 'node server.js' 
+and 
+### 'npm start' 
+in order to run the server first and then our application

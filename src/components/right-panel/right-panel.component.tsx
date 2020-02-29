@@ -1,37 +1,104 @@
 import React from "react"
-import { Transport } from "tone"
-import { BPM } from "../bpm-component"
+import { Button } from "../button/button.component"
+import { MainSketch } from "../../sketches/sketch"
+
+
 import { Container } from "./right-panel.style"
-import { PlayPause } from "../play-pause"
+
 
 export class RightPanel extends React.Component<any, any> {
-    constructor(props) {
-        super(props)
-        this.state = {
-            bpm: 120
-        }
-    }
-    pause = () => {
-        Transport.stop()
+    private onLayerClick = () => {
+       
+        MainSketch.createNewLayer()
     }
 
-    play = () => {
-        Transport.start()
+    private onTrackClick = () => {
+        //console.log("yes")
+        MainSketch.selectShape()
     }
-    handleBPMChange = (bpm: number) => {
-        Transport.bpm.value = bpm
-        this.setState({ bpm })
+
+    private onShapeClick = () => {
+        MainSketch.changeShape()
+    }
+
+    private onRotateClick = () => {
+        MainSketch.rotateShape()
+    }
+
+    private onShapeDeleteClick = () => {
+        MainSketch.deleteShape()
+    }
+    private onPlayClick = () => {
+        MainSketch.updateGrains()
+        MainSketch.generateShapes()
+    }
+
+    private encoderClick = () => {
+        MainSketch.encoderButt()
+    }
+
+    private plusOneClick = () => {
+        MainSketch.encoderInc()
+    }
+
+    private minusOneClick = () => {
+        MainSketch.encoderDec()
+    }
+
+    private onMouseReleased = () => {
+        MainSketch.mouseReleased()
     }
     public render() {
         return (
             <div style={{ marginTop: "12px" }}>
-                <h5>Audio panel</h5>
+                <h5>Groove Shapes Control</h5>
+                
                 <Container>
-                    <div style={{ display: "block" }}>
-                        <BPM handleChange={this.handleBPMChange} value={this.state.bpm} />
-                    </div>
+                <Button
+                        text="Play"
+                        icon="play"
+                        onMouseDown={this.onPlayClick}
+                        onMouseUp={this.onMouseReleased}
+                        style={{ marginBottom: "12px" }}
+                    />
+                    <Button
+                        text="Layer"
+                        icon="plus"
+                        onMouseDown={this.onLayerClick}
+                        onMouseUp={this.onMouseReleased}
+                        style={{ marginBottom: "12px" }}
+                    />
+                    <Button
+                        text="Track"
+                        icon="vector-square"
+                        onMouseDown={this.onTrackClick}
+                        onMouseUp={this.onMouseReleased}
+                        style={{ marginBottom: "12px" }}
+                    />
+                    <Button
+                        text="Shape"
+                        icon="shapes"
+                        onMouseDown={this.onShapeClick}
+                        onMouseUp={this.onMouseReleased}
+                        style={{ marginBottom: "12px" }}
+                    />
+                    <Button
+                        text="Rotate"
+                        icon="sync"
+                        onClick={this.onRotateClick}
+                        style={{ marginBottom: "12px" }}
+                    />
+                    <Button
+                        text="Delete shape"
+                        icon="times"
+                        type="danger"
+                        onClick={this.onShapeDeleteClick}
+                        style={{ marginBottom: "12px" }}
+                    />
+                    <Button text="Encoder" onClick={this.encoderClick} style={{ marginBottom: "12px" }} />
+                    <Button text="-1" onClick={this.minusOneClick} style={{ marginBottom: "12px" }} />
+                    <Button text="+1" onClick={this.plusOneClick} style={{ marginBottom: "12px" }} />
                 </Container>
-                <PlayPause play={this.play} pause={this.pause} />
             </div>
         )
     }

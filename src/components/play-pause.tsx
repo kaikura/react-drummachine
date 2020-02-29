@@ -14,10 +14,7 @@ export class PlayPause extends React.Component<any, any> {
     }
 
     public handleClick = () => {
-        if (this.isFirst) {
-            Tone.context.resume()
-            this.isFirst = false
-        }
+      
 
         if (this.state.playing) {
             this.props.pause()
