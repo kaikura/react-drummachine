@@ -14,8 +14,6 @@ export class PlayPause extends React.Component<any, any> {
     }
 
     public handleClick = () => {
-      
-
         if (this.state.playing) {
             this.props.pause()
         } else {

@@ -27,12 +27,11 @@ export class TimeForm extends React.Component<IProps, IState> {
     }
 
     public getTS = () => {
-    return this.state.selectedTimeSignature;
+        return this.state.selectedTimeSignature
     }
     public getnG = () => {
-        return this.state.selectedNumberOfGrains;
-        }
-    
+        return this.state.selectedNumberOfGrains
+    }
 
     public render() {
         const { layer } = this.props
@@ -40,13 +39,19 @@ export class TimeForm extends React.Component<IProps, IState> {
         const disabledNumberOfGrains = selectedTimeSignature === undefined
 
         return (
-        
             <form onSubmit={this.onSubmit}>
                 <div className="form-group row">
-                    <label htmlFor="polyrhytm" className="col-sm-2 col-form-label">Polyrhytm Layer{layer}</label>
+                    <label htmlFor="polyrhytm" className="col-sm-2 col-form-label">
+                        Polyrhytm Layer{layer}
+                    </label>
                     <div className="col-sm-10">
-                        <input type="text" readOnly className="form-control-plaintext" id="polyrhytm"
-                               value="1/1"/>
+                        <input
+                            type="text"
+                            readOnly
+                            className="form-control-plaintext"
+                            id="polyrhytm"
+                            value="1/1"
+                        />
                     </div>
                 </div>
                 <div className="form-group">
@@ -104,13 +109,13 @@ export class TimeForm extends React.Component<IProps, IState> {
             switch (layer) {
                 case 1:
                     MainSketch.setNGrain(Number(this.state.selectedNumberOfGrains))
-                    MainSketch.generateShapes();
-                    MainSketch.updateArrays();
+                    MainSketch.generateShapes()
+                    MainSketch.updateArrays()
                     break
                 case 2:
                     MainSketch.setNGrain2(Number(this.state.selectedNumberOfGrains))
-                    MainSketch.generateShapes();
-                    MainSketch.updateArrays();
+                    MainSketch.generateShapes()
+                    MainSketch.updateArrays()
                     break
             }
         }
@@ -118,4 +123,3 @@ export class TimeForm extends React.Component<IProps, IState> {
         event.preventDefault()
     }
 }
-

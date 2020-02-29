@@ -6,23 +6,23 @@ import { ControlPanel } from "../components/control-panel/control-panel.componen
 import { FooterPanel } from "../components/footer-panel/footer-panel.component"
 import { RightPanel } from "../components/right-panel/right-panel.component"
 import { TransportComponent } from "src/components/transport"
-import { subscribeToTimer } from '../api';
+import { subscribeToTimer } from "../api"
 
 export class RootComponent extends React.Component<any, any> {
     constructor(props) {
-        super(props);
-        subscribeToTimer((err, timestamp) => this.setState({ 
-          timestamp 
-        }));
-        
+        super(props)
+        subscribeToTimer((err, timestamp) =>
+            this.setState({
+                timestamp
+            })
+        )
     }
-      state = {
-        timestamp: 'no timestamp yet'
-      };
+    state = {
+        timestamp: "no timestamp yet"
+    }
     public render() {
         return (
             <div className="App">
-                
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-2 control-column">
@@ -39,12 +39,10 @@ export class RootComponent extends React.Component<any, any> {
                             <RightPanel />
                         </div>
                     </div>
-                    
-                        <div className="trnsp" style={{ padding: "20px" }}>
-                            {" "}
-                            This is the encoder value: {this.state.timestamp}
-                            
-                        
+
+                    <div className="trnsp" style={{ padding: "20px" }}>
+                        {" "}
+                        This is the encoder value: {this.state.timestamp}
                     </div>
                 </div>
             </div>

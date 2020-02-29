@@ -6,9 +6,8 @@ import { MainSketch } from "../sketches/sketch"
 import { Slider } from "./slider"
 import { Clap } from "../engines/clap"
 import { Cymbal } from "../engines/cymbal"
-import {Synth} from "tone"
-import {TimeForm} from "../components/control-panel/time-form/time-form.component"
- 
+import { Synth } from "tone"
+import { TimeForm } from "../components/control-panel/time-form/time-form.component"
 
 export interface InstrumentProps {
     engine: string
@@ -29,19 +28,17 @@ export class Instrument extends React.Component<InstrumentProps, any> {
         this.ctx = new AudioContext()
         switch (props.engine) {
             case "Kick":
-                this.sound = new Kick();
+                this.sound = new Kick()
                 break
             case "Snare":
-                this.sound = new Snare();
+                this.sound = new Snare()
                 break
             case "HiHat":
-                this.sound = new HiHat();
+                this.sound = new HiHat()
                 break
             case "Clap":
-                this.sound = new Clap();
+                this.sound = new Clap()
                 break
-
-            
         }
 
         this.state = {
@@ -62,8 +59,7 @@ export class Instrument extends React.Component<InstrumentProps, any> {
                 false,
                 false,
                 false
-            ],
-           
+            ]
         }
 
         this.loopId = 0
@@ -93,10 +89,8 @@ export class Instrument extends React.Component<InstrumentProps, any> {
         }
         this.loopId = Transport.schedule(loop, "0")
     }
-  
 
     private onMouseReleased = () => {
-        
         MainSketch.mouseReleased()
     }
     private onTrackClick = () => {
@@ -116,8 +110,6 @@ export class Instrument extends React.Component<InstrumentProps, any> {
         if (this.props.handleClick) this.props.handleClick(this.props.engine, this.state.steps.slice(0))
     }
 
-   
-
     render() {
         const InstrumentStyle = {
             height: "3em",
@@ -131,8 +123,12 @@ export class Instrument extends React.Component<InstrumentProps, any> {
         }
         return (
             <div style={{ display: "inline-block", width: "1em", alignContent: "center", padding: "2em" }}>
-                <div style={InstrumentStyle} onClick={this.handleClick} onMouseDown={this.onTrackClick}
-                        onMouseUp={this.onMouseReleased}>
+                <div
+                    style={InstrumentStyle}
+                    onClick={this.handleClick}
+                    onMouseDown={this.onTrackClick}
+                    onMouseUp={this.onMouseReleased}
+                >
                     <p>{this.props.engine}</p>
                 </div>
             </div>
