@@ -41,12 +41,6 @@ export class FooterPanel extends React.Component<any, any> {
         MainSketch.mouseReleased()
     }
     public render() {
-        return (
-            <div style={{ marginTop: "12px" }}>
-                
-            </div>
-        )
+        return <div style={{ marginTop: "12px" }}></div>
     }
-
-    
 }

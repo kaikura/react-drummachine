@@ -1,17 +1,17 @@
 // UPDATE: there is a problem in chrome with starting audio context
- //  before a user gesture. This fixes it.
- /*
+//  before a user gesture. This fixes it.
+/*
  document.documentElement.addEventListener('mousedown', () => {
     if (Tone.context.state !== 'running') Tone.context.resume();
   });
   */
- import React from "react"
-import {MainSketch} from './sketch'
-import {Transport} from 'tone'
-import { TimeForm } from "src/components/control-panel/time-form/time-form.component";
-import { render } from "@testing-library/react";
-import {TransportComponent} from '../components/transport'
-import { BPM } from "src/components/bpm-component";
+import React from "react"
+import { MainSketch } from "./sketch"
+import { Transport } from "tone"
+import { TimeForm } from "src/components/control-panel/time-form/time-form.component"
+import { render } from "@testing-library/react"
+import { TransportComponent } from "../components/transport"
+import { BPM } from "src/components/bpm-component"
 
 
   export class Sequencer extends React.Component<any,any> {
@@ -53,36 +53,22 @@ Transport.loopEnd = "1m"
     console.log(this.time);
   Transport.TimeSignature = this.time.state.selectedTimeSignature;
 
+    
   }
+   
 
-  handleBPMChange = (bpm: number) => {
-    Transport.bpm.value = bpm
-    this.setState({ bpm })
+    private handleBPMChange = (bpm: number) => {
+        Transport.bpm.value = bpm
+        this.setState({ bpm })
+    }
+
+    render() {
+        return (
+            <div>
+                <BPM handleChange={this.handleBPMChange} value={this.state.bpm} />
+            </div>
+        )
+    }
 }
 
-render(){
-return(
-  
-  <div>
- <BPM handleChange={this.handleBPMChange} value={this.state.bpm} />
-
-  </div>
-);
-}
-  
- 
-}
-  
-  //drumkit
-  
-  
-  
-  
-  
- 
-  
- 
- 
- 
-  
-  
+//drumkit

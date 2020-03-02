@@ -2,14 +2,11 @@ import React from "react"
 import { Button } from "../button/button.component"
 import { MainSketch } from "../../sketches/sketch"
 
-
 import { Container } from "./right-panel.style"
 import { Sequencer } from "src/sketches/sequencer"
 
-
 export class RightPanel extends React.Component<any, any> {
     private onLayerClick = () => {
-       
         MainSketch.createNewLayer()
     }
 
@@ -54,12 +51,13 @@ export class RightPanel extends React.Component<any, any> {
         return (
             <div style={{ marginTop: "12px" }}>
                 <h5>Groove Shapes Control</h5>
-                
+
                 <Container>
                 
                  <div><Sequencer /></div>   
                     
                 <Button
+                    
                         text="Play"
                         icon="play"
                         onClick={this.onPlayClick}
