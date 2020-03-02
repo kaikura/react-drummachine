@@ -82,38 +82,38 @@ class MainSketchClass implements P5Sketch {
     private sounds2 = []
 
     constructor() {
-        var kick = new Audio("./samples/kick.wav")
-        var snare1 = new Audio("./samples/snare1.wav")
-        var snare2 = new Audio("./samples/snare2.wav")
-        var clap = new Audio("./samples/clap.wav")
-        var blastBlock = new Audio("./samples/blastBlock.wav")
-        var closedHH = new Audio("./samples/closedHH.wav")
-        var cowbell = new Audio("./samples/cowbell.wav")
-        var egg = new Audio("./samples/egg.wav")
-        var openHH = new Audio("./samples/openHH.wav")
-        var stick = new Audio("./samples/stick.wav")
-        var tomFloor = new Audio("./samples/tomFloor.wav")
-        var tomHigh = new Audio("./samples/tomHigh.wav")
-        var tomMid = new Audio("./samples/tomMid.wav")
-        this.drumKit[0] = kick
-        this.drumKit[1] = snare1
-        this.drumKit[2] = snare2
-        this.drumKit[3] = clap
-        this.drumKit[4] = blastBlock
-        this.drumKit[5] = closedHH
-        this.drumKit[6] = cowbell
-        this.drumKit[7] = egg
-        this.drumKit[7] = openHH
-        this.drumKit[8] = stick
-        this.drumKit[9] = tomFloor
-        this.drumKit[10] = tomHigh
-        this.drumKit[11] = tomMid
-        this.drumKit[12] = tomFloor
-
-        this.trig1 = []
-        this.trig2 = []
-        this.compact_shp1 = []
-        this.compact_shp2 = []
+  var kick = new Audio("samples/kick.wav");
+  var snare1 = new Audio("samples/snare1.wav");
+  var snare2 = new Audio("samples/snare2.wav");
+  var clap = new Audio("samples/clap.wav");
+  var blastBlock = new Audio("samples/blastBlock.wav");
+  var closedHH = new Audio("samples/closedHH.wav");
+  var cowbell = new Audio("samples");
+  var egg = new Audio("samples/egg.wav");
+  var openHH = new Audio("samples/openHH.wav");
+  var stick = new Audio("samples/stick.wav");
+  var tomFloor = new Audio("samples/tomFloor.wav");
+  var tomHigh = new Audio("samples/tomHigh.wav");
+  var tomMid = new Audio("samples/tomMid.wav");
+  this.drumKit[0] = kick;
+  this.drumKit[1] = snare1;
+  this.drumKit[2] = snare2;
+  this.drumKit[3] = clap;
+  this.drumKit[4] = blastBlock;
+  this.drumKit[5] = closedHH;
+  this.drumKit[6] = cowbell;
+  this.drumKit[7] = egg;
+  this.drumKit[7] = openHH;
+  this.drumKit[8] = stick;
+  this.drumKit[9] = tomFloor;
+  this.drumKit[10] = tomHigh;
+  this.drumKit[11] = tomMid;
+  this.drumKit[12] = tomFloor;
+  
+        this.trig1 = [];
+        this.trig2 = [];
+        this.compact_shp1 = [];
+        this.compact_shp2 = [];
         this.initializeArrays()
         this.initializePolygonArrays()
         this.generateShapes()

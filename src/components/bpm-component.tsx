@@ -1,6 +1,7 @@
 import * as React from "react"
 import "./bpm.style.css"
 
+
 export interface BPMProps {
     handleChange: (value: number) => void
     value: number
@@ -15,6 +16,12 @@ export class BPM extends React.Component<BPMProps> {
         }
     }
     render() {
-        return <input onChange={this.handleChange} className="bpm" />
+        return (
+            <div style={{display: "inline-block" , flex: 1, flexDirection: "row" }}>
+                <input onChange={this.handleChange} className="bpm" />
+            <div>BPM</div>
+            </div>
+        
+        )
     }
 }
