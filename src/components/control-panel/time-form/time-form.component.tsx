@@ -42,16 +42,11 @@ export class TimeForm extends React.Component<IProps, IState> {
             <form onSubmit={this.onSubmit}>
                 <div className="form-group row">
                     <label htmlFor="polyrhytm" className="col-sm-2 col-form-label">
-                        Polyrhytm Layer{layer}
+                        <ul></ul>
+                        <h5>Layer{layer}</h5>
                     </label>
                     <div className="col-sm-10">
-                        <input
-                            type="text"
-                            readOnly
-                            className="form-control-plaintext"
-                            id="polyrhytm"
-                            value="1/1"
-                        />
+                        <input type="text" readOnly className="form-control-plaintext" id="polyrhytm" />
                     </div>
                 </div>
                 <div className="form-group">
@@ -83,7 +78,7 @@ export class TimeForm extends React.Component<IProps, IState> {
                             ))}
                     </select>
                 </div>
-                <button type="submit" className="btn btn-primary btn-block">
+                <button type="submit" className="btn btn-info btn-block">
                     Confirm
                 </button>
             </form>

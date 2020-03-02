@@ -47,7 +47,7 @@ export class RootComponent extends React.Component<any, State> {
                             <div
                                 id="centralSquare"
                                 className="col-8"
-                                style={{ position: "relative", backgroundColor: "#51757a" }}
+                                style={{ position: "relative", backgroundColor: "#17a2b8" }}
                             >
                                 <Drawer />
                             </div>

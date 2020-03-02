@@ -1,5 +1,6 @@
 import * as P5 from "p5"
 import { Transport } from "tone"
+import { AppMode } from "../app/root.component"
 
 export interface P5Sketch {
     setup(p5: P5, canvasParentRef: "centralSquare"): void
@@ -29,6 +30,7 @@ class MainSketchClass implements P5Sketch {
     private trig2: any[]
     private compact_shp1 = new Array()
     private compact_shp2 = new Array()
+    private appMode: AppMode = 0
 
     private rot1 = new Array(this.maxNumShapes)
     private shp1 = new Array(this.maxNumShapes)
@@ -254,7 +256,9 @@ class MainSketchClass implements P5Sketch {
     }
 
     public draw(p5: P5): void {
+        p5.background(23, 162, 184)
         p5.fill(250, 250, 250, 70)
+        p5.strokeWeight(2)
         p5.ellipse(this.canvasWidth / 2, this.canvasHeight / 2, this.circleLandW, this.circleLandW)
         //if (layerNumber === 2) {
         //  p5.stroke(195, 195, 195);
