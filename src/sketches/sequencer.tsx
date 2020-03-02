@@ -13,27 +13,31 @@ import { render } from "@testing-library/react";
 import {TransportComponent} from '../components/transport'
 import { BPM } from "src/components/bpm-component";
 
+
   export class Sequencer extends React.Component<any,any> {
-    private drumKit!: any[];
-    private sounds1 = [];
-    private sounds2 = [];
+    private drumKit: any[] = [];
+    private sounds1: any = [];
+    private sounds2:any = [];
+    private time : TimeForm = new TimeForm(this.props);
     
   
   constructor(props:any){
   super(props);
-  this.drumKit[0] = new Audio("./samples/kick.wav")
-  this.drumKit[1] = new Audio("./samples/snare1.wav");
-  this.drumKit[2] = new Audio("./samples/snare2.wav");
-  this.drumKit[3] = new Audio("./samples/clap.wav");
-  this.drumKit[4] = new Audio("./samples/blastBlock.wav");
-  this.drumKit[5] = new Audio("./samples/closedHH.wav");
-  this.drumKit[6] = new Audio("./samples/cowbell.wav");
-  this.drumKit[7] = new Audio("./samples/egg.wav");
-  this.drumKit[7] = new Audio("./samples/openHH.wav");
-  this.drumKit[8] = new Audio("./samples/stick.wav");
-  this.drumKit[9] = new Audio("./samples/tomFloor.wav");
-  this.drumKit[10] = new Audio("./samples/tomHigh.wav");
-  this.drumKit[11] = new Audio("./samples/tomMid.wav");
+  
+  this.drumKit[0] = new Audio("src/samples/kick.wav")
+  this.drumKit[1] = new Audio("samples/snare1.wav");
+  this.drumKit[2] = new Audio("samples/snare2.wav");
+  this.drumKit[3] = new Audio("samples/clap.wav");
+  this.drumKit[4] = new Audio("samples/blastBlock.wav");
+  this.drumKit[5] = new Audio("samples/closedHH.wav");
+  this.drumKit[6] = new Audio("samples/cowbell.wav");
+  this.drumKit[7] = new Audio("samples/egg.wav");
+  this.drumKit[7] = new Audio("samples/openHH.wav");
+  this.drumKit[8] = new Audio("samples/stick.wav");
+  this.drumKit[9] = new Audio("samples/tomFloor.wav");
+  this.drumKit[10] = new Audio("samples/tomHigh.wav");
+  this.drumKit[11] = new Audio("samples/tomMid.wav");
+  
   this.state = {
  
     selected: null,
@@ -46,7 +50,8 @@ Transport.loopEnd = "1m"
  
 
   private handleTSChange(){
-  
+    console.log(this.time);
+  Transport.TimeSignature = this.time.state.selectedTimeSignature;
 
   }
 

@@ -22,7 +22,7 @@ export class RootComponent extends React.Component<any, any> {
     public render() {
         return (
             <div className="App">
-                
+           
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-2 control-column">

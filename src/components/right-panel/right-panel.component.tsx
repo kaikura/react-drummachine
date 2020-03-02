@@ -4,6 +4,7 @@ import { MainSketch } from "../../sketches/sketch"
 
 
 import { Container } from "./right-panel.style"
+import { Sequencer } from "src/sketches/sequencer"
 
 
 export class RightPanel extends React.Component<any, any> {
@@ -29,8 +30,9 @@ export class RightPanel extends React.Component<any, any> {
         MainSketch.deleteShape()
     }
     private onPlayClick = () => {
+       
         MainSketch.updateGrains()
-        MainSketch.generateShapes()
+        
     }
 
     private encoderClick = () => {
@@ -54,11 +56,14 @@ export class RightPanel extends React.Component<any, any> {
                 <h5>Groove Shapes Control</h5>
                 
                 <Container>
+                
+                 <div><Sequencer /></div>   
+                    
                 <Button
                         text="Play"
                         icon="play"
-                        onMouseDown={this.onPlayClick}
-                        onMouseUp={this.onMouseReleased}
+                        onClick={this.onPlayClick}
+                        
                         style={{ marginBottom: "12px" }}
                     />
                     <Button

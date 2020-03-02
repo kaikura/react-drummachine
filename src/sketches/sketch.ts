@@ -91,19 +91,19 @@ class MainSketchClass implements P5Sketch {
 
 
     constructor() {
-  var kick = new Audio("./samples/kick.wav");
-  var snare1 = new Audio("./samples/snare1.wav");
-  var snare2 = new Audio("./samples/snare2.wav");
-  var clap = new Audio("./samples/clap.wav");
-  var blastBlock = new Audio("./samples/blastBlock.wav");
-  var closedHH = new Audio("./samples/closedHH.wav");
-  var cowbell = new Audio("./samples/cowbell.wav");
-  var egg = new Audio("./samples/egg.wav");
-  var openHH = new Audio("./samples/openHH.wav");
-  var stick = new Audio("./samples/stick.wav");
-  var tomFloor = new Audio("./samples/tomFloor.wav");
-  var tomHigh = new Audio("./samples/tomHigh.wav");
-  var tomMid = new Audio("./samples/tomMid.wav");
+  var kick = new Audio("samples/kick.wav");
+  var snare1 = new Audio("samples/snare1.wav");
+  var snare2 = new Audio("samples/snare2.wav");
+  var clap = new Audio("samples/clap.wav");
+  var blastBlock = new Audio("samples/blastBlock.wav");
+  var closedHH = new Audio("samples/closedHH.wav");
+  var cowbell = new Audio("samples");
+  var egg = new Audio("samples/egg.wav");
+  var openHH = new Audio("samples/openHH.wav");
+  var stick = new Audio("samples/stick.wav");
+  var tomFloor = new Audio("samples/tomFloor.wav");
+  var tomHigh = new Audio("samples/tomHigh.wav");
+  var tomMid = new Audio("samples/tomMid.wav");
   this.drumKit[0] = kick;
   this.drumKit[1] = snare1;
   this.drumKit[2] = snare2;
