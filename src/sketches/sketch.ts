@@ -1,5 +1,6 @@
 import * as P5 from "p5"
 import { Transport } from "tone"
+import { AppMode } from "../app/root.component"
 
 export interface P5Sketch {
     setup(p5: P5, canvasParentRef: "centralSquare"): void
@@ -24,11 +25,13 @@ class MainSketchClass implements P5Sketch {
     private currentGrain2 = 0
     private nGrain = 4
     private nGrain2 = 4
-    private firstLayerLandW = 500
+    //private firstLayerLandW = 500
     private trig1: any[]
     private trig2: any[]
-    private compact_shp1 = new Array()
-    private compact_shp2 = new Array()
+    private compact_shp1 : any[]
+    private compact_shp2 : any[]
+    private appMode: AppMode = 0
+   // private context = new AudioContext
 
     private rot1 = new Array(this.maxNumShapes)
     public shp1 = new Array(this.maxNumShapes)
@@ -115,6 +118,17 @@ class MainSketchClass implements P5Sketch {
             this.shp1[i] = i
         }
 
+        this.trig1.length = 0
+        for (let i = 0; i<this.nGrain; i++){
+            this.trig1[i] = false
+        }
+
+        this.sounds1.length = 0
+        for (let i = 0; i < this.shp1.length; i++){
+        this.sounds1[i] = i;
+        }
+
+
         //LAYER 2 ARRAYS
         for (let i = 0; i < this.rot2.length; i++) {
             this.rot2[i] = 0
@@ -122,6 +136,16 @@ class MainSketchClass implements P5Sketch {
 
         for (let i = 0; i < this.shp2.length; i++) {
             this.shp2[i] = i
+        }
+        
+        this.trig2.length = 0;
+        for (let i = 0; i < this.nGrain; i++){
+          this.trig2[i] = false;
+        }
+      
+        this.sounds2.length = 0;
+        for (let i = 0; i < this.shp2.length; i++){
+          this.sounds2[i] = 0;
         }
     }
     public generateShapes() {
@@ -172,11 +196,11 @@ class MainSketchClass implements P5Sketch {
     //UPDATE ARRAYS
     public updateArrays() {
         // this is the rotation array, containing all the rotation indexes for just the FIRST layer. Its length is equal to the maximum number of shapes created in the related layer.
-        if (this.layerNumber === 1 && this.instrumentMode == 2) {
+        if (this.layerNumber === 1 && this.instrumentMode === 2) {
             this.rot1.push(0)
         }
 
-        if (this.layerNumber === 2 && this.instrumentMode == 2) {
+        if (this.layerNumber === 2 && this.instrumentMode === 2) {
             this.rot2.push(0)
         }
 
@@ -187,10 +211,19 @@ class MainSketchClass implements P5Sketch {
             this.selectedShape = this.maxNumShapes
         }
 
+        if(this.instrumentMode === 2 && this.layerNumber === 1) {
+            this.sounds1.push(this.maxNumShapes-1);
+          }        
+
         if (this.instrumentMode === 2 && this.layerNumber === 2) {
             this.shp2.push(this.maxNumShape2 - 1)
             this.selectedShape2 = this.maxNumShape2
         }
+
+        if(this.instrumentMode === 2 && this.layerNumber === 2) {
+            this.sounds2.push(this.maxNumShape2-1);
+          }
+        
         this.numSides1 = new Array()
 
         for (let i = 0; i <= this.shp1.length - 1; i++) {
@@ -242,7 +275,9 @@ class MainSketchClass implements P5Sketch {
     }
 
     public draw(p5: P5): void {
+        p5.background(23, 162, 184)
         p5.fill(250, 250, 250, 70)
+        p5.strokeWeight(2)
         p5.ellipse(this.canvasWidth / 2, this.canvasHeight / 2, this.circleLandW, this.circleLandW)
         //if (layerNumber === 2) {
         //  p5.stroke(195, 195, 195);
@@ -412,7 +447,7 @@ class MainSketchClass implements P5Sketch {
                 this.canvasWidth / 2 + p5.cos(angle + step * this.currentGrain) * (this.circleLandW / 2)
             let selGrainY =
                 this.canvasHeight / 2 + p5.sin(angle + step * this.currentGrain) * (this.circleLandW / 2)
-            let grains = p5.createVector(grainX, grainY)
+            //let grains = p5.createVector(grainX, grainY)
             p5.strokeWeight(10)
             p5.stroke("red")
             p5.point(selGrainX, selGrainY)
@@ -538,16 +573,16 @@ class MainSketchClass implements P5Sketch {
             step = p5.TWO_PI / this.TS_Num
 
             for (let j = 0; j < this.TS_Num_2; j++) {
-                grainX2 = this.canvasWidth / 2 + p5.cos(angle2) * 266 * this.clockCircleScaleSize //320 effects how much bigger the second circle is should be half the width and height of the elipse
-                grainY2 = this.canvasHeight / 2 + p5.sin(angle2) * 266 * this.clockCircleScaleSize
+                var grainX2 = this.canvasWidth / 2 + p5.cos(angle2) * 266 * this.clockCircleScaleSize //320 effects how much bigger the second circle is should be half the width and height of the elipse
+                var grainY2 = this.canvasHeight / 2 + p5.sin(angle2) * 266 * this.clockCircleScaleSize
                 p5.strokeWeight(3)
                 p5.stroke("pink")
                 p5.line(grainX2, grainY2, grainX2 + p5.cos(angle2) * 9, grainY2 + p5.sin(angle2) * 9)
                 angle2 += step2
             }
             for (let j = 0; j < this.TS_Num; j++) {
-                var grainX2 = this.canvasWidth / 2 + p5.cos(angle) * 275 * this.clockCircleScaleSize //320 effects how much bigger the second circle is should be half the width and height of the elipse
-                var grainY2 = this.canvasHeight / 2 + p5.sin(angle) * 275 * this.clockCircleScaleSize
+                grainX2 = this.canvasWidth / 2 + p5.cos(angle) * 275 * this.clockCircleScaleSize //320 effects how much bigger the second circle is should be half the width and height of the elipse
+                grainY2 = this.canvasHeight / 2 + p5.sin(angle) * 275 * this.clockCircleScaleSize
                 p5.strokeWeight(3)
                 p5.stroke("darkslategrey")
                 p5.line(grainX2, grainY2, grainX2 + p5.cos(angle) * 9, grainY2 + p5.sin(angle) * 9)
@@ -619,6 +654,7 @@ class MainSketchClass implements P5Sketch {
             }
         }
         this.nGrain_string = this.nGrain.toString() + "n"
+        
     }
 
     public encoderInc() {
@@ -940,7 +976,7 @@ class MainSketchClass implements P5Sketch {
 
         //reading and shifting the trig1 array accorging to rot1
         for (let k = 0; k < this.rot1.length; k++) {
-            if (this.rot1[k] != 0) {
+            if (this.rot1[k] !== 0) {
                 if (this.rot1[k] > 0) {
                     for (let i = 0; i < this.rot1[k]; i++) {
                         this.compact_shp1 = this.trig1[k].pop()
@@ -956,7 +992,7 @@ class MainSketchClass implements P5Sketch {
         }
 
         for (let k = 0; k < this.rot2.length; k++) {
-            if (this.rot2[k] != 0) {
+            if (this.rot2[k] !== 0) {
                 if (this.rot2[k] > 0) {
                     for (let i = 0; i < this.rot2[k]; i++) {
                         this.compact_shp2 = this.trig2[k].pop()
@@ -1021,7 +1057,7 @@ document.documentElement.addEventListener('mousedown', () => {
   */
 
     public updateGrains() {
-        this.stop_sequencer()
+        //this.stop_sequencer()
         Transport.scheduleRepeat(function() {}, "0n")
         Transport.scheduleRepeat(this.repeat, this.nGrain_string)
         Transport.start()
@@ -1050,12 +1086,12 @@ document.documentElement.addEventListener('mousedown', () => {
      repeat = (time:number) => {
         let step = this.index1 % this.nGrain
         let step_2 = this.index2 % this.nGrain2 // POLYMETRICS!
-
         this.counter++
         this.counter2++
-        console.log(this.counter)
+
+        
         if (this.counter === this.nGrain + 1) {
-            console.log("CIAo")
+            ///console.log("CIAo")
             this.counter = 1
             this.numMeasures++
             //console.log(numMeasures);
