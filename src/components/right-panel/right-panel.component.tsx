@@ -31,6 +31,11 @@ export class RightPanel extends React.Component<any, any> {
         MainSketch.updateGrains()
         
     }
+    private onStopClick = () => {
+       
+        MainSketch.stop_sequencer()
+        
+    }
 
     private encoderClick = () => {
         MainSketch.encoderButt()
@@ -64,6 +69,14 @@ export class RightPanel extends React.Component<any, any> {
                         
                         style={{ marginBottom: "12px" }}
                     />
+                    <Button
+                    
+                    text="Stop"
+                    icon="stop"
+                    onClick={this.onStopClick}
+                    
+                    style={{ marginBottom: "12px" }}
+                />
                     <Button
                         text="Layer"
                         icon="plus"

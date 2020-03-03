@@ -79,8 +79,8 @@ class MainSketchClass implements P5Sketch {
     private index2: number = 0
 
     public  drumKit: any = []
-    private sounds1 = []
-    private sounds2 = []
+    private sounds1: any = []
+    private sounds2: any = []
 
     constructor() {
  
@@ -1110,7 +1110,7 @@ document.documentElement.addEventListener('mousedown', () => {
         for (let i = 1; i <= this.shp1.length; i++) {
             if (this.trig1[i - 1][step] === true) {
                 //synths[2].triggerAttackRelease(notes[i], '30n', time);
-                this.drumKit[this.sounds1[i - 1]].play()
+                this.drumKit[this.sounds1[i - 1]].play(time)
                 //DrumKit[i-1].trigger(time);
             }
         }
