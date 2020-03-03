@@ -31,7 +31,7 @@ class MainSketchClass implements P5Sketch {
     private compact_shp2 = new Array()
 
     private rot1 = new Array(this.maxNumShapes)
-    private shp1 = new Array(this.maxNumShapes)
+    public shp1 = new Array(this.maxNumShapes)
     private rot2 = new Array(this.maxNumShape2)
     private shp2 = new Array(this.maxNumShape2)
 
@@ -75,38 +75,26 @@ class MainSketchClass implements P5Sketch {
     private index1: number = 0
     private index2: number = 0
 
-    private drumKit: any = []
+    public  drumKit: any = []
     private sounds1 = []
     private sounds2 = []
 
     constructor() {
-  var kick = new Audio("samples/kick.wav");
-  var snare1 = new Audio("samples/snare1.wav");
-  var snare2 = new Audio("samples/snare2.wav");
-  var clap = new Audio("samples/clap.wav");
-  var blastBlock = new Audio("samples/blastBlock.wav");
-  var closedHH = new Audio("samples/closedHH.wav");
-  var cowbell = new Audio("samples");
-  var egg = new Audio("samples/egg.wav");
-  var openHH = new Audio("samples/openHH.wav");
-  var stick = new Audio("samples/stick.wav");
-  var tomFloor = new Audio("samples/tomFloor.wav");
-  var tomHigh = new Audio("samples/tomHigh.wav");
-  var tomMid = new Audio("samples/tomMid.wav");
-  this.drumKit[0] = kick;
-  this.drumKit[1] = snare1;
-  this.drumKit[2] = snare2;
-  this.drumKit[3] = clap;
-  this.drumKit[4] = blastBlock;
-  this.drumKit[5] = closedHH;
-  this.drumKit[6] = cowbell;
-  this.drumKit[7] = egg;
-  this.drumKit[7] = openHH;
-  this.drumKit[8] = stick;
-  this.drumKit[9] = tomFloor;
-  this.drumKit[10] = tomHigh;
-  this.drumKit[11] = tomMid;
-  this.drumKit[12] = tomFloor;
+ 
+  this.drumKit[0] = new Audio("samples/kick.wav");;
+  this.drumKit[1] = new Audio("samples/snare1.wav");
+  this.drumKit[2] = new Audio("samples/snare2.wav");
+  this.drumKit[3] = new Audio("samples/clap.wav");
+  this.drumKit[4] = new Audio("samples/blastBlock.wav");
+  this.drumKit[5] = new Audio("samples/closedHH.wav");
+  this.drumKit[6] = new Audio("samples");
+  this.drumKit[7] = new Audio("samples/egg.wav");
+  this.drumKit[7] = new Audio("samples/openHH.wav");
+  this.drumKit[8] =  new Audio("samples/stick.wav");
+  this.drumKit[9] = new Audio("samples/tomFloor.wav");
+  this.drumKit[10] = new Audio("samples/tomHigh.wav");
+  this.drumKit[11] = new Audio("samples/tomMid.wav");
+  
   
         this.trig1 = [];
         this.trig2 = [];
@@ -211,7 +199,7 @@ class MainSketchClass implements P5Sketch {
 
         this.ver = 0
         for (let i = 0; i <= this.numSides1.length - 1; i++) {
-            if (this.nGrain % this.numSides1[i] == 0) {
+            if (this.nGrain % this.numSides1[i] === 0) {
                 this.ver++
             }
         }
@@ -1039,6 +1027,8 @@ document.documentElement.addEventListener('mousedown', () => {
         Transport.start()
     }
 
+ 
+
     // change time signature
 
     /*
@@ -1057,7 +1047,7 @@ document.documentElement.addEventListener('mousedown', () => {
 
     // actual audio engine
 
-    public repeat(time) {
+     repeat = (time:number) => {
         let step = this.index1 % this.nGrain
         let step_2 = this.index2 % this.nGrain2 // POLYMETRICS!
 
