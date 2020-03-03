@@ -10,7 +10,7 @@ interface IProps extends React.HTMLAttributes<HTMLButtonElement> {
 
 export class Button extends React.Component<IProps, any> {
     public render() {
-        const { loading = false, text, type = "primary", icon, ...rest } = this.props
+        const { loading = false, text, type = "light", icon, ...rest } = this.props
 
         return (
             <>
