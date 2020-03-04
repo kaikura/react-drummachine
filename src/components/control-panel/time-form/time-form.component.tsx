@@ -18,7 +18,7 @@ export class TimeForm extends React.Component<IProps, IState> {
     }
     private timeSignature = ["4/4", "3/4", "9/8", "7/8", "5/4", "3/2"]
     private numberOfGrains = {
-        "4/4": [2, 4, 8, 12, 16, 20, 24, 28],
+        "4/4": [4, 8, 12, 16, 20, 24, 28],
         "3/4": [3, 6, 9, 12, 15, 18, 21, 24, 27, 30],
         "9/8": [9, 18, 27, 36],
         "7/8": [7, 14, 21, 28],
@@ -85,11 +85,16 @@ export class TimeForm extends React.Component<IProps, IState> {
         )
     }
 
+    private Num = 0
+    private Num2 = 0
+
     private onSelectTimeSignature = (event) => {
         this.setState({
             selectedTimeSignature: event.target.value || undefined,
             selectedNumberOfGrains: this.numberOfGrains[event.target.value][0]
         })
+        this.Num = this.numberOfGrains[event.target.value][0]
+        this.Num2 = this.numberOfGrains[event.target.value][0]
     }
 
     private onSelectNumberOfGrains = (event) => {
@@ -104,11 +109,13 @@ export class TimeForm extends React.Component<IProps, IState> {
             switch (layer) {
                 case 1:
                     MainSketch.setNGrain(Number(this.state.selectedNumberOfGrains))
+                    MainSketch.setNum(Number(this.Num))
                     MainSketch.generateShapes()
                     MainSketch.updateArrays()
                     break
                 case 2:
                     MainSketch.setNGrain2(Number(this.state.selectedNumberOfGrains))
+                    MainSketch.setNum2(Number(this.Num2))
                     MainSketch.generateShapes()
                     MainSketch.updateArrays()
                     break

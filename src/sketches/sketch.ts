@@ -117,12 +117,13 @@ class MainSketchClass implements P5Sketch {
         this.compact_shp1 = [];
         this.compact_shp2 = [];
         this.initializeArrays()
-        this.initializePolygonArrays()
         this.generateShapes()
+        this.updateArrays()
+        this.triggerer()
     }
 
     private initializeArrays() {
-        //LAYER 1 ARRAYS (missing "Trig1" "Trig2" "Sounds1" from Old Version)
+        
         for (let i = 0; i < this.rot1.length; i++) {
             this.rot1[i] = 0
         }
@@ -143,6 +144,7 @@ class MainSketchClass implements P5Sketch {
 
 
         //LAYER 2 ARRAYS
+        if (this.secondLayer_activated === true){
         for (let i = 0; i < this.rot2.length; i++) {
             this.rot2[i] = 0
         }
@@ -152,7 +154,7 @@ class MainSketchClass implements P5Sketch {
         }
         
         this.trig2.length = 0;
-        for (let i = 0; i < this.nGrain; i++){
+        for (let i = 0; i < this.nGrain2; i++){
           this.trig2[i] = false;
         }
       
@@ -160,6 +162,7 @@ class MainSketchClass implements P5Sketch {
         for (let i = 0; i < this.shp2.length; i++){
           this.sounds2[i] = 0;
         }
+    }
     }
     public generateShapes() {
         for (let i = 2; i <= this.nGrain; i++) {
@@ -183,28 +186,6 @@ class MainSketchClass implements P5Sketch {
         }
     }
 
-    private initializePolygonArrays() {
-        //INITIALIZES SHAPE ARRAYS GIVEN # GRAIN
-        for (let i = 2; i <= this.nGrain; i++) {
-            //starts from 2 since we need a line as the simplest shape possible
-            this.polygon_array[i - 2] = new Array(i)
-            for (let h = 0; h < this.polygon_array[i - 2].length; h++) {
-                this.polygon_array[i - 2][h] = Math.round(
-                    (this.nGrain * h) / this.polygon_array[i - 2].length
-                )
-            }
-        }
-
-        for (let i = 2; i <= this.nGrain2; i++) {
-            //starts from 2 p5.since we need a line as the simplest shape possible
-            this.polygon_array2[i - 2] = new Array(i)
-            for (let h = 0; h < this.polygon_array2[i - 2].length; h++) {
-                this.polygon_array2[i - 2][h] = Math.round(
-                    (this.nGrain2 * h) / this.polygon_array2[i - 2].length
-                )
-            }
-        }
-    }
 
     //UPDATE ARRAYS
     public updateArrays() {
@@ -218,7 +199,6 @@ class MainSketchClass implements P5Sketch {
         }
 
         //kind of shape index array relative to the first layer. here are stored the kind of shape of tracks. i set up this number to be 1,2,3...maxNumofShapes just to make the user distinguish between and avoid graphic overlap.
-        //MISSING "Sounds1" and "Sounds2 from Old Version"
         if (this.instrumentMode === 2 && this.layerNumber === 1) {
             this.shp1.push(this.maxNumShapes - 1)
             this.selectedShape = this.maxNumShapes
@@ -251,34 +231,7 @@ class MainSketchClass implements P5Sketch {
         }
     }
 
-    public deleteShape() {
-        //This was to fix a bug if in custom shape mode
-        if (this.instrumentMode === 7) {
-            this.instrumentMode = 2
-        }
-        if (this.layerNumber === 1) {
-            this.shp1.splice(this.selectedShape - 1, 1)
-            this.rot1.splice(this.selectedShape - 1, 1)
-            this.maxNumShapes--
-            //start from skratch
-            if (this.maxNumShapes === 0) {
-                this.instrumentMode = 0
-            }
-            this.selectedShape = this.maxNumShapes
-        }
-        if (this.layerNumber === 2) {
-            this.shp2.splice(this.selectedShape2 - 1, 1)
-            this.rot1.splice(this.selectedShape2 - 1, 1)
-            this.maxNumShape2--
-            //start from skratch
-            if (this.maxNumShape2 === 0) {
-                this.instrumentMode = 0
-            }
-            this.selectedShape2 = this.maxNumShape2
-        }
-        this.updateArrays()
-        this.triggerer()
-    }
+   
 
     //SETUP
     public setup(p5: P5, canvasParentRef: "centralSquare"): void {
@@ -924,6 +877,35 @@ class MainSketchClass implements P5Sketch {
         this.instrumentMode = 4 // we are in rotation_mode!
     }
 
+    public deleteShape() {
+        //This was to fix a bug if in custom shape mode
+        if (this.instrumentMode === 7) {
+            this.instrumentMode = 2
+        }
+        if (this.layerNumber === 1) {
+            this.shp1.splice(this.selectedShape - 1, 1)
+            this.rot1.splice(this.selectedShape - 1, 1)
+            this.maxNumShapes--
+            //start from skratch
+            if (this.maxNumShapes === 0) {
+                this.instrumentMode = 0
+            }
+            this.selectedShape = this.maxNumShapes
+        }
+        if (this.layerNumber === 2) {
+            this.shp2.splice(this.selectedShape2 - 1, 1)
+            this.rot1.splice(this.selectedShape2 - 1, 1)
+            this.maxNumShape2--
+            //start from skratch
+            if (this.maxNumShape2 === 0) {
+                this.instrumentMode = 0
+            }
+            this.selectedShape2 = this.maxNumShape2
+        }
+        this.updateArrays()
+        this.triggerer()
+    }
+
     public mouseReleased() {
         clearTimeout(this.myTimeout)
     }
@@ -937,6 +919,18 @@ class MainSketchClass implements P5Sketch {
 
     public setNGrain2(value: number) {
         this.nGrain2 = value
+
+        return this
+    }
+
+    public setNum(value: number) {
+        this.TS_Num = value
+
+        return this
+    }
+
+    public setNum2(value: number) {
+        this.TS_Num_2 = value
 
         return this
     }
@@ -1070,9 +1064,7 @@ document.documentElement.addEventListener('mousedown', () => {
   */
 
     public updateGrains() {
-        console.log(this.drumKit);
-        
-        //this.stop_sequencer()
+        this.stop_sequencer()
         Transport.scheduleRepeat(function() {}, "0n")
         Transport.scheduleRepeat(this.repeat, this.nGrain_string)
         Transport.start()
