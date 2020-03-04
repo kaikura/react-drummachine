@@ -23,6 +23,6 @@
     "baseUrl": "./"
   },
   "include": [
-    "src", "server.js","samples"
+    "src", "server.js"
   ]
 }

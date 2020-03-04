@@ -14,6 +14,7 @@ import { TransportComponent } from "../components/transport"
 import { BPM } from "src/components/bpm-component"
 
 
+
   export class Sequencer extends React.Component<any,any> {
     private drumKit: any[] = [];
     private sounds1: any = [];

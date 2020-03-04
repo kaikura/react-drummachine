@@ -52,6 +52,10 @@ export class RightPanel extends React.Component<any, any> {
     private onMouseReleased = () => {
         MainSketch.mouseReleased()
     }
+    private onSoundClick = () => {
+        MainSketch.chooseSound()
+    }
+    
     public render() {
         return (
             <div style={{ marginTop: "12px" }}>
@@ -82,6 +86,13 @@ export class RightPanel extends React.Component<any, any> {
                         icon="plus"
                         onMouseDown={this.onLayerClick}
                         onMouseUp={this.onMouseReleased}
+                        style={{ marginBottom: "12px" }}
+                    />
+                    <Button
+                        text="Instrument"
+                        icon="boh"
+                        onMouseDown={this.onSoundClick}
+                        
                         style={{ marginBottom: "12px" }}
                     />
                     <Button

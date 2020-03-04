@@ -2,6 +2,21 @@ import * as P5 from "p5"
 import { Transport } from "tone"
 import { AppMode } from "../app/root.component"
 
+
+const kk =  require("../assests/kick.wav")
+const s1 =  require("../assests/snare1.wav")
+const s2 =  require("../assests/snare2.wav")
+const clp =  require("../assests/clap.wav")
+const stk =  require("../assests/stick.wav")
+const blS =  require("../assests/blastBlock.wav")
+const cHH =  require("../assests/closedHH.wav")
+const oHH =  require("../assests/openHH.wav")
+const egg =  require("../assests/egg.wav")
+const tmH =  require("../assests/tomHigh.wav")
+const tmL =  require("../assests/tomFloor.wav")
+
+
+
 export interface P5Sketch {
     setup(p5: P5, canvasParentRef: "centralSquare"): void
     draw(p5: P5, canvasParentRef: "centralSquare"): void
@@ -84,19 +99,17 @@ class MainSketchClass implements P5Sketch {
 
     constructor() {
  
-  this.drumKit[0] = new Audio("samples/kick.wav");;
-  this.drumKit[1] = new Audio("samples/snare1.wav");
-  this.drumKit[2] = new Audio("samples/snare2.wav");
-  this.drumKit[3] = new Audio("samples/clap.wav");
-  this.drumKit[4] = new Audio("samples/blastBlock.wav");
-  this.drumKit[5] = new Audio("samples/closedHH.wav");
-  this.drumKit[6] = new Audio("samples");
-  this.drumKit[7] = new Audio("samples/egg.wav");
-  this.drumKit[7] = new Audio("samples/openHH.wav");
-  this.drumKit[8] =  new Audio("samples/stick.wav");
-  this.drumKit[9] = new Audio("samples/tomFloor.wav");
-  this.drumKit[10] = new Audio("samples/tomHigh.wav");
-  this.drumKit[11] = new Audio("samples/tomMid.wav");
+  this.drumKit[0] = new Audio(kk);
+  this.drumKit[1] = new Audio(s1);
+  this.drumKit[2] = new Audio(s2);
+  this.drumKit[3] = new Audio(clp);
+  this.drumKit[4] = new Audio(blS);
+  this.drumKit[5] = new Audio(cHH);
+  this.drumKit[6] = new Audio(oHH);
+  this.drumKit[7] = new Audio(egg);
+  this.drumKit[7] = new Audio(stk);
+  this.drumKit[8] =  new Audio(tmH);
+  this.drumKit[9] = new Audio(tmL);
   
   
         this.trig1 = [];
@@ -1057,6 +1070,8 @@ document.documentElement.addEventListener('mousedown', () => {
   */
 
     public updateGrains() {
+        console.log(this.drumKit);
+        
         //this.stop_sequencer()
         Transport.scheduleRepeat(function() {}, "0n")
         Transport.scheduleRepeat(this.repeat, this.nGrain_string)
