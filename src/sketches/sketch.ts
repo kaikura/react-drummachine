@@ -700,6 +700,15 @@ class MainSketchClass implements P5Sketch {
             //rotate the selected shape
             this.rot2[this.selectedShape2 - 1] = this.rot2[this.selectedShape2 - 1] + 1
         }
+        if (this.layerNumber === 1 && this.instrumentMode === 6 && this.selectedShape !== 0){
+            this.sounds1[this.selectedShape - 1] = (this.sounds1[this.selectedShape - 1] + 1) % (this.drumKit.length);
+          }
+      
+          if (this.layerNumber === 2 && this.instrumentMode === 6 && this.selectedShape2 !== 0){
+            this.sounds2[this.selectedShape2 - 1] = (this.sounds2[this.selectedShape2 - 1] + 1) % (this.drumKit.length);
+          }
+      
+      
         this.triggerer()
     }
 
@@ -758,6 +767,13 @@ class MainSketchClass implements P5Sketch {
         if (this.layerNumber === 2 && this.instrumentMode === 4 && this.selectedShape2 !== 0) {
             this.rot2[this.selectedShape2 - 1] = this.rot2[this.selectedShape2 - 1] - 1
         }
+        if (this.layerNumber === 1 && this.instrumentMode === 6 && this.selectedShape !== 0){
+            this.sounds1[this.selectedShape - 1] = (this.sounds1[this.selectedShape - 1] - 1) % (this.drumKit.length);
+          }
+      
+          if (this.layerNumber === 2 && this.instrumentMode === 6 && this.selectedShape2 !== 0){
+            this.sounds2[this.selectedShape2 - 1] = (this.sounds2[this.selectedShape2 - 1] - 1) % (this.drumKit.length);
+          }
         this.triggerer()
     }
 
