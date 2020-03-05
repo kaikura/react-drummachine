@@ -1,9 +1,10 @@
 import React from "react"
 import { Button } from "../button/button.component"
 import { MainSketch } from "../../sketches/sketch"
-
+import { Metro } from '../../sketches/metronome'
 import { Container } from "./right-panel.style"
 import { Sequencer } from "src/sketches/sequencer"
+
 
 export class RightPanel extends React.Component<any, any> {
     private onLayerClick = () => {
@@ -60,10 +61,14 @@ export class RightPanel extends React.Component<any, any> {
         return (
             <div style={{ marginTop: "12px" }}>
                 <h5>Groove Shapes Control</h5>
-
+                 
                 <Container>
                 
-                 <div><Sequencer /></div>   
+                <div style={{flexDirection:'row', flexWrap:'wrap'}}>
+                      <div><Sequencer /></div> 
+                      <div><Metro /></div> 
+                      
+                 </div>  
                     
                 <Button
                     

@@ -1,7 +1,7 @@
 import * as P5 from "p5"
 import { Transport } from "tone"
 import { AppMode } from "../app/root.component"
-
+import {Time} from "tone"
 
 const kk =  require("../assests/kick.wav")
 const s1 =  require("../assests/snare1.wav")
@@ -1081,10 +1081,16 @@ document.documentElement.addEventListener('mousedown', () => {
 
     public updateGrains() {
         this.stop_sequencer()
-        Transport.scheduleRepeat(function() {}, "0n")
+        //Transport.scheduleRepeat(function() {}, "0n")
         Transport.scheduleRepeat(this.repeat, this.nGrain_string)
-        Transport.start()
+        Transport.stop();
+        Transport.start();
     }
+
+    public getnGrains() {
+       return this.nGrain;
+    }
+
 
  
 
@@ -1133,6 +1139,8 @@ document.documentElement.addEventListener('mousedown', () => {
         for (let i = 1; i <= this.shp1.length; i++) {
             if (this.trig1[i - 1][step] === true) {
                 //synths[2].triggerAttackRelease(notes[i], '30n', time);
+                console.log(this.nGrain);
+                console.log(step);
                 this.drumKit[this.sounds1[i - 1]].play(time)
                 //DrumKit[i-1].trigger(time);
             }

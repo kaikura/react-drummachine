@@ -56,7 +56,7 @@ export class RootComponent extends React.Component<any, State> {
                             </div>
                         </div>
 
-                        <div className="trnsp" style={{ padding: "20px" }}>
+                        <div>
                             {" "}
                             This is the encoder value: {this.state.timestamp}
                         </div>
