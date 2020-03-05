@@ -19,7 +19,7 @@ export class BPM extends React.Component<BPMProps> {
         return (
             <div style={{display: "inline-block" , flex: 1, flexDirection: "row" }}>
                 <input onChange={this.handleChange} className="bpm" />
-            <div>BPM</div>
+            <h5>BPM</h5>
             </div>
         
         )

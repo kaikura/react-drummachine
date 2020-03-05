@@ -81,6 +81,13 @@ export class RightPanel extends React.Component<any, any> {
                     
                     style={{ marginBottom: "12px" }}
                 />
+                <Button
+                        text="Instrument"
+                        icon="music player fill"
+                        onMouseDown={this.onSoundClick}
+                        
+                        style={{ marginBottom: "12px" }}
+                    />
                     <Button
                         text="Layer"
                         icon="plus"
@@ -88,13 +95,7 @@ export class RightPanel extends React.Component<any, any> {
                         onMouseUp={this.onMouseReleased}
                         style={{ marginBottom: "12px" }}
                     />
-                    <Button
-                        text="Instrument"
-                        icon="boh"
-                        onMouseDown={this.onSoundClick}
-                        
-                        style={{ marginBottom: "12px" }}
-                    />
+                    
                     <Button
                         text="Track"
                         icon="vector-square"
@@ -117,7 +118,7 @@ export class RightPanel extends React.Component<any, any> {
                     />
                     <Button
                         text="Delete shape"
-                        icon="times"
+                        icon="trash fill"
                         type="danger"
                         onClick={this.onShapeDeleteClick}
                         style={{ marginBottom: "12px" }}
