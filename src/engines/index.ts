@@ -1,3 +1,3 @@
-export * from "./snare"
-export * from "./kick"
+
+export * from "./metro_tick"
 export * from "./hat"

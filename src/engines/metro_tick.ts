@@ -1,6 +1,6 @@
 import { Synth } from "tone"
 
-export class Snare {
+export class Tick {
     private sound: any
 
     constructor() {
@@ -13,6 +13,6 @@ export class Snare {
 
     trigger(time: number) {
         this.setup()
-        this.sound.triggerAttackRelease("G2", "30n", time)
+        this.sound.triggerAttackRelease("C4", "30n", time)
     }
 }

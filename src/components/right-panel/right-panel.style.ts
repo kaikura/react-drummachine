@@ -11,3 +11,6 @@ export const Container = styled.div`
 export const ActionButton = styled(Button)`
     margin-bottom: ${spacing[2]}px;
 `
+export const playControls = styled.div`
+    margin-right: ${spacing[8]}px;
+    `
