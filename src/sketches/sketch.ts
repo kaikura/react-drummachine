@@ -1,21 +1,20 @@
 import * as P5 from "p5"
 import { Transport } from "tone"
 import { AppMode } from "../app/root.component"
-import {Time} from "tone"
+import { Time } from "tone"
+import { ModeSelection } from "../components/mode-selection/mode-selection.component"
 
-const kk =  require("../assests/kick.wav")
-const s1 =  require("../assests/snare1.wav")
-const s2 =  require("../assests/snare2.wav")
-const clp =  require("../assests/clap.wav")
-const stk =  require("../assests/stick.wav")
-const blS =  require("../assests/blastBlock.wav")
-const cHH =  require("../assests/closedHH.wav")
-const oHH =  require("../assests/openHH.wav")
-const egg =  require("../assests/egg.wav")
-const tmH =  require("../assests/tomHigh.wav")
-const tmL =  require("../assests/tomFloor.wav")
-
-
+const kk = require("../assests/kick.wav")
+const s1 = require("../assests/snare1.wav")
+const s2 = require("../assests/snare2.wav")
+const clp = require("../assests/clap.wav")
+const stk = require("../assests/stick.wav")
+const blS = require("../assests/blastBlock.wav")
+const cHH = require("../assests/closedHH.wav")
+const oHH = require("../assests/openHH.wav")
+const egg = require("../assests/egg.wav")
+const tmH = require("../assests/tomHigh.wav")
+const tmL = require("../assests/tomFloor.wav")
 
 export interface P5Sketch {
     setup(p5: P5, canvasParentRef: "centralSquare"): void
@@ -43,10 +42,11 @@ class MainSketchClass implements P5Sketch {
     //private firstLayerLandW = 500
     private trig1: any[]
     private trig2: any[]
-    private compact_shp1 : any[]
-    private compact_shp2 : any[]
-    private appMode: AppMode = 0
-   // private context = new AudioContext
+    private compact_shp1: any[]
+    private compact_shp2: any[]
+    private appMode!: AppMode 
+    
+    // private context = new AudioContext
 
     private rot1 = new Array(this.maxNumShapes)
     public shp1 = new Array(this.maxNumShapes)
@@ -93,29 +93,27 @@ class MainSketchClass implements P5Sketch {
     private index1: number = 0
     private index2: number = 0
 
-    public  drumKit: any = []
+    public drumKit: any = []
     private sounds1: any = []
     private sounds2: any = []
 
     constructor() {
- 
-  this.drumKit[0] = new Audio(kk);
-  this.drumKit[1] = new Audio(s1);
-  this.drumKit[2] = new Audio(s2);
-  this.drumKit[3] = new Audio(clp);
-  this.drumKit[4] = new Audio(blS);
-  this.drumKit[5] = new Audio(cHH);
-  this.drumKit[6] = new Audio(oHH);
-  this.drumKit[7] = new Audio(egg);
-  this.drumKit[7] = new Audio(stk);
-  this.drumKit[8] =  new Audio(tmH);
-  this.drumKit[9] = new Audio(tmL);
-  
-  
-        this.trig1 = [];
-        this.trig2 = [];
-        this.compact_shp1 = [];
-        this.compact_shp2 = [];
+        this.drumKit[0] = new Audio(kk)
+        this.drumKit[1] = new Audio(s1)
+        this.drumKit[2] = new Audio(s2)
+        this.drumKit[3] = new Audio(clp)
+        this.drumKit[4] = new Audio(blS)
+        this.drumKit[5] = new Audio(cHH)
+        this.drumKit[6] = new Audio(oHH)
+        this.drumKit[7] = new Audio(egg)
+        this.drumKit[7] = new Audio(stk)
+        this.drumKit[8] = new Audio(tmH)
+        this.drumKit[9] = new Audio(tmL)
+
+        this.trig1 = []
+        this.trig2 = []
+        this.compact_shp1 = []
+        this.compact_shp2 = []
         this.initializeArrays()
         this.generateShapes()
         this.updateArrays()
@@ -123,7 +121,6 @@ class MainSketchClass implements P5Sketch {
     }
 
     private initializeArrays() {
-        
         for (let i = 0; i < this.rot1.length; i++) {
             this.rot1[i] = 0
         }
@@ -133,36 +130,35 @@ class MainSketchClass implements P5Sketch {
         }
 
         this.trig1.length = 0
-        for (let i = 0; i<this.nGrain; i++){
+        for (let i = 0; i < this.nGrain; i++) {
             this.trig1[i] = false
         }
 
         this.sounds1.length = 0
-        for (let i = 0; i < this.shp1.length; i++){
-        this.sounds1[i] = i;
+        for (let i = 0; i < this.shp1.length; i++) {
+            this.sounds1[i] = i
         }
-
 
         //LAYER 2 ARRAYS
-        if (this.secondLayer_activated === true){
-        for (let i = 0; i < this.rot2.length; i++) {
-            this.rot2[i] = 0
-        }
+        if (this.secondLayer_activated === true) {
+            for (let i = 0; i < this.rot2.length; i++) {
+                this.rot2[i] = 0
+            }
 
-        for (let i = 0; i < this.shp2.length; i++) {
-            this.shp2[i] = i
+            for (let i = 0; i < this.shp2.length; i++) {
+                this.shp2[i] = i
+            }
+
+            this.trig2.length = 0
+            for (let i = 0; i < this.nGrain2; i++) {
+                this.trig2[i] = false
+            }
+
+            this.sounds2.length = 0
+            for (let i = 0; i < this.shp2.length; i++) {
+                this.sounds2[i] = 0
+            }
         }
-        
-        this.trig2.length = 0;
-        for (let i = 0; i < this.nGrain2; i++){
-          this.trig2[i] = false;
-        }
-      
-        this.sounds2.length = 0;
-        for (let i = 0; i < this.shp2.length; i++){
-          this.sounds2[i] = 0;
-        }
-    }
     }
     public generateShapes() {
         for (let i = 2; i <= this.nGrain; i++) {
@@ -186,7 +182,6 @@ class MainSketchClass implements P5Sketch {
         }
     }
 
-
     //UPDATE ARRAYS
     public updateArrays() {
         // this is the rotation array, containing all the rotation indexes for just the FIRST layer. Its length is equal to the maximum number of shapes created in the related layer.
@@ -204,19 +199,19 @@ class MainSketchClass implements P5Sketch {
             this.selectedShape = this.maxNumShapes
         }
 
-        if(this.instrumentMode === 2 && this.layerNumber === 1) {
-            this.sounds1.push(this.maxNumShapes-1);
-          }        
+        if (this.instrumentMode === 2 && this.layerNumber === 1) {
+            this.sounds1.push(this.maxNumShapes - 1)
+        }
 
         if (this.instrumentMode === 2 && this.layerNumber === 2) {
             this.shp2.push(this.maxNumShape2 - 1)
             this.selectedShape2 = this.maxNumShape2
         }
 
-        if(this.instrumentMode === 2 && this.layerNumber === 2) {
-            this.sounds2.push(this.maxNumShape2-1);
-          }
-        
+        if (this.instrumentMode === 2 && this.layerNumber === 2) {
+            this.sounds2.push(this.maxNumShape2 - 1)
+        }
+
         this.numSides1 = new Array()
 
         for (let i = 0; i <= this.shp1.length - 1; i++) {
@@ -231,8 +226,6 @@ class MainSketchClass implements P5Sketch {
         }
     }
 
-   
-
     //SETUP
     public setup(p5: P5, canvasParentRef: "centralSquare"): void {
         p5.createCanvas((p5.width = this.canvasWidth), (p5.height = this.canvasHeight)).parent(
@@ -241,7 +234,12 @@ class MainSketchClass implements P5Sketch {
     }
 
     public draw(p5: P5): void {
-        p5.background(23, 162, 184)
+        if(this.appMode==1){
+            p5.background(23, 162, 184)
+        }
+        else if(this.appMode==0) {
+            p5.background(20, 53, 51)
+        }
         p5.fill(250, 250, 250, 70)
         p5.strokeWeight(2)
         p5.ellipse(this.canvasWidth / 2, this.canvasHeight / 2, this.circleLandW, this.circleLandW)
@@ -620,7 +618,6 @@ class MainSketchClass implements P5Sketch {
             }
         }
         this.nGrain_string = this.nGrain.toString() + "n"
-        
     }
 
     public encoderInc() {
@@ -700,15 +697,16 @@ class MainSketchClass implements P5Sketch {
             //rotate the selected shape
             this.rot2[this.selectedShape2 - 1] = this.rot2[this.selectedShape2 - 1] + 1
         }
-        if (this.layerNumber === 1 && this.instrumentMode === 6 && this.selectedShape !== 0){
-            this.sounds1[this.selectedShape - 1] = (this.sounds1[this.selectedShape - 1] + 1) % (this.drumKit.length);
-          }
-      
-          if (this.layerNumber === 2 && this.instrumentMode === 6 && this.selectedShape2 !== 0){
-            this.sounds2[this.selectedShape2 - 1] = (this.sounds2[this.selectedShape2 - 1] + 1) % (this.drumKit.length);
-          }
-      
-      
+        if (this.layerNumber === 1 && this.instrumentMode === 6 && this.selectedShape !== 0) {
+            this.sounds1[this.selectedShape - 1] =
+                (this.sounds1[this.selectedShape - 1] + 1) % this.drumKit.length
+        }
+
+        if (this.layerNumber === 2 && this.instrumentMode === 6 && this.selectedShape2 !== 0) {
+            this.sounds2[this.selectedShape2 - 1] =
+                (this.sounds2[this.selectedShape2 - 1] + 1) % this.drumKit.length
+        }
+
         this.triggerer()
     }
 
@@ -767,13 +765,15 @@ class MainSketchClass implements P5Sketch {
         if (this.layerNumber === 2 && this.instrumentMode === 4 && this.selectedShape2 !== 0) {
             this.rot2[this.selectedShape2 - 1] = this.rot2[this.selectedShape2 - 1] - 1
         }
-        if (this.layerNumber === 1 && this.instrumentMode === 6 && this.selectedShape !== 0){
-            this.sounds1[this.selectedShape - 1] = (this.sounds1[this.selectedShape - 1] - 1) % (this.drumKit.length);
-          }
-      
-          if (this.layerNumber === 2 && this.instrumentMode === 6 && this.selectedShape2 !== 0){
-            this.sounds2[this.selectedShape2 - 1] = (this.sounds2[this.selectedShape2 - 1] - 1) % (this.drumKit.length);
-          }
+        if (this.layerNumber === 1 && this.instrumentMode === 6 && this.selectedShape !== 0) {
+            this.sounds1[this.selectedShape - 1] =
+                (this.sounds1[this.selectedShape - 1] - 1) % this.drumKit.length
+        }
+
+        if (this.layerNumber === 2 && this.instrumentMode === 6 && this.selectedShape2 !== 0) {
+            this.sounds2[this.selectedShape2 - 1] =
+                (this.sounds2[this.selectedShape2 - 1] - 1) % this.drumKit.length
+        }
         this.triggerer()
     }
 
@@ -1083,16 +1083,13 @@ document.documentElement.addEventListener('mousedown', () => {
         this.stop_sequencer()
         //Transport.scheduleRepeat(function() {}, "0n")
         Transport.scheduleRepeat(this.repeat, this.nGrain_string)
-        Transport.stop();
-        Transport.start();
+        Transport.stop()
+        Transport.start()
     }
 
     public getnGrains() {
-       return this.nGrain;
+        return this.nGrain
     }
-
-
- 
 
     // change time signature
 
@@ -1112,13 +1109,12 @@ document.documentElement.addEventListener('mousedown', () => {
 
     // actual audio engine
 
-     repeat = (time:number) => {
+    repeat = (time: number) => {
         let step = this.index1 % this.nGrain
         let step_2 = this.index2 % this.nGrain2 // POLYMETRICS!
         this.counter++
         this.counter2++
 
-        
         if (this.counter === this.nGrain + 1) {
             ///console.log("CIAo")
             this.counter = 1
@@ -1139,8 +1135,8 @@ document.documentElement.addEventListener('mousedown', () => {
         for (let i = 1; i <= this.shp1.length; i++) {
             if (this.trig1[i - 1][step] === true) {
                 //synths[2].triggerAttackRelease(notes[i], '30n', time);
-                console.log(this.nGrain);
-                console.log(step);
+                console.log(this.nGrain)
+                console.log(step)
                 this.drumKit[this.sounds1[i - 1]].play(time)
                 //DrumKit[i-1].trigger(time);
             }

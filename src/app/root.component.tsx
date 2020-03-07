@@ -3,6 +3,7 @@ import "./root.component.scss"
 import { Drawer } from "../components/drawer/drawer.component"
 import { ControlPanel } from "../components/control-panel/control-panel.component"
 import { RightPanel } from "../components/right-panel/right-panel.component"
+import { FooterPanel } from "../components/footer-panel/footer-panel.component"
 import { subscribeToTimer } from "../api"
 import { ModeSelection } from "../components/mode-selection/mode-selection.component"
 
@@ -44,6 +45,8 @@ export class RootComponent extends React.Component<any, State> {
                             <div className="col-2 control-column">
                                 <ControlPanel />
                             </div>
+                            
+{appMode==1 && (
                             <div
                                 id="centralSquare"
                                 className="col-8"
@@ -51,12 +54,25 @@ export class RootComponent extends React.Component<any, State> {
                             >
                                 <Drawer />
                             </div>
+)}
+{appMode==0 && (
+                            <div
+                                id="centralSquare"
+                                className="col-8"
+                                style={{ position: "relative", backgroundColor: "#348781" }}
+                            >
+                                <Drawer />
+                            </div>
+)}
+
                             <div className="col-2 control-column">
                                 <RightPanel />
                             </div>
+                            
                         </div>
-
+                        <FooterPanel/>
                         <div>
+                        
                             {" "}
                             This is the encoder value: {this.state.timestamp}
                         </div>
@@ -65,6 +81,7 @@ export class RootComponent extends React.Component<any, State> {
             </div>
         )
     }
+    
 
     private onClick = (mode: AppMode) => {
         this.setState({
