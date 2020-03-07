@@ -2,18 +2,9 @@ import * as P5 from "p5"
 import { Transport } from "tone"
 import { AppMode } from "../app/root.component"
 import {Time} from "tone"
+import { Engines } from "src/engines"
 
-const kk =  require("../assests/kick.wav")
-const s1 =  require("../assests/snare1.wav")
-const s2 =  require("../assests/snare2.wav")
-const clp =  require("../assests/clap.wav")
-const stk =  require("../assests/stick.wav")
-const blS =  require("../assests/blastBlock.wav")
-const cHH =  require("../assests/closedHH.wav")
-const oHH =  require("../assests/openHH.wav")
-const egg =  require("../assests/egg.wav")
-const tmH =  require("../assests/tomHigh.wav")
-const tmL =  require("../assests/tomFloor.wav")
+
 
 
 
@@ -61,12 +52,6 @@ class MainSketchClass implements P5Sketch {
     private secondLayer_activated = false
 
     private degree = 0
-
-    private input_grains
-    private input_BPM
-    private input_my_TS_Num
-    private input_my_TS_2_Num
-    private input_my_TS_Den
     private canvas
     private counter = -1
     private counter2 = -1
@@ -77,41 +62,23 @@ class MainSketchClass implements P5Sketch {
     private ver = 0
     private active_seq = false
     private rotation_element = 0
+    
 
     // TIME SIGNATURE _ Layer 1
 
     private TS_Num = 4
-    private TS_Den = 4
     private TS_Num_2 = 4
-
-    private CK_1_bool = false
-    private CK_2_bool = false
-
-    private div_integer
-
-    private nGrain_string
-    private index1: number = 0
-    private index2: number = 0
-
-    public  drumKit: any = []
+    private TS_Den = 4
+    private TS_Den_2 = 4
+    public  Kit = new Engines()
+    private drumKit :any = []
     private sounds1: any = []
     private sounds2: any = []
+    private measure : String =""
+    private measure_2 : String =""
 
     constructor() {
- 
-  this.drumKit[0] = new Audio(kk);
-  this.drumKit[1] = new Audio(s1);
-  this.drumKit[2] = new Audio(s2);
-  this.drumKit[3] = new Audio(clp);
-  this.drumKit[4] = new Audio(blS);
-  this.drumKit[5] = new Audio(cHH);
-  this.drumKit[6] = new Audio(oHH);
-  this.drumKit[7] = new Audio(egg);
-  this.drumKit[7] = new Audio(stk);
-  this.drumKit[8] =  new Audio(tmH);
-  this.drumKit[9] = new Audio(tmL);
-  
-  
+        this.drumKit = this.Kit.drumKit;
         this.trig1 = [];
         this.trig2 = [];
         this.compact_shp1 = [];
@@ -619,7 +586,7 @@ class MainSketchClass implements P5Sketch {
                 p5.pop()
             }
         }
-        this.nGrain_string = this.nGrain.toString() + "n"
+      
         
     }
 
@@ -939,19 +906,43 @@ class MainSketchClass implements P5Sketch {
         return this
     }
 
-    public setNum(value: number) {
-        this.TS_Num = value
+    public setTS1(value: String) {
+        this.TS_Num=Number(value.substring(0,1))
+        this.TS_Den=Number(value.substring(2))
+        let val = this.mapping(value)
+        if (val !== undefined)
+        this.measure = val
 
         return this
     }
 
-    public setNum2(value: number) {
-        this.TS_Num_2 = value
+    //managing Time Signature
+    public setTS2(value: String) {
+        console.log(value)
+        this.TS_Num_2=Number(value.substring(0,1))
+        this.TS_Den_2=Number(value.substring(2))
+        let val = this.mapping(value)
+        if (val !== undefined)
+        this.measure_2 = val
 
         return this
     }
-
-    //FUNCTIONS FILE
+    //any kind of time signature can be used, but it has to be mapped with respect to the master clock
+    private mapping(val : String){
+        let num = Number(val.substring(0,1))
+        let den = Number(val.substring(2))
+        if(den===4){
+            if(num===5) return "0:5"
+            if(num===3) return "0:3"
+            if(num===4) return "1:0"
+        }else{
+        if(den===8){
+            if(num===9) return "0:4:2"
+            if(num===7) return "0:3:14"
+        }
+    } return "1:2"
+    //end
+    }
 
     public stop_sequencer() {
         //active_seq = false;
@@ -961,13 +952,14 @@ class MainSketchClass implements P5Sketch {
         this.numMeasure2 = 0
         Transport.stop()
         Transport.cancel()
-        this.index1 = 0
-        this.index2 = 0
+       
     }
+
 
     public triggerer() {
         //clears all the previous trigs
         this.trig1 = new Array()
+        this.trig2 = new Array()
         for (let j = 1; j <= this.shp1.length; j++) {
             this.trig1[j - 1] = []
 
@@ -982,7 +974,7 @@ class MainSketchClass implements P5Sketch {
             }
         }
 
-        this.trig2 = new Array()
+       
         for (let j = 1; j <= this.shp2.length; j++) {
             this.trig2[j - 1] = []
 
@@ -1030,60 +1022,25 @@ class MainSketchClass implements P5Sketch {
             }
         }
 
-        //BACKUPROTATION
-        /*
-      if(rot1[0] != 0){
-        if(rot1[0] > 0){
-      for(i = 0; i < rot1[0] ; i++){
-        compact_shp1 = trig1.pop();
-        trig1.unshift(compact_shp1);
-      }
-    } else {
-        for(i = 0; i < Math.abs(rot1[0]); i++){
-          compact_shp1 = trig1.shift();
-          trig1.push(compact_shp1);
-          }
-        }
-      }
-      */
     }
 
     //read input for grains
 
     public chooseSound() {
+    
         this.instrumentMode = 6
     }
 
-    public clock_sounds1() {
-        this.CK_1_bool = !this.CK_1_bool
-    }
-
-    public clock_sounds2() {
-        this.CK_2_bool = !this.CK_2_bool
-    }
-    //SEQUENCER
-    /*
-document.documentElement.addEventListener('mousedown', () => {
-    if (Tone.context.state !== 'running') Tone.context.resume();
-  });
-  */
-    // TIME SIGNATURE _ Layer 1
-
-    //drumkit
-
-    /*
-  var new_BPM = 60;
-  var showed_BPM = 60;
-  let nGrain_string = '8n';
-  Transport.timeSignature = [this.TS_Num, this.TS_Den];
-  Transport.bpm.value = showed_BPM; 
-  */
 
     public updateGrains() {
         this.stop_sequencer()
-        //Transport.scheduleRepeat(function() {}, "0n")
-        Transport.scheduleRepeat(this.repeat, this.nGrain_string)
-        Transport.stop();
+
+        //"1:0" is one measure at 4/4 (8/8) will associated to the Time Signature, also 16th can be added "1:0:0"
+        if(this.measure!=="") Transport.scheduleRepeat(this.repeat_l1,this.measure,"0")
+         
+        //Scond layer has another schedule, with adjustable duration indipendent from BPM
+        if(this.measure_2!=="") Transport.scheduleRepeat(this.repeat_l2, this.measure_2 ,"0")
+        
         Transport.start();
     }
 
@@ -1091,78 +1048,29 @@ document.documentElement.addEventListener('mousedown', () => {
        return this.nGrain;
     }
 
-
- 
-
-    // change time signature
-
-    /*
-  //COMPUTATION FOR SECOND LAYER
-  function setGrains_secondLayer(){
-     if(TS_Num_2 <= TS_Num)
-         return nGrain2 = Math.ceil(nGrain/TS_Num_2) * TS_Num_2;
-  else if(TS_Num_2 > TS_Num && Number.isInteger(div_integer) != true)
-         return nGrain2 = Math.ceil(nGrain/TS_Num_2) * TS_Num_2;
-  else if(TS_Num_2 > TS_Num && Number.isInteger(div_integer) == true)
-         return console.log("aiuto");
-    }
-    */
-
-    //COMPUTATION FOR SECOND LAYER ------- BACKUP
-
     // actual audio engine
 
-     repeat = (time:number) => {
-        let step = this.index1 % this.nGrain
-        let step_2 = this.index2 % this.nGrain2 // POLYMETRICS!
-        this.counter++
-        this.counter2++
-
-        
-        if (this.counter === this.nGrain + 1) {
-            ///console.log("CIAo")
-            this.counter = 1
-            this.numMeasures++
-            //console.log(numMeasures);
-        }
-        if (this.layerNumber === 2 && this.counter2 === this.nGrain2 + 1) {
-            this.counter2 = 1
-            this.numMeasure2++
-            //console.log(numMeasure2);
-        }
-        if (this.layerNumber === 2 && this.numMeasures === this.nGrain2 + 1) {
-            this.numMeasures = 1
-        }
-        if (this.layerNumber === 1 && this.numMeasure2 === this.nGrain + 1) {
-            this.numMeasure2 = 1
-        }
-        for (let i = 1; i <= this.shp1.length; i++) {
-            if (this.trig1[i - 1][step] === true) {
-                //synths[2].triggerAttackRelease(notes[i], '30n', time);
-                console.log(this.nGrain);
-                console.log(step);
-                this.drumKit[this.sounds1[i - 1]].play(time)
-                //DrumKit[i-1].trigger(time);
-            }
-        }
-
-        for (let i = 1; i <= this.shp2.length; i++) {
-            if (this.trig2[i - 1][step_2] === true) {
-                //synths[2].triggerAttackRelease(notes[i], '30n', time);
-                this.drumKit[this.sounds2[i - 1]].play(time)
-            }
-        }
-
-        // CLOCK
-        // with polymeters
-
-        this.index1++
-        if (this.TS_Num > this.TS_Num_2) {
-            this.index2 = this.index2 + 1 + Math.floor(this.TS_Num / this.TS_Num_2)
-        } else {
-            this.index2++
-        }
+     repeat_l1 = (time:number) => {
+    
+ for(let i = 1; i <= this.shp1.length; i++){
+     for(let stp = 0 ; stp<this.nGrain; stp++){
+ if(this.trig1[i-1][stp] === true){
+   this.drumKit[this.sounds1[i-1]].start(time+stp*(this.TS_Num/this.TS_Den)*Time(this.nGrain+"n").toSeconds());
+  }
+}
+ }
+}
+repeat_l2 = (time:number) => {
+    console.log("l2")
+    console.log(this.measure_2)
+    for(let i = 1; i <= this.shp2.length; i++){
+        for(let stp = 0 ; stp<this.nGrain2; stp++){
+    if(this.trig2[i-1][stp] === true){
+      this.drumKit[this.sounds2[i-1]].start(time+stp*(this.TS_Num_2/this.TS_Den_2)*Time(this.nGrain2+"n").toSeconds());
+     }
+   }
     }
+   }
 }
 
 export const MainSketch = new MainSketchClass()

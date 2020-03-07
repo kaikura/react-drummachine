@@ -13,6 +13,6 @@ export class Tick {
 
     trigger(time: number) {
         this.setup()
-        this.sound.triggerAttackRelease("C4", "30n", time)
+        this.sound.triggerAttackRelease("C5", "30n", time)
     }
 }

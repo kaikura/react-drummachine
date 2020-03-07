@@ -19,7 +19,7 @@ import "./metronome.css"
     private drumKit: any[] = [];
     private sounds1: any = [];
     private sounds2:any = [];
-    private time: TimeForm | undefined ;
+   //private time: TimeForm ;
     private tick : any;
     
     
@@ -37,19 +37,27 @@ import "./metronome.css"
 }
 Transport.TimeSignature = 4
 Transport.loop = true
-Transport.loopEnd = "1m"
+Transport.loopEnd = "2m"
 }
  
 
   private handleTSChange(){
-    console.log(this.time);
+    //console.log(this.time);
   //Transport.TimeSignature = this.time.state.selectedTimeSignature;
 
     
   }
+  loop = () => {
+    const lp = (time:number) =>{
+
+
+    }
+
+  }
    
 
     private handleBPMChange = (bpm: number) => {
+      //console.log(this.time.state.selectedTimeSignature);
         Transport.bpm.value = bpm
         this.setState({ bpm })
     }

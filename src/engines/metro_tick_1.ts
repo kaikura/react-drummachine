@@ -1,6 +1,6 @@
 import { Synth } from "tone"
 
-export class HiHat {
+export class Tick_1 {
     private sound: any
 
     constructor() {
@@ -13,6 +13,6 @@ export class HiHat {
 
     trigger(time: number) {
         this.setup()
-        this.sound.triggerAttackRelease("B2", "30n", time)
+        this.sound.triggerAttackRelease("B5", "30n", time)
     }
 }

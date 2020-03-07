@@ -1,6 +1,8 @@
 import React from "react"
 import { MainSketch } from "../../../sketches/sketch"
-import { Sequencer } from "src/sketches/sequencer"
+import { Metro }  from   "../../../sketches/metronome"
+
+
 
 export interface IState {
     selectedTimeSignature: string
@@ -26,12 +28,6 @@ export class TimeForm extends React.Component<IProps, IState> {
         "3/2": [3, 6, 9, 12, 15, 18]
     }
 
-    public getTS = () => {
-        return this.state.selectedTimeSignature
-    }
-    public getnG = () => {
-        return this.state.selectedNumberOfGrains
-    }
 
     public render() {
         const { layer } = this.props
@@ -85,16 +81,13 @@ export class TimeForm extends React.Component<IProps, IState> {
         )
     }
 
-    private Num = 0
-    private Num2 = 0
-
     private onSelectTimeSignature = (event) => {
         this.setState({
-            selectedTimeSignature: event.target.value || undefined,
+            selectedTimeSignature: event.target.value,
             selectedNumberOfGrains: this.numberOfGrains[event.target.value][0]
         })
-        this.Num = this.numberOfGrains[event.target.value][0]
-        this.Num2 = this.numberOfGrains[event.target.value][0]
+        
+        
     }
 
     private onSelectNumberOfGrains = (event) => {
@@ -109,15 +102,18 @@ export class TimeForm extends React.Component<IProps, IState> {
             switch (layer) {
                 case 1:
                     MainSketch.setNGrain(Number(this.state.selectedNumberOfGrains))
-                    MainSketch.setNum(Number(this.Num))
+                    MainSketch.setTS1(String(this.state.selectedTimeSignature))
+                    Metro.setTS(String(this.state.selectedTimeSignature))
                     MainSketch.generateShapes()
                     MainSketch.updateArrays()
+                    MainSketch.triggerer()
                     break
                 case 2:
                     MainSketch.setNGrain2(Number(this.state.selectedNumberOfGrains))
-                    MainSketch.setNum2(Number(this.Num2))
+                    MainSketch.setTS2(String(this.state.selectedTimeSignature))
                     MainSketch.generateShapes()
                     MainSketch.updateArrays()
+                    MainSketch.triggerer()
                     break
             }
         }
