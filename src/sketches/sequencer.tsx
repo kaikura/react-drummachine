@@ -32,12 +32,57 @@ export class Sequencer extends React.Component<any, any> {
         Transport.loopEnd = "1m"
     }
 
+<<<<<<< HEAD
     private handleTSChange() {
         console.log(this.time)
         //Transport.TimeSignature = this.time.state.selectedTimeSignature;
     }
+=======
+
+  export class Sequencer extends React.Component<any,any> {
+    private drumKit: any[] = [];
+    private sounds1: any = [];
+    private sounds2:any = [];
+   //private time: TimeForm ;
+    private tick : any;
+    
+    
+  
+  constructor(props:any){
+  super(props);
+
+  
+  
+  
+  this.state = {
+ 
+    selected: null,
+    bpm: 120
+}
+Transport.TimeSignature = 4
+Transport.loop = true
+Transport.loopEnd = "2m"
+}
+ 
+
+  private handleTSChange(){
+    //console.log(this.time);
+  //Transport.TimeSignature = this.time.state.selectedTimeSignature;
+
+    
+  }
+  loop = () => {
+    const lp = (time:number) =>{
+
+
+    }
+
+  }
+   
+>>>>>>> 44f43583a39ebe837d64380c86dab9467f3d0850
 
     private handleBPMChange = (bpm: number) => {
+      //console.log(this.time.state.selectedTimeSignature);
         Transport.bpm.value = bpm
         this.setState({ bpm })
     }
