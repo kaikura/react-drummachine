@@ -1,29 +1,12 @@
 import * as P5 from "p5"
 import { Transport } from "tone"
 import { AppMode } from "../app/root.component"
-<<<<<<< HEAD
-import { Time } from "tone"
-import { ModeSelection } from "../components/mode-selection/mode-selection.component"
-
-const kk = require("../assests/kick.wav")
-const s1 = require("../assests/snare1.wav")
-const s2 = require("../assests/snare2.wav")
-const clp = require("../assests/clap.wav")
-const stk = require("../assests/stick.wav")
-const blS = require("../assests/blastBlock.wav")
-const cHH = require("../assests/closedHH.wav")
-const oHH = require("../assests/openHH.wav")
-const egg = require("../assests/egg.wav")
-const tmH = require("../assests/tomHigh.wav")
-const tmL = require("../assests/tomFloor.wav")
-=======
 import {Time} from "tone"
 import { Engines } from "src/engines"
 
 
 
 
->>>>>>> 44f43583a39ebe837d64380c86dab9467f3d0850
 
 export interface P5Sketch {
     setup(p5: P5, canvasParentRef: "centralSquare"): void
@@ -86,54 +69,21 @@ class MainSketchClass implements P5Sketch {
 
     private TS_Num = 4
     private TS_Num_2 = 4
-<<<<<<< HEAD
-
-    private CK_1_bool = false
-    private CK_2_bool = false
-
-    private div_integer
-
-    private nGrain_string
-    private index1: number = 0
-    private index2: number = 0
-
-    public drumKit: any = []
-=======
     private TS_Den = 4
     private TS_Den_2 = 4
     public  Kit = new Engines()
     private drumKit :any = []
->>>>>>> 44f43583a39ebe837d64380c86dab9467f3d0850
     private sounds1: any = []
     private sounds2: any = []
     private measure : String =""
     private measure_2 : String =""
 
     constructor() {
-<<<<<<< HEAD
-        this.drumKit[0] = new Audio(kk)
-        this.drumKit[1] = new Audio(s1)
-        this.drumKit[2] = new Audio(s2)
-        this.drumKit[3] = new Audio(clp)
-        this.drumKit[4] = new Audio(blS)
-        this.drumKit[5] = new Audio(cHH)
-        this.drumKit[6] = new Audio(oHH)
-        this.drumKit[7] = new Audio(egg)
-        this.drumKit[7] = new Audio(stk)
-        this.drumKit[8] = new Audio(tmH)
-        this.drumKit[9] = new Audio(tmL)
-
-        this.trig1 = []
-        this.trig2 = []
-        this.compact_shp1 = []
-        this.compact_shp2 = []
-=======
         this.drumKit = this.Kit.drumKit;
         this.trig1 = [];
         this.trig2 = [];
         this.compact_shp1 = [];
         this.compact_shp2 = [];
->>>>>>> 44f43583a39ebe837d64380c86dab9467f3d0850
         this.initializeArrays()
         this.generateShapes()
         this.updateArrays()
@@ -637,12 +587,8 @@ class MainSketchClass implements P5Sketch {
                 p5.pop()
             }
         }
-<<<<<<< HEAD
-        this.nGrain_string = this.nGrain.toString() + "n"
-=======
       
         
->>>>>>> 44f43583a39ebe837d64380c86dab9467f3d0850
     }
 
     public encoderInc() {
@@ -1092,12 +1038,6 @@ class MainSketchClass implements P5Sketch {
 
     public updateGrains() {
         this.stop_sequencer()
-<<<<<<< HEAD
-        //Transport.scheduleRepeat(function() {}, "0n")
-        Transport.scheduleRepeat(this.repeat, this.nGrain_string)
-        Transport.stop()
-        Transport.start()
-=======
 
         //"1:0" is one measure at 4/4 (8/8) will associated to the Time Signature, also 16th can be added "1:0:0"
         if(this.measure!=="") Transport.scheduleRepeat(this.repeat_l1,this.measure,"0")
@@ -1106,105 +1046,33 @@ class MainSketchClass implements P5Sketch {
         if(this.measure_2!=="") Transport.scheduleRepeat(this.repeat_l2, this.measure_2 ,"0")
         
         Transport.start();
->>>>>>> 44f43583a39ebe837d64380c86dab9467f3d0850
     }
 
     public getnGrains() {
         return this.nGrain
     }
 
-<<<<<<< HEAD
-    // change time signature
-
-    /*
-  //COMPUTATION FOR SECOND LAYER
-  function setGrains_secondLayer(){
-     if(TS_Num_2 <= TS_Num)
-         return nGrain2 = Math.ceil(nGrain/TS_Num_2) * TS_Num_2;
-  else if(TS_Num_2 > TS_Num && Number.isInteger(div_integer) != true)
-         return nGrain2 = Math.ceil(nGrain/TS_Num_2) * TS_Num_2;
-  else if(TS_Num_2 > TS_Num && Number.isInteger(div_integer) == true)
-         return console.log("aiuto");
-    }
-    */
-
-    //COMPUTATION FOR SECOND LAYER ------- BACKUP
-
     // actual audio engine
 
-    repeat = (time: number) => {
-        let step = this.index1 % this.nGrain
-        let step_2 = this.index2 % this.nGrain2 // POLYMETRICS!
-        this.counter++
-        this.counter2++
-
-        if (this.counter === this.nGrain + 1) {
-            ///console.log("CIAo")
-            this.counter = 1
-            this.numMeasures++
-            //console.log(numMeasures);
-        }
-        if (this.layerNumber === 2 && this.counter2 === this.nGrain2 + 1) {
-            this.counter2 = 1
-            this.numMeasure2++
-            //console.log(numMeasure2);
-        }
-        if (this.layerNumber === 2 && this.numMeasures === this.nGrain2 + 1) {
-            this.numMeasures = 1
-        }
-        if (this.layerNumber === 1 && this.numMeasure2 === this.nGrain + 1) {
-            this.numMeasure2 = 1
-        }
-        for (let i = 1; i <= this.shp1.length; i++) {
-            if (this.trig1[i - 1][step] === true) {
-                //synths[2].triggerAttackRelease(notes[i], '30n', time);
-                console.log(this.nGrain)
-                console.log(step)
-                this.drumKit[this.sounds1[i - 1]].play(time)
-                //DrumKit[i-1].trigger(time);
-            }
-        }
-
-        for (let i = 1; i <= this.shp2.length; i++) {
-            if (this.trig2[i - 1][step_2] === true) {
-                //synths[2].triggerAttackRelease(notes[i], '30n', time);
-                this.drumKit[this.sounds2[i - 1]].play(time)
-            }
-        }
-
-        // CLOCK
-        // with polymeters
-
-        this.index1++
-        if (this.TS_Num > this.TS_Num_2) {
-            this.index2 = this.index2 + 1 + Math.floor(this.TS_Num / this.TS_Num_2)
-        } else {
-            this.index2++
-        }
-=======
-    // actual audio engine
-
-     repeat_l1 = (time:number) => {
+    repeat_l1 = (time:number) => {
     
- for(let i = 1; i <= this.shp1.length; i++){
-     for(let stp = 0 ; stp<this.nGrain; stp++){
- if(this.trig1[i-1][stp] === true){
-   this.drumKit[this.sounds1[i-1]].start(time+stp*(this.TS_Num/this.TS_Den)*Time(this.nGrain+"n").toSeconds());
-  }
+        for(let i = 1; i <= this.shp1.length; i++){
+            for(let stp = 0 ; stp<this.nGrain; stp++){
+                if(this.trig1[i-1][stp] === true){
+        this.drumKit[this.sounds1[i-1]].start(time+stp*(this.TS_Num/this.TS_Den)*Time(this.nGrain+"n").toSeconds());
+                 }
+            }
+        }
 }
- }
-}
-repeat_l2 = (time:number) => {
-    console.log("l2")
-    console.log(this.measure_2)
-    for(let i = 1; i <= this.shp2.length; i++){
-        for(let stp = 0 ; stp<this.nGrain2; stp++){
-    if(this.trig2[i-1][stp] === true){
-      this.drumKit[this.sounds2[i-1]].start(time+stp*(this.TS_Num_2/this.TS_Den_2)*Time(this.nGrain2+"n").toSeconds());
-     }
-   }
->>>>>>> 44f43583a39ebe837d64380c86dab9467f3d0850
-    }
+    repeat_l2 = (time:number) => {
+
+        for(let i = 1; i <= this.shp2.length; i++){
+            for(let stp = 0 ; stp<this.nGrain2; stp++){
+                if(this.trig2[i-1][stp] === true){
+        this.drumKit[this.sounds2[i-1]].start(time+stp*(this.TS_Num_2/this.TS_Den_2)*Time(this.nGrain2+"n").toSeconds());
+                 }
+            }
+        }
    }
 }
 

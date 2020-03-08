@@ -15,6 +15,14 @@ export class RightPanel extends React.Component<any, any> {
         //console.log("yes")
         MainSketch.selectShape()
     }
+    private onMetroClick_1 = () => {
+        
+        Metro.handleClick_1()
+    } 
+    private onMetroClick_2 = () => {
+        
+        Metro.handleClick_2()
+    } 
 
     private onShapeClick = () => {
         MainSketch.changeShape()
@@ -61,9 +69,20 @@ export class RightPanel extends React.Component<any, any> {
                 <Container>
                     <div className="d-flex justify-content-around">
                         <Sequencer />
-                        <Metro />
                     </div>
 
+                    <Button
+                        text="Clock layer 1"
+                        icon="play"
+                        onClick={this.onMetroClick_1}
+                        style={{ marginBottom: "12px" }}
+                    />
+                    <Button
+                        text="Clock layer 2"
+                        icon="play"
+                        onClick={this.onMetroClick_2}
+                        style={{ marginBottom: "12px" }}
+                    />
                     <Button
                         text="Play"
                         icon="play"
@@ -71,7 +90,7 @@ export class RightPanel extends React.Component<any, any> {
                         style={{ marginBottom: "12px" }}
                     />
                     <Button
-                        text="Stop"
+                        text="Global_Stop"
                         icon="stop"
                         onClick={this.onStopClick}
                         style={{ marginBottom: "12px" }}

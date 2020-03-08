@@ -2,9 +2,11 @@ import { Synth } from "tone"
 
 export class Tick {
     private sound: any
+    private tone : String
 
-    constructor() {
+    constructor(tone : String) {
         this.sound = new Synth()
+        this.tone = tone
     }
 
     setup() {
@@ -13,6 +15,6 @@ export class Tick {
 
     trigger(time: number) {
         this.setup()
-        this.sound.triggerAttackRelease("C5", "30n", time)
+        this.sound.triggerAttackRelease(this.tone, "30n", time)
     }
 }

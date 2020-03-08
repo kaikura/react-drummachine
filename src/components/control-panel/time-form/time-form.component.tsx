@@ -103,7 +103,7 @@ export class TimeForm extends React.Component<IProps, IState> {
                 case 1:
                     MainSketch.setNGrain(Number(this.state.selectedNumberOfGrains))
                     MainSketch.setTS1(String(this.state.selectedTimeSignature))
-                    Metro.setTS(String(this.state.selectedTimeSignature))
+                    Metro.setTS_1(String(this.state.selectedTimeSignature))
                     MainSketch.generateShapes()
                     MainSketch.updateArrays()
                     MainSketch.triggerer()
@@ -111,6 +111,7 @@ export class TimeForm extends React.Component<IProps, IState> {
                 case 2:
                     MainSketch.setNGrain2(Number(this.state.selectedNumberOfGrains))
                     MainSketch.setTS2(String(this.state.selectedTimeSignature))
+                    Metro.setTS_2(String(this.state.selectedTimeSignature))
                     MainSketch.generateShapes()
                     MainSketch.updateArrays()
                     MainSketch.triggerer()
