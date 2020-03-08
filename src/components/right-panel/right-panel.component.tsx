@@ -7,14 +7,14 @@ import { Sequencer } from "src/sketches/sequencer"
 import { spacing } from "src/config/spacing"
 
 export class RightPanel extends React.Component<any, any> {
-    private onLayerClick = () => {
+    /*private onLayerClick = () => {
         MainSketch.createNewLayer()
     }
 
     private onTrackClick = () => {
         //console.log("yes")
         MainSketch.selectShape()
-    }
+    }*/
     private onMetroClick_1 = () => {
         
         Metro.handleClick_1()
@@ -24,7 +24,7 @@ export class RightPanel extends React.Component<any, any> {
         Metro.handleClick_2()
     } 
 
-    private onShapeClick = () => {
+    /*private onShapeClick = () => {
         MainSketch.changeShape()
     }
 
@@ -34,14 +34,14 @@ export class RightPanel extends React.Component<any, any> {
 
     private onShapeDeleteClick = () => {
         MainSketch.deleteShape()
-    }
+    }*/
     private onPlayClick = () => {
         MainSketch.updateGrains()
     }
     private onStopClick = () => {
         MainSketch.stop_sequencer()
     }
-
+/*
     private encoderClick = () => {
         MainSketch.encoderButt()
     }
@@ -53,7 +53,7 @@ export class RightPanel extends React.Component<any, any> {
     private minusOneClick = () => {
         MainSketch.encoderDec()
     }
-
+*/
     private onMouseReleased = () => {
         MainSketch.mouseReleased()
     }
@@ -90,7 +90,7 @@ export class RightPanel extends React.Component<any, any> {
                         style={{ marginBottom: "12px" }}
                     />
                     <Button
-                        text="Global_Stop"
+                        text="Global Stop"
                         icon="stop"
                         onClick={this.onStopClick}
                         style={{ marginBottom: "12px" }}
@@ -101,7 +101,7 @@ export class RightPanel extends React.Component<any, any> {
                         onMouseDown={this.onSoundClick}
                         style={{ marginBottom: "12px" }}
                     />
-                    <Button
+                   {/*<Button
                         text="Layer"
                         icon="plus"
                         onMouseDown={this.onLayerClick}
@@ -138,7 +138,7 @@ export class RightPanel extends React.Component<any, any> {
                     />
                     <Button text="Encoder" onClick={this.encoderClick} style={{ marginBottom: "12px" }} />
                     <Button text="-1" onClick={this.minusOneClick} style={{ marginBottom: "12px" }} />
-                    <Button text="+1" onClick={this.plusOneClick} style={{ marginBottom: "12px" }} />
+                   <Button text="+1" onClick={this.plusOneClick} style={{ marginBottom: "12px" }} />*/} 
                 </Container>
             </div>
         )
