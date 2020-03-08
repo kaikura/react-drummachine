@@ -2,6 +2,7 @@ import React from "react"
 import "./mode-selection.component.scss"
 import { AppMode } from "../../app/root.component"
 import logo from "src/img/Polyknob.png"
+import { TimeForm } from "src/components/control-panel/time-form/time-form.component"
 
 interface Props {
     onClick(mode: AppMode): void

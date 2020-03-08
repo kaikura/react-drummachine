@@ -39,27 +39,31 @@ export class RootComponent extends React.Component<any, State> {
 
         return (
             <div className="App">
-                {noModeSelected && <ModeSelection onClick={this.onClick}/>}
+                {noModeSelected && <ModeSelection onClick={this.onClick} />}
                 {!noModeSelected && (
                     <div className="container-fluid">
                         <div className="row">
                             <div className="col-2 control-column">
-                                <ControlPanel/>
+                                <ControlPanel />
                             </div>
 
                             <div
                                 id="centralSquare"
                                 className="col-8"
-                                style={{ position: "relative", backgroundColor  }}
+                                style={{ position: "relative", backgroundColor }}
                             >
-                                <Drawer/>
+                                <Drawer />
                             </div>
 
                             <div className="col-2 control-column">
-                                <RightPanel/>
+                                <RightPanel />
                             </div>
                         </div>
-                        <FooterPanel/>
+                        <div className="row">
+                            <div className="col-12 control-column">
+                                <FooterPanel />
+                            </div>
+                        </div>
                         <div> This is the encoder value: {this.state.timestamp}</div>
                     </div>
                 )}

@@ -7,14 +7,6 @@ import { Sequencer } from "src/sketches/sequencer"
 import { spacing } from "src/config/spacing"
 
 export class RightPanel extends React.Component<any, any> {
-    /*private onLayerClick = () => {
-        MainSketch.createNewLayer()
-    }
-
-    private onTrackClick = () => {
-        //console.log("yes")
-        MainSketch.selectShape()
-    }*/
     private onMetroClick_1 = () => {
         Metro.handleClick_1()
     }
@@ -22,39 +14,13 @@ export class RightPanel extends React.Component<any, any> {
         Metro.handleClick_2()
     }
 
-    /*private onShapeClick = () => {
-        MainSketch.changeShape()
-    }
-
-    private onRotateClick = () => {
-        MainSketch.rotateShape()
-    }
-
-    private onShapeDeleteClick = () => {
-        MainSketch.deleteShape()
-    }*/
     private onPlayClick = () => {
         MainSketch.updateGrains()
     }
     private onStopClick = () => {
         MainSketch.stop_sequencer()
     }
-/*
-    private encoderClick = () => {
-        MainSketch.encoderButt()
-    }
 
-    private plusOneClick = () => {
-        MainSketch.encoderInc()
-    }
-
-    private minusOneClick = () => {
-        MainSketch.encoderDec()
-    }
-*/
-    private onMouseReleased = () => {
-        MainSketch.mouseReleased()
-    }
     private onSoundClick = () => {
         MainSketch.chooseSound()
     }
@@ -65,18 +31,18 @@ export class RightPanel extends React.Component<any, any> {
                 <h5>Groove Shapes Control</h5>
 
                 <Container>
-                    <div className="d-flex justify-content-around">
+                    <div className="d-flex justify-content-center">
                         <Sequencer />
                     </div>
 
                     <Button
-                        text="Clock layer 1"
+                        text="Clock Layer 1"
                         icon="clock"
                         onClick={this.onMetroClick_1}
                         style={{ marginBottom: "12px" }}
                     />
                     <Button
-                        text="Clock layer 2"
+                        text="Clock Layer 2"
                         icon="clock"
                         onClick={this.onMetroClick_2}
                         style={{ marginBottom: "12px" }}
@@ -99,44 +65,6 @@ export class RightPanel extends React.Component<any, any> {
                         onMouseDown={this.onSoundClick}
                         style={{ marginBottom: "12px" }}
                     />
-                   {/*<Button
-                        text="Layer"
-                        icon="plus"
-                        onMouseDown={this.onLayerClick}
-                        onMouseUp={this.onMouseReleased}
-                        style={{ marginBottom: "12px" }}
-                    />
-
-                    <Button
-                        text="Track"
-                        icon="vector-square"
-                        onMouseDown={this.onTrackClick}
-                        onMouseUp={this.onMouseReleased}
-                        style={{ marginBottom: "12px" }}
-                    />
-                    <Button
-                        text="Shape"
-                        icon="shapes"
-                        onMouseDown={this.onShapeClick}
-                        onMouseUp={this.onMouseReleased}
-                        style={{ marginBottom: "12px" }}
-                    />
-                    <Button
-                        text="Rotate"
-                        icon="sync"
-                        onClick={this.onRotateClick}
-                        style={{ marginBottom: "12px" }}
-                    />
-                    <Button
-                        text="Delete shape"
-                        icon="trash fill"
-                        type="danger"
-                        onClick={this.onShapeDeleteClick}
-                        style={{ marginBottom: "12px" }}
-                    />
-                    <Button text="Encoder" onClick={this.encoderClick} style={{ marginBottom: "12px" }} />
-                    <Button text="-1" onClick={this.minusOneClick} style={{ marginBottom: "12px" }} />
-                   <Button text="+1" onClick={this.plusOneClick} style={{ marginBottom: "12px" }} />*/} 
                 </Container>
             </div>
         )

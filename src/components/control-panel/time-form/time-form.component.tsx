@@ -1,6 +1,8 @@
 import React from "react"
 import { MainSketch } from "../../../sketches/sketch"
 import { Metro } from "../../../sketches/metronome"
+import { AppMode } from "src/app/root.component"
+import { ModeSelection } from "src/components/mode-selection/mode-selection.component"
 
 export interface IState {
     selectedTimeSignature: string
@@ -25,6 +27,7 @@ export class TimeForm extends React.Component<IProps, IState> {
         "5/4": [5, 10, 15, 20, 25, 30],
         "3/2": [3, 6, 9, 12, 15, 18]
     }
+    private appMode!: AppMode
 
     public render() {
         const { layer } = this.props
@@ -58,18 +61,35 @@ export class TimeForm extends React.Component<IProps, IState> {
                 </div>
                 <div className="form-group">
                     <label htmlFor="numberOfGrains">Number of grains</label>
-                    <select
-                        className="form-control"
-                        id="numberOfGrains"
-                        disabled={disabledNumberOfGrains}
-                        value={selectedNumberOfGrains}
-                        onChange={this.onSelectNumberOfGrains}
-                    >
-                        {selectedTimeSignature &&
-                            this.numberOfGrains[(selectedTimeSignature as unknown) as string].map((o) => (
-                                <option key={`option-${o}`}>{o}</option>
-                            ))}
-                    </select>
+                    {this.appMode === AppMode.Learn && (
+                        <select
+                            className="form-control"
+                            id="numberOfGrains"
+                            disabled={disabledNumberOfGrains}
+                            value={selectedNumberOfGrains}
+                            onChange={this.onSelectNumberOfGrains}
+                        >
+                            {selectedTimeSignature &&
+                                this.numberOfGrains[(selectedTimeSignature as unknown) as string].map((o) => (
+                                    <option key={`option-${o}`}>{o}</option>
+                                ))}
+                        </select>
+                    )}
+
+                    {this.appMode === AppMode.Play && (
+                        <input
+                            className="form-control"
+                            id="numberOfGrains"
+                            disabled={disabledNumberOfGrains}
+                            value={selectedNumberOfGrains}
+                            onChange={this.onSelectNumberOfGrains}
+                        >
+                            {selectedTimeSignature &&
+                                this.numberOfGrains[(selectedTimeSignature as unknown) as string].map((o) => (
+                                    <option key={`option-${o}`}>{o}</option>
+                                ))}
+                        </input>
+                    )}
                 </div>
                 <button type="submit" className="btn btn-info btn-block">
                     Confirm

@@ -4,7 +4,7 @@ import { spacing } from "../../config/spacing"
 
 export const Container = styled.div`
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     margin-top: 12px;
 `
 
