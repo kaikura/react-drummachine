@@ -2,9 +2,9 @@ import { Synth } from "tone"
 
 export class Tick {
     private sound: any
-    private tone : String
+    private tone: String
 
-    constructor(tone : String) {
+    constructor(tone: String) {
         this.sound = new Synth()
         this.tone = tone
     }

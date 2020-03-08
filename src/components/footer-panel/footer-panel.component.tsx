@@ -3,6 +3,7 @@ import { Button } from "../button/button.component"
 import { MainSketch } from "../../sketches/sketch"
 import { Metro } from "../../sketches/metronome"
 import { Container } from "./footer-panel.style"
+<<<<<<< HEAD
 import {TimeForm} from "../control-panel/time-form/time-form.component"
 import { Sequencer } from "src/sketches/sequencer"
 import { spacing } from "src/config/spacing"
@@ -12,18 +13,25 @@ import { spacing } from "src/config/spacing"
 export class FooterPanel extends React.Component<any, any> {
     /*public render () {
         return(
+=======
+import { TimeForm } from "../control-panel/time-form/time-form.component"
+
+export class FooterPanel extends React.Component<any, any> {
+    public render() {
+        return (
+>>>>>>> dae7d89c7645d8d811d85e7b440a55a244ec36b0
             <Container>
-        <div className="alert alert-info" role="alert">
-            <strong>Polyrhythm created: </strong> 
-        </div>
-        
-        
-        <div className="alert alert-info" role="alert">
-            <strong>Polymeter created:</strong>
-        </div>
-        </Container>
+                <div className="alert alert-info" role="alert">
+                    <strong>Polyrhythm created: </strong>
+                </div>
+
+                <div className="alert alert-info" role="alert">
+                    <strong>Polymeter created:</strong>
+                </div>
+            </Container>
         )
     }
+<<<<<<< HEAD
     */
    private onLayerClick = () => {
     MainSketch.createNewLayer()
@@ -124,4 +132,6 @@ private onMouseReleased = () => {
             </div> 
     )
 }
+=======
+>>>>>>> dae7d89c7645d8d811d85e7b440a55a244ec36b0
 }

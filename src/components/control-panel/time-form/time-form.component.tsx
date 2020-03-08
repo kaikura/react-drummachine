@@ -1,8 +1,6 @@
 import React from "react"
 import { MainSketch } from "../../../sketches/sketch"
-import { Metro }  from   "../../../sketches/metronome"
-
-
+import { Metro } from "../../../sketches/metronome"
 
 export interface IState {
     selectedTimeSignature: string
@@ -27,7 +25,6 @@ export class TimeForm extends React.Component<IProps, IState> {
         "5/4": [5, 10, 15, 20, 25, 30],
         "3/2": [3, 6, 9, 12, 15, 18]
     }
-
 
     public render() {
         const { layer } = this.props
@@ -86,8 +83,6 @@ export class TimeForm extends React.Component<IProps, IState> {
             selectedTimeSignature: event.target.value,
             selectedNumberOfGrains: this.numberOfGrains[event.target.value][0]
         })
-        
-        
     }
 
     private onSelectNumberOfGrains = (event) => {

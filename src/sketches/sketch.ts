@@ -1,12 +1,8 @@
 import * as P5 from "p5"
 import { Transport } from "tone"
 import { AppMode } from "../app/root.component"
-import {Time} from "tone"
+import { Time } from "tone"
 import { Engines } from "src/engines"
-
-
-
-
 
 export interface P5Sketch {
     setup(p5: P5, canvasParentRef: "centralSquare"): void
@@ -36,8 +32,8 @@ class MainSketchClass implements P5Sketch {
     private trig2: any[]
     private compact_shp1: any[]
     private compact_shp2: any[]
-    private appMode!: AppMode 
-    
+    private appMode!: AppMode
+
     // private context = new AudioContext
 
     private rot1 = new Array(this.maxNumShapes)
@@ -63,7 +59,6 @@ class MainSketchClass implements P5Sketch {
     private ver = 0
     private active_seq = false
     private rotation_element = 0
-    
 
     // TIME SIGNATURE _ Layer 1
 
@@ -71,19 +66,19 @@ class MainSketchClass implements P5Sketch {
     private TS_Num_2 = 4
     private TS_Den = 4
     private TS_Den_2 = 4
-    public  Kit = new Engines()
-    private drumKit :any = []
+    public Kit = new Engines()
+    private drumKit: any = []
     private sounds1: any = []
     private sounds2: any = []
-    private measure : String =""
-    private measure_2 : String =""
+    private measure: String = ""
+    private measure_2: String = ""
 
     constructor() {
-        this.drumKit = this.Kit.drumKit;
-        this.trig1 = [];
-        this.trig2 = [];
-        this.compact_shp1 = [];
-        this.compact_shp2 = [];
+        this.drumKit = this.Kit.drumKit
+        this.trig1 = []
+        this.trig2 = []
+        this.compact_shp1 = []
+        this.compact_shp2 = []
         this.initializeArrays()
         this.generateShapes()
         this.updateArrays()
@@ -204,10 +199,9 @@ class MainSketchClass implements P5Sketch {
     }
 
     public draw(p5: P5): void {
-        if(this.appMode==1){
+        if (this.appMode == 1) {
             p5.background(23, 162, 184)
-        }
-        else if(this.appMode==0) {
+        } else if (this.appMode == 0) {
             p5.background(20, 53, 51)
         }
         p5.fill(250, 250, 250, 70)
@@ -587,8 +581,6 @@ class MainSketchClass implements P5Sketch {
                 p5.pop()
             }
         }
-      
-        
     }
 
     public encoderInc() {
@@ -911,11 +903,10 @@ class MainSketchClass implements P5Sketch {
     }
 
     public setTS1(value: String) {
-        this.TS_Num=Number(value.substring(0,1))
-        this.TS_Den=Number(value.substring(2))
+        this.TS_Num = Number(value.substring(0, 1))
+        this.TS_Den = Number(value.substring(2))
         let val = this.mapping(value)
-        if (val !== undefined)
-        this.measure = val
+        if (val !== undefined) this.measure = val
 
         return this
     }
@@ -923,29 +914,29 @@ class MainSketchClass implements P5Sketch {
     //managing Time Signature
     public setTS2(value: String) {
         console.log(value)
-        this.TS_Num_2=Number(value.substring(0,1))
-        this.TS_Den_2=Number(value.substring(2))
+        this.TS_Num_2 = Number(value.substring(0, 1))
+        this.TS_Den_2 = Number(value.substring(2))
         let val = this.mapping(value)
-        if (val !== undefined)
-        this.measure_2 = val
+        if (val !== undefined) this.measure_2 = val
 
         return this
     }
     //any kind of time signature can be used, but it has to be mapped with respect to the master clock
-    private mapping(val : String){
-        let num = Number(val.substring(0,1))
+    private mapping(val: String) {
+        let num = Number(val.substring(0, 1))
         let den = Number(val.substring(2))
-        if(den===4){
-            if(num===5) return "0:5"
-            if(num===3) return "0:3"
-            if(num===4) return "1:0"
-        }else{
-        if(den===8){
-            if(num===9) return "0:4:2"
-            if(num===7) return "0:3:14"
+        if (den === 4) {
+            if (num === 5) return "0:5"
+            if (num === 3) return "0:3"
+            if (num === 4) return "1:0"
+        } else {
+            if (den === 8) {
+                if (num === 9) return "0:4:2"
+                if (num === 7) return "0:3:14"
+            }
         }
-    } return "1:2"
-    //end
+        return "1:2"
+        //end
     }
 
     public stop_sequencer() {
@@ -956,9 +947,7 @@ class MainSketchClass implements P5Sketch {
         this.numMeasure2 = 0
         Transport.stop()
         Transport.cancel()
-       
     }
-
 
     public triggerer() {
         //clears all the previous trigs
@@ -978,7 +967,6 @@ class MainSketchClass implements P5Sketch {
             }
         }
 
-       
         for (let j = 1; j <= this.shp2.length; j++) {
             this.trig2[j - 1] = []
 
@@ -1025,27 +1013,24 @@ class MainSketchClass implements P5Sketch {
                 }
             }
         }
-
     }
 
     //read input for grains
 
     public chooseSound() {
-    
         this.instrumentMode = 6
     }
-
 
     public updateGrains() {
         this.stop_sequencer()
 
         //"1:0" is one measure at 4/4 (8/8) will associated to the Time Signature, also 16th can be added "1:0:0"
-        if(this.measure!=="") Transport.scheduleRepeat(this.repeat_l1,this.measure,"0")
-         
+        if (this.measure !== "") Transport.scheduleRepeat(this.repeat_l1, this.measure, "0")
+
         //Scond layer has another schedule, with adjustable duration indipendent from BPM
-        if(this.measure_2!=="") Transport.scheduleRepeat(this.repeat_l2, this.measure_2 ,"0")
-        
-        Transport.start();
+        if (this.measure_2 !== "") Transport.scheduleRepeat(this.repeat_l2, this.measure_2, "0")
+
+        Transport.start()
     }
 
     public getnGrains() {
@@ -1054,26 +1039,28 @@ class MainSketchClass implements P5Sketch {
 
     // actual audio engine
 
-    repeat_l1 = (time:number) => {
-    
-        for(let i = 1; i <= this.shp1.length; i++){
-            for(let stp = 0 ; stp<this.nGrain; stp++){
-                if(this.trig1[i-1][stp] === true){
-        this.drumKit[this.sounds1[i-1]].start(time+stp*(this.TS_Num/this.TS_Den)*Time(this.nGrain+"n").toSeconds());
-                 }
+    repeat_l1 = (time: number) => {
+        for (let i = 1; i <= this.shp1.length; i++) {
+            for (let stp = 0; stp < this.nGrain; stp++) {
+                if (this.trig1[i - 1][stp] === true) {
+                    this.drumKit[this.sounds1[i - 1]].start(
+                        time + stp * (this.TS_Num / this.TS_Den) * Time(this.nGrain + "n").toSeconds()
+                    )
+                }
             }
         }
-}
-    repeat_l2 = (time:number) => {
-
-        for(let i = 1; i <= this.shp2.length; i++){
-            for(let stp = 0 ; stp<this.nGrain2; stp++){
-                if(this.trig2[i-1][stp] === true){
-        this.drumKit[this.sounds2[i-1]].start(time+stp*(this.TS_Num_2/this.TS_Den_2)*Time(this.nGrain2+"n").toSeconds());
-                 }
+    }
+    repeat_l2 = (time: number) => {
+        for (let i = 1; i <= this.shp2.length; i++) {
+            for (let stp = 0; stp < this.nGrain2; stp++) {
+                if (this.trig2[i - 1][stp] === true) {
+                    this.drumKit[this.sounds2[i - 1]].start(
+                        time + stp * (this.TS_Num_2 / this.TS_Den_2) * Time(this.nGrain2 + "n").toSeconds()
+                    )
+                }
             }
         }
-   }
+    }
 }
 
 export const MainSketch = new MainSketchClass()

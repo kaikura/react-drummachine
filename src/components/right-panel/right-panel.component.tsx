@@ -16,13 +16,11 @@ export class RightPanel extends React.Component<any, any> {
         MainSketch.selectShape()
     }*/
     private onMetroClick_1 = () => {
-        
         Metro.handleClick_1()
-    } 
+    }
     private onMetroClick_2 = () => {
-        
         Metro.handleClick_2()
-    } 
+    }
 
     /*private onShapeClick = () => {
         MainSketch.changeShape()

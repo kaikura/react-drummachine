@@ -35,53 +35,37 @@ export class RootComponent extends React.Component<any, State> {
     public render() {
         const { appMode } = this.state
         const noModeSelected = appMode === null
+        const backgroundColor = appMode === AppMode.Learn ? "#17a2b8" : "#348781"
 
         return (
             <div className="App">
-                {noModeSelected && <ModeSelection onClick={this.onClick} />}
+                {noModeSelected && <ModeSelection onClick={this.onClick}/>}
                 {!noModeSelected && (
                     <div className="container-fluid">
                         <div className="row">
                             <div className="col-2 control-column">
-                                <ControlPanel />
+                                <ControlPanel/>
                             </div>
-                            
-{appMode==1 && (
+
                             <div
                                 id="centralSquare"
                                 className="col-8"
-                                style={{ position: "relative", backgroundColor: "#17a2b8" }}
+                                style={{ position: "relative", backgroundColor  }}
                             >
-                                <Drawer />
+                                <Drawer/>
                             </div>
-)}
-{appMode==0 && (
-                            <div
-                                id="centralSquare"
-                                className="col-8"
-                                style={{ position: "relative", backgroundColor: "#348781" }}
-                            >
-                                <Drawer />
-                            </div>
-)}
 
                             <div className="col-2 control-column">
-                                <RightPanel />
+                                <RightPanel/>
                             </div>
-                            
                         </div>
                         <FooterPanel/>
-                        <div>
-                        
-                            {" "}
-                            This is the encoder value: {this.state.timestamp}
-                        </div>
+                        <div> This is the encoder value: {this.state.timestamp}</div>
                     </div>
                 )}
             </div>
         )
     }
-    
 
     private onClick = (mode: AppMode) => {
         this.setState({

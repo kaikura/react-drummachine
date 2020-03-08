@@ -1,4 +1,3 @@
-
 import * as React from "react"
 import { MainSketch } from "./sketch"
 import { Transport } from "tone"
@@ -8,9 +7,7 @@ import { Tick } from "src/engines"
 import "./metronome.css"
 
 export class Sequencer extends React.Component<any, any> {
-   
     private time: TimeForm | undefined
-   
 
     constructor(props: any) {
         super(props)
@@ -19,7 +16,6 @@ export class Sequencer extends React.Component<any, any> {
             selected: null,
             bpm: 120
         }
-      
     }
 
     private handleTSChange() {
@@ -28,7 +24,7 @@ export class Sequencer extends React.Component<any, any> {
     }
 
     private handleBPMChange = (bpm: number) => {
-      //console.log(this.time.state.selectedTimeSignature);
+        //console.log(this.time.state.selectedTimeSignature);
         Transport.bpm.value = bpm
         this.setState({ bpm })
     }
