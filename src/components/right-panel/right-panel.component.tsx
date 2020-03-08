@@ -73,13 +73,13 @@ export class RightPanel extends React.Component<any, any> {
 
                     <Button
                         text="Clock layer 1"
-                        icon="play"
+                        icon="clock"
                         onClick={this.onMetroClick_1}
                         style={{ marginBottom: "12px" }}
                     />
                     <Button
                         text="Clock layer 2"
-                        icon="play"
+                        icon="clock"
                         onClick={this.onMetroClick_2}
                         style={{ marginBottom: "12px" }}
                     />
