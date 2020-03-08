@@ -83,6 +83,7 @@ export class TimeForm extends React.Component<IProps, IState> {
                                         id="numberOfGrains"
                                         disabled={disabledNumberOfGrains}
                                         value={selectedNumberOfGrains}
+                                        onChange={this.onSelectNumberOfGrains}
                                     />
                                 )}
                             </>

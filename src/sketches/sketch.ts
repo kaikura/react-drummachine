@@ -25,8 +25,8 @@ class MainSketchClass implements P5Sketch {
     private clockCircleScaleSize = 0.95
     private currentGrain = 0
     private currentGrain2 = 0
-    private nGrain = 4
-    private nGrain2 = 4
+    private nGrain = 1
+    private nGrain2 = 1
     //private firstLayerLandW = 500
     private trig1: any[]
     private trig2: any[]
