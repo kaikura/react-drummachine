@@ -98,11 +98,11 @@ export class FooterPanel extends React.Component<any, any> {
     private renderPopoverContent = (buttonType) => {
         return () => {
             const map = {
-                [ButtonType.Layer]: "Description of button Layer",
-                [ButtonType.Track]: "Description of button Layer",
-                [ButtonType.Rotate]: "Description of button Layer",
-                [ButtonType.Shape]: "Description of button Layer",
-                [ButtonType.DeleteShape]: "Description of button Layer"
+                [ButtonType.Layer]: "Hold to add a layer, press to enter the layer mode. Then you can switch between them with the encoder.",
+                [ButtonType.Track]: "Hold to add a track, press to enter the track mode. Then you can switch between them with the encoder.",
+                [ButtonType.Rotate]: "Press to enter the rotation mode. Then you can rotate shapes with the encoder",
+                [ButtonType.Shape]: "Hold to add a shape. press to enter the shape mode. Then you can switch between them with the encoder.",
+                [ButtonType.DeleteShape]: "Press to delete the shape selected."
             }
 
             return <p>{map[buttonType]}</p>
