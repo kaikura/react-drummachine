@@ -5,6 +5,8 @@ import { Metro } from "../../sketches/metronome"
 import { Container } from "./right-panel.style"
 import { Sequencer } from "src/sketches/sequencer"
 import { spacing } from "src/config/spacing"
+import { ButtonWithPopover } from "../button-with-popover/button-with-popover.component"
+
 
 export class RightPanel extends React.Component<any, any> {
     private onMetroClick_1 = () => {
@@ -28,8 +30,15 @@ export class RightPanel extends React.Component<any, any> {
     public render() {
         return (
             <div style={{ marginTop: "12px" }}>
-                <h5>Groove Shapes Control</h5>
-
+                
+                <ButtonWithPopover
+                    id="test-popover"
+                    placement="bottom"
+                    title="Audio Panel"
+                    showIcon
+                    btnText="Click me"
+                    renderPopoverContent={this.renderPopoverContent as any}
+                />
                 <Container>
                     <div className="d-flex justify-content-center">
                         <Sequencer />
@@ -68,5 +77,8 @@ export class RightPanel extends React.Component<any, any> {
                 </Container>
             </div>
         )
+    }
+    private renderPopoverContent = () => {
+        return <p>Here you can manage all the audio features of the interface.</p>
     }
 }

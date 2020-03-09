@@ -9,7 +9,6 @@ import { subscribeToTimer } from "../api"
 import { ModeSelection } from "../components/mode-selection/mode-selection.component"
 import { AppContext } from "./app-context"
 import { MainSketch } from "../sketches/sketch"
-import { Tutorial } from "src/tutorial/tutorial.component"
 
 export enum AppMode {
     Play,

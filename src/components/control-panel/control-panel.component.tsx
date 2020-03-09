@@ -9,7 +9,7 @@ export class ControlPanel extends React.Component<any, any> {
                 <ButtonWithPopover
                     id="test-popover"
                     placement="bottom"
-                    title="Test popover"
+                    title="Rhythm panel"
                     showIcon
                     btnText="Click me"
                     renderPopoverContent={this.renderPopoverContent as any}
@@ -21,6 +21,6 @@ export class ControlPanel extends React.Component<any, any> {
     }
 
     private renderPopoverContent = () => {
-        return <p>Contenuto del popover</p>
+        return <p>Here you can choose the time signature and the number of grains for the first layer and for the second one, once you have added it.</p>
     }
 }
