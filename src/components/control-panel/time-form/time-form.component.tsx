@@ -13,7 +13,6 @@ export interface IProps {
     layer: 1 | 2
 }
 
-
 export class TimeForm extends React.Component<IProps, IState> {
     public state = {
         selectedTimeSignature: "",
@@ -28,16 +27,13 @@ export class TimeForm extends React.Component<IProps, IState> {
         "5/4": [5, 10, 15, 20, 25, 30],
         "3/2": [3, 6, 9, 12, 15, 18]
     }
-    
 
     public render() {
         const { layer } = this.props
         const { selectedTimeSignature, selectedNumberOfGrains } = this.state
         const disabledNumberOfGrains = selectedTimeSignature === undefined
 
-
         return (
-            
             <form onSubmit={this.onSubmit}>
                 <div className="form-group row">
                     <label htmlFor="polyrhytm" className="col-sm-2 col-form-label">
@@ -97,13 +93,9 @@ export class TimeForm extends React.Component<IProps, IState> {
                 <button type="submit" className="btn btn-info btn-block">
                     Confirm
                 </button>
-                
             </form>
-            
         )
     }
-
-    
 
     private onSelectTimeSignature = (event) => {
         this.setState({
@@ -144,4 +136,3 @@ export class TimeForm extends React.Component<IProps, IState> {
         event.preventDefault()
     }
 }
-
