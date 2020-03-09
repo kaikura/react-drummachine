@@ -23,41 +23,9 @@ app.get('/', function (req, res) {
 });
 
 
-val=0;
-/*
-board.on("ready", () => {
-  //const potentiometer = new Sensor("A0");
 
-  //potentiometer.on("change", () => {
-    
-    const {value} = potentiometer;
-    console.log("Sensor: ");
-    console.log("  value  : ", value);
-    val = value;
 
-    //console.log("  raw    : ", raw);
-    console.log("-----------------");
-      const upButton = new five.Button(13);
-  const downButton = new five.Button(12);
-  const pressButton = new five.Button(11);
 
-  rotaryEncoder({
-    upButton,
-    downButton,
-    pressButton,
-    onUp: () => {
-      console.log('up');
-    },
-    onDown: () => {
-      console.log('down');
-    },
-    onPress: () => {
-      console.log('press');
-    },
-  });
-    
-  });
-  */
  var enc_val = '';
   board.on('ready', () => {
     const upButton = new five.Button(13);
@@ -78,10 +46,12 @@ board.on("ready", () => {
       },
       onPress: () => {
         enc_val='press';
+       
         console.log('press');
       },
     });
   });
+
 
 io.on('connection', (client) => {
   client.on('subscribeToTimer', (interval) => {

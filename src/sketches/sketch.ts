@@ -54,8 +54,8 @@ class MainSketchClass implements P5Sketch {
 
     private degree = 0
     private canvas
-    private counter = -1
-    private counter2 = -1
+    private counter = 0
+    private counter2 = 0
     private numMeasures
     private numMeasure2
     private numSides1 = new Array()
@@ -1055,9 +1055,11 @@ class MainSketchClass implements P5Sketch {
     // actual audio engine
 
     repeat_l1 = (time:number) => {
+        this.numMeasures++
     
         for(let i = 1; i <= this.shp1.length; i++){
             for(let stp = 0 ; stp<this.nGrain; stp++){
+            
                 if(this.trig1[i-1][stp] === true){
         this.drumKit[this.sounds1[i-1]].start(time+stp*(this.TS_Num/this.TS_Den)*Time(this.nGrain+"n").toSeconds());
                  }
@@ -1065,6 +1067,7 @@ class MainSketchClass implements P5Sketch {
         }
 }
     repeat_l2 = (time:number) => {
+        this.numMeasure2++
 
         for(let i = 1; i <= this.shp2.length; i++){
             for(let stp = 0 ; stp<this.nGrain2; stp++){

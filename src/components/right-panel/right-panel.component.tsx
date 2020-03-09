@@ -5,6 +5,7 @@ import { Metro } from "../../sketches/metronome"
 import { Container } from "./right-panel.style"
 import { Sequencer } from "src/sketches/sequencer"
 import { spacing } from "src/config/spacing"
+import { PlayPause } from "../play_button/play-pause"
 
 export class RightPanel extends React.Component<any, any> {
     private onLayerClick = () => {
@@ -35,13 +36,7 @@ export class RightPanel extends React.Component<any, any> {
     private onShapeDeleteClick = () => {
         MainSketch.deleteShape()
     }
-    private onPlayClick = () => {
-        MainSketch.updateGrains()
-    }
-    private onStopClick = () => {
-        MainSketch.stop_sequencer()
-    }
-
+  
     private encoderClick = () => {
         MainSketch.encoderButt()
     }
@@ -59,6 +54,13 @@ export class RightPanel extends React.Component<any, any> {
     }
     private onSoundClick = () => {
         MainSketch.chooseSound()
+    }
+    private pause = () => {
+        MainSketch.stop_sequencer()
+    }
+
+    play = () => {
+        MainSketch.updateGrains()
     }
 
     public render() {
@@ -83,18 +85,10 @@ export class RightPanel extends React.Component<any, any> {
                         onClick={this.onMetroClick_2}
                         style={{ marginBottom: "12px" }}
                     />
-                    <Button
-                        text="Play"
-                        icon="play"
-                        onClick={this.onPlayClick}
-                        style={{ marginBottom: "12px" }}
-                    />
-                    <Button
-                        text="Global_Stop"
-                        icon="stop"
-                        onClick={this.onStopClick}
-                        style={{ marginBottom: "12px" }}
-                    />
+                    <Container>
+                    <PlayPause play={this.play} pause={this.pause} />
+                    </Container>
+                 
                     <Button
                         text="Instrument"
                         icon="music player fill"
