@@ -7,6 +7,7 @@ import { FooterPanel } from "../components/footer-panel/footer-panel.component"
 import { subscribeToTimer } from "../api"
 import { ModeSelection } from "../components/mode-selection/mode-selection.component"
 import { AppContext } from "./app-context"
+import { MainSketch } from "../sketches/sketch"
 
 export enum AppMode {
     Play,
@@ -79,6 +80,7 @@ export class RootComponent extends React.Component<any, State> {
             appMode: mode
         })
 
+        MainSketch.setAppMode(mode)
         // TODO: do something more with the mode just selected
     }
 }

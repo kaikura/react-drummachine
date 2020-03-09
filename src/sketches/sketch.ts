@@ -32,7 +32,7 @@ class MainSketchClass implements P5Sketch {
     private trig2: any[]
     private compact_shp1: any[]
     private compact_shp2: any[]
-    private appMode!: AppMode
+    private appMode: AppMode | null = null
 
     // private context = new AudioContext
 
@@ -1060,6 +1060,12 @@ class MainSketchClass implements P5Sketch {
                 }
             }
         }
+    }
+
+    public setAppMode(mode: AppMode) {
+        this.appMode = mode
+
+        return this
     }
 }
 
