@@ -1,4 +1,5 @@
 import React from "react"
+import "bootstrap/dist/css/bootstrap.min.css"
 import "./root.component.scss"
 import { Drawer } from "../components/drawer/drawer.component"
 import { ControlPanel } from "../components/control-panel/control-panel.component"
