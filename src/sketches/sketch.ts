@@ -199,11 +199,12 @@ class MainSketchClass implements P5Sketch {
     }
 
     public draw(p5: P5): void {
-        /*if (this.appMode == AppMode.Learn) {
-            p5.background(23, 162, 184)
+        if (this.appMode == AppMode.Learn) {
+            p5.background('#17a2b8')
         } else if (this.appMode == AppMode.Play) {
-            p5.background(20, 53, 51)
-        }*/
+            p5.background('#348781')
+        }
+        
         p5.fill(250, 250, 250, 70)
         p5.strokeWeight(2)
         p5.ellipse(this.canvasWidth / 2, this.canvasHeight / 2, this.circleLandW, this.circleLandW)
