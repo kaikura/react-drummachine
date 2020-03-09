@@ -33,13 +33,14 @@ export class RootComponent extends React.Component<any, State> {
 
     public state = {
         appMode: null,
-        timestamp: "no timestamp yet"
+        timestamp: "no timestamp yet",
     }
 
     public render() {
         const { appMode } = this.state
         const noModeSelected = appMode === null
         const backgroundColor = appMode === AppMode.Learn ? "#17a2b8" : "#348781"
+        MainSketch.setEncoder(String(this.state.timestamp))
 
         return (
             <AppContext.Provider value={{ appMode }}>
