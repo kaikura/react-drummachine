@@ -77,9 +77,9 @@ export class RootComponent extends React.Component<any, State> {
 
     private onClick = (mode: AppMode) => {
         this.setState({
-            appMode: mode
+            appMode: mode 
         })
-
+        console.log(this.state.appMode)
         MainSketch.setAppMode(mode)
         // TODO: do something more with the mode just selected
     }
