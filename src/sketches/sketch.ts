@@ -1,12 +1,8 @@
 import * as P5 from "p5"
 import { Transport } from "tone"
 import { AppMode } from "../app/root.component"
-import {Time} from "tone"
+import { Time } from "tone"
 import { Engines } from "src/engines"
-
-
-
-
 
 export interface P5Sketch {
     setup(p5: P5, canvasParentRef: "centralSquare"): void
@@ -29,15 +25,15 @@ class MainSketchClass implements P5Sketch {
     private clockCircleScaleSize = 0.95
     private currentGrain = 0
     private currentGrain2 = 0
-    private nGrain = 4
-    private nGrain2 = 4
+    private nGrain = 1
+    private nGrain2 = 1
     //private firstLayerLandW = 500
     private trig1: any[]
     private trig2: any[]
     private compact_shp1: any[]
     private compact_shp2: any[]
-    private appMode!: AppMode 
-    
+    private appMode: AppMode | null = null
+
     // private context = new AudioContext
 
     private rot1 = new Array(this.maxNumShapes)
@@ -63,7 +59,6 @@ class MainSketchClass implements P5Sketch {
     private ver = 0
     private active_seq = false
     private rotation_element = 0
-    
 
     // TIME SIGNATURE _ Layer 1
 
@@ -71,19 +66,19 @@ class MainSketchClass implements P5Sketch {
     private TS_Num_2 = 4
     private TS_Den = 4
     private TS_Den_2 = 4
-    public  Kit = new Engines()
-    private drumKit :any = []
+    public Kit = new Engines()
+    private drumKit: any = []
     private sounds1: any = []
     private sounds2: any = []
-    private measure : String =""
-    private measure_2 : String =""
+    private measure: String = ""
+    private measure_2: String = ""
 
     constructor() {
-        this.drumKit = this.Kit.drumKit;
-        this.trig1 = [];
-        this.trig2 = [];
-        this.compact_shp1 = [];
-        this.compact_shp2 = [];
+        this.drumKit = this.Kit.drumKit
+        this.trig1 = []
+        this.trig2 = []
+        this.compact_shp1 = []
+        this.compact_shp2 = []
         this.initializeArrays()
         this.generateShapes()
         this.updateArrays()
@@ -204,12 +199,11 @@ class MainSketchClass implements P5Sketch {
     }
 
     public draw(p5: P5): void {
-        if(this.appMode==1){
+        /*if (this.appMode == AppMode.Learn) {
             p5.background(23, 162, 184)
-        }
-        else if(this.appMode==0) {
+        } else if (this.appMode == AppMode.Play) {
             p5.background(20, 53, 51)
-        }
+        }*/
         p5.fill(250, 250, 250, 70)
         p5.strokeWeight(2)
         p5.ellipse(this.canvasWidth / 2, this.canvasHeight / 2, this.circleLandW, this.circleLandW)
@@ -224,7 +218,8 @@ class MainSketchClass implements P5Sketch {
         if (this.counter > 0) {
             p5.noFill()
             p5.push()
-            p5.stroke("pink")
+            if (this.appMode == AppMode.Learn) {p5.stroke("pink")}
+            else if (this.appMode == AppMode.Play) {p5.stroke("#43BFC7")}
             p5.arc(
                 this.canvasWidth / 2,
                 this.canvasHeight / 2,
@@ -267,7 +262,8 @@ class MainSketchClass implements P5Sketch {
         if (this.counter === this.nGrain) {
             p5.noFill()
             p5.push()
-            p5.stroke("pink")
+            if (this.appMode == AppMode.Learn) {p5.stroke("pink")}
+            else if (this.appMode == AppMode.Play) {p5.stroke("#43BFC7")}
             p5.ellipse(
                 this.canvasWidth / 2,
                 this.canvasHeight / 2,
@@ -293,7 +289,8 @@ class MainSketchClass implements P5Sketch {
             p5.noFill()
             p5.strokeWeight(4)
             p5.push()
-            p5.stroke("pink")
+            if (this.appMode == AppMode.Learn) {p5.stroke("pink")}
+            else if (this.appMode == AppMode.Play) {p5.stroke("#43BFC7")}
             if (this.TS_Num <= this.TS_Num_2) {
                 p5.arc(
                     this.canvasWidth / 2,
@@ -337,7 +334,8 @@ class MainSketchClass implements P5Sketch {
         //draw ellipse for last connection clock ring arcs
         if (this.layerNumber === 2 && this.numMeasures === this.nGrain2) {
             p5.push()
-            p5.stroke("pink")
+            if (this.appMode == AppMode.Learn) {p5.stroke("pink")}
+            else if (this.appMode == AppMode.Play) {p5.stroke("#43BFC7")}
             p5.strokeWeight(4)
             p5.ellipse(
                 this.canvasWidth / 2,
@@ -368,7 +366,8 @@ class MainSketchClass implements P5Sketch {
             grainX = this.canvasWidth / 2 + p5.cos(angle) * (this.circleLandW / 2)
             grainY = this.canvasHeight / 2 + p5.sin(angle) * (this.circleLandW / 2)
             p5.strokeWeight(10)
-            p5.stroke("pink")
+            if (this.appMode == AppMode.Learn) {p5.stroke("pink")}
+            else if (this.appMode == AppMode.Play) {p5.stroke("#48CCCD")}
             p5.point(grainX, grainY)
             angle += step
         }
@@ -395,7 +394,8 @@ class MainSketchClass implements P5Sketch {
 
             //draws first layer shapes
             p5.beginShape()
-            p5.stroke("pink")
+            if (this.appMode == AppMode.Learn) {p5.stroke("pink")}
+            else if (this.appMode == AppMode.Play) {p5.stroke("#43BFC7")}
             for (let i = 0; i <= vert.length; i++) {
                 let corr_node = vert[i]
                 let count = 0
@@ -510,7 +510,8 @@ class MainSketchClass implements P5Sketch {
                 var grainX2 = this.canvasWidth / 2 + p5.cos(angle2) * 266 * this.clockCircleScaleSize //320 effects how much bigger the second circle is should be half the width and height of the elipse
                 var grainY2 = this.canvasHeight / 2 + p5.sin(angle2) * 266 * this.clockCircleScaleSize
                 p5.strokeWeight(3)
-                p5.stroke("pink")
+                if (this.appMode == AppMode.Learn) {p5.stroke("pink")}
+            else if (this.appMode == AppMode.Play) {p5.stroke("#43BFC7")}
                 p5.line(grainX2, grainY2, grainX2 + p5.cos(angle2) * 9, grainY2 + p5.sin(angle2) * 9)
                 angle2 += step2
             }
@@ -587,8 +588,6 @@ class MainSketchClass implements P5Sketch {
                 p5.pop()
             }
         }
-      
-        
     }
 
     public encoderInc() {
@@ -911,11 +910,10 @@ class MainSketchClass implements P5Sketch {
     }
 
     public setTS1(value: String) {
-        this.TS_Num=Number(value.substring(0,1))
-        this.TS_Den=Number(value.substring(2))
+        this.TS_Num = Number(value.substring(0, 1))
+        this.TS_Den = Number(value.substring(2))
         let val = this.mapping(value)
-        if (val !== undefined)
-        this.measure = val
+        if (val !== undefined) this.measure = val
 
         return this
     }
@@ -923,29 +921,29 @@ class MainSketchClass implements P5Sketch {
     //managing Time Signature
     public setTS2(value: String) {
         console.log(value)
-        this.TS_Num_2=Number(value.substring(0,1))
-        this.TS_Den_2=Number(value.substring(2))
+        this.TS_Num_2 = Number(value.substring(0, 1))
+        this.TS_Den_2 = Number(value.substring(2))
         let val = this.mapping(value)
-        if (val !== undefined)
-        this.measure_2 = val
+        if (val !== undefined) this.measure_2 = val
 
         return this
     }
     //any kind of time signature can be used, but it has to be mapped with respect to the master clock
-    private mapping(val : String){
-        let num = Number(val.substring(0,1))
+    private mapping(val: String) {
+        let num = Number(val.substring(0, 1))
         let den = Number(val.substring(2))
-        if(den===4){
-            if(num===5) return "0:5"
-            if(num===3) return "0:3"
-            if(num===4) return "1:0"
-        }else{
-        if(den===8){
-            if(num===9) return "0:4:2"
-            if(num===7) return "0:3:14"
+        if (den === 4) {
+            if (num === 5) return "0:5"
+            if (num === 3) return "0:3"
+            if (num === 4) return "1:0"
+        } else {
+            if (den === 8) {
+                if (num === 9) return "0:4:2"
+                if (num === 7) return "0:3:14"
+            }
         }
-    } return "1:2"
-    //end
+        return "1:2"
+        //end
     }
 
     public stop_sequencer() {
@@ -956,9 +954,7 @@ class MainSketchClass implements P5Sketch {
         this.numMeasure2 = 0
         Transport.stop()
         Transport.cancel()
-       
     }
-
 
     public triggerer() {
         //clears all the previous trigs
@@ -978,7 +974,6 @@ class MainSketchClass implements P5Sketch {
             }
         }
 
-       
         for (let j = 1; j <= this.shp2.length; j++) {
             this.trig2[j - 1] = []
 
@@ -1025,27 +1020,24 @@ class MainSketchClass implements P5Sketch {
                 }
             }
         }
-
     }
 
     //read input for grains
 
     public chooseSound() {
-    
         this.instrumentMode = 6
     }
-
 
     public updateGrains() {
         this.stop_sequencer()
 
         //"1:0" is one measure at 4/4 (8/8) will associated to the Time Signature, also 16th can be added "1:0:0"
-        if(this.measure!=="") Transport.scheduleRepeat(this.repeat_l1,this.measure,"0")
-         
+        if (this.measure !== "") Transport.scheduleRepeat(this.repeat_l1, this.measure, "0")
+
         //Scond layer has another schedule, with adjustable duration indipendent from BPM
-        if(this.measure_2!=="") Transport.scheduleRepeat(this.repeat_l2, this.measure_2 ,"0")
-        
-        Transport.start();
+        if (this.measure_2 !== "") Transport.scheduleRepeat(this.repeat_l2, this.measure_2, "0")
+
+        Transport.start()
     }
 
     public getnGrains() {
@@ -1076,7 +1068,13 @@ class MainSketchClass implements P5Sketch {
                  }
             }
         }
-   }
+    }
+
+    public setAppMode(mode: AppMode) {
+        this.appMode = mode
+console.log(this.appMode)
+        return this
+    }
 }
 
 export const MainSketch = new MainSketchClass()

@@ -1,8 +1,8 @@
 import React from "react"
 import { MainSketch } from "../../../sketches/sketch"
-import { Metro }  from   "../../../sketches/metronome"
-
-
+import { Metro } from "../../../sketches/metronome"
+import { AppMode } from "src/app/root.component"
+import { AppContext } from "../../../app/app-context"
 
 export interface IState {
     selectedTimeSignature: string
@@ -28,7 +28,6 @@ export class TimeForm extends React.Component<IProps, IState> {
         "3/2": [3, 6, 9, 12, 15, 18]
     }
 
-
     public render() {
         const { layer } = this.props
         const { selectedTimeSignature, selectedNumberOfGrains } = this.state
@@ -53,7 +52,7 @@ export class TimeForm extends React.Component<IProps, IState> {
                         onChange={this.onSelectTimeSignature}
                         value={selectedTimeSignature}
                     >
-                        <option> </option>
+                        <option></option>
                         {this.timeSignature.map((o) => (
                             <option key={`option-${o}`}>{o}</option>
                         ))}
@@ -61,18 +60,35 @@ export class TimeForm extends React.Component<IProps, IState> {
                 </div>
                 <div className="form-group">
                     <label htmlFor="numberOfGrains">Number of grains</label>
-                    <select
-                        className="form-control"
-                        id="numberOfGrains"
-                        disabled={disabledNumberOfGrains}
-                        value={selectedNumberOfGrains}
-                        onChange={this.onSelectNumberOfGrains}
-                    >
-                        {selectedTimeSignature &&
-                            this.numberOfGrains[(selectedTimeSignature as unknown) as string].map((o) => (
-                                <option key={`option-${o}`}>{o}</option>
-                            ))}
-                    </select>
+                    <AppContext.Consumer>
+                        {(context) => (
+                            <>
+                                {context.appMode === AppMode.Learn && (
+                                    <select
+                                        className="form-control"
+                                        id="numberOfGrains"
+                                        disabled={disabledNumberOfGrains}
+                                        value={selectedNumberOfGrains}
+                                        onChange={this.onSelectNumberOfGrains}
+                                    >
+                                        {selectedTimeSignature &&
+                                            this.numberOfGrains[
+                                                (selectedTimeSignature as unknown) as string
+                                            ].map((o) => <option key={`option-${o}`}>{o}</option>)}
+                                    </select>
+                                )}
+                                {context.appMode === AppMode.Play && (
+                                    <input
+                                        className="form-control"
+                                        id="numberOfGrains"
+                                        disabled={disabledNumberOfGrains}
+                                        value={selectedNumberOfGrains}
+                                        onChange={this.onSelectNumberOfGrains}
+                                    />
+                                )}
+                            </>
+                        )}
+                    </AppContext.Consumer>
                 </div>
                 <button type="submit" className="btn btn-info btn-block">
                     Confirm
@@ -86,8 +102,6 @@ export class TimeForm extends React.Component<IProps, IState> {
             selectedTimeSignature: event.target.value,
             selectedNumberOfGrains: this.numberOfGrains[event.target.value][0]
         })
-        
-        
     }
 
     private onSelectNumberOfGrains = (event) => {

@@ -6,6 +6,8 @@ import { RightPanel } from "../components/right-panel/right-panel.component"
 import { FooterPanel } from "../components/footer-panel/footer-panel.component"
 import { subscribeToTimer } from "../api"
 import { ModeSelection } from "../components/mode-selection/mode-selection.component"
+import { AppContext } from "./app-context"
+import { MainSketch } from "../sketches/sketch"
 
 export enum AppMode {
     Play,
@@ -35,59 +37,50 @@ export class RootComponent extends React.Component<any, State> {
     public render() {
         const { appMode } = this.state
         const noModeSelected = appMode === null
+        const backgroundColor = appMode === AppMode.Learn ? "#17a2b8" : "#348781"
 
         return (
-            <div className="App">
-                {noModeSelected && <ModeSelection onClick={this.onClick} />}
-                {!noModeSelected && (
-                    <div className="container-fluid">
-                        <div className="row">
-                            <div className="col-2 control-column">
-                                <ControlPanel />
-                            </div>
-                            
-{appMode==1 && (
-                            <div
-                                id="centralSquare"
-                                className="col-8"
-                                style={{ position: "relative", backgroundColor: "#17a2b8" }}
-                            >
-                                <Drawer />
-                            </div>
-)}
-{appMode==0 && (
-                            <div
-                                id="centralSquare"
-                                className="col-8"
-                                style={{ position: "relative", backgroundColor: "#348781" }}
-                            >
-                                <Drawer />
-                            </div>
-)}
+            <AppContext.Provider value={{ appMode }}>
+                <div className="App">
+                    {noModeSelected && <ModeSelection onClick={this.onClick} />}
+                    {!noModeSelected && (
+                        <div className="container-fluid">
+                            <div className="row">
+                                <div className="col-2 control-column">
+                                    <ControlPanel />
+                                </div>
 
-                            <div className="col-2 control-column">
-                                <RightPanel />
+                                <div
+                                    id="centralSquare"
+                                    className="col-8"
+                                    style={{ position: "relative", backgroundColor }}
+                                >
+                                    <Drawer />
+                                </div>
+
+                                <div className="col-2 control-column">
+                                    <RightPanel />
+                                </div>
                             </div>
-                            
+                            <div className="row">
+                                <div className="col-12 control-column">
+                                    <FooterPanel />
+                                </div>
+                            </div>
+                            <div> This is the encoder value: {this.state.timestamp}</div>
                         </div>
-                        <FooterPanel/>
-                        <div>
-                        
-                            {" "}
-                            This is the encoder value: {this.state.timestamp}
-                        </div>
-                    </div>
-                )}
-            </div>
+                    )}
+                </div>
+            </AppContext.Provider>
         )
     }
-    
 
     private onClick = (mode: AppMode) => {
         this.setState({
-            appMode: mode
+            appMode: mode 
         })
-
+        console.log(this.state.appMode)
+        MainSketch.setAppMode(mode)
         // TODO: do something more with the mode just selected
     }
 }
