@@ -218,8 +218,11 @@ class MainSketchClass implements P5Sketch {
         if (this.counter > 0) {
             p5.noFill()
             p5.push()
-            if (this.appMode == AppMode.Learn) {p5.stroke("pink")}
-            else if (this.appMode == AppMode.Play) {p5.stroke("#43BFC7")}
+            if (this.appMode == AppMode.Learn) {
+                p5.stroke("pink")
+            } else if (this.appMode == AppMode.Play) {
+                p5.stroke("#43BFC7")
+            }
             p5.arc(
                 this.canvasWidth / 2,
                 this.canvasHeight / 2,
@@ -262,8 +265,11 @@ class MainSketchClass implements P5Sketch {
         if (this.counter === this.nGrain) {
             p5.noFill()
             p5.push()
-            if (this.appMode == AppMode.Learn) {p5.stroke("pink")}
-            else if (this.appMode == AppMode.Play) {p5.stroke("#43BFC7")}
+            if (this.appMode == AppMode.Learn) {
+                p5.stroke("pink")
+            } else if (this.appMode == AppMode.Play) {
+                p5.stroke("#43BFC7")
+            }
             p5.ellipse(
                 this.canvasWidth / 2,
                 this.canvasHeight / 2,
@@ -289,8 +295,11 @@ class MainSketchClass implements P5Sketch {
             p5.noFill()
             p5.strokeWeight(4)
             p5.push()
-            if (this.appMode == AppMode.Learn) {p5.stroke("pink")}
-            else if (this.appMode == AppMode.Play) {p5.stroke("#43BFC7")}
+            if (this.appMode == AppMode.Learn) {
+                p5.stroke("pink")
+            } else if (this.appMode == AppMode.Play) {
+                p5.stroke("#43BFC7")
+            }
             if (this.TS_Num <= this.TS_Num_2) {
                 p5.arc(
                     this.canvasWidth / 2,
@@ -334,8 +343,11 @@ class MainSketchClass implements P5Sketch {
         //draw ellipse for last connection clock ring arcs
         if (this.layerNumber === 2 && this.numMeasures === this.nGrain2) {
             p5.push()
-            if (this.appMode == AppMode.Learn) {p5.stroke("pink")}
-            else if (this.appMode == AppMode.Play) {p5.stroke("#43BFC7")}
+            if (this.appMode == AppMode.Learn) {
+                p5.stroke("pink")
+            } else if (this.appMode == AppMode.Play) {
+                p5.stroke("#43BFC7")
+            }
             p5.strokeWeight(4)
             p5.ellipse(
                 this.canvasWidth / 2,
@@ -366,8 +378,11 @@ class MainSketchClass implements P5Sketch {
             grainX = this.canvasWidth / 2 + p5.cos(angle) * (this.circleLandW / 2)
             grainY = this.canvasHeight / 2 + p5.sin(angle) * (this.circleLandW / 2)
             p5.strokeWeight(10)
-            if (this.appMode == AppMode.Learn) {p5.stroke("pink")}
-            else if (this.appMode == AppMode.Play) {p5.stroke("#48CCCD")}
+            if (this.appMode == AppMode.Learn) {
+                p5.stroke("pink")
+            } else if (this.appMode == AppMode.Play) {
+                p5.stroke("#48CCCD")
+            }
             p5.point(grainX, grainY)
             angle += step
         }
@@ -394,8 +409,11 @@ class MainSketchClass implements P5Sketch {
 
             //draws first layer shapes
             p5.beginShape()
-            if (this.appMode == AppMode.Learn) {p5.stroke("pink")}
-            else if (this.appMode == AppMode.Play) {p5.stroke("#43BFC7")}
+            if (this.appMode == AppMode.Learn) {
+                p5.stroke("pink")
+            } else if (this.appMode == AppMode.Play) {
+                p5.stroke("#43BFC7")
+            }
             for (let i = 0; i <= vert.length; i++) {
                 let corr_node = vert[i]
                 let count = 0
@@ -510,8 +528,11 @@ class MainSketchClass implements P5Sketch {
                 var grainX2 = this.canvasWidth / 2 + p5.cos(angle2) * 266 * this.clockCircleScaleSize //320 effects how much bigger the second circle is should be half the width and height of the elipse
                 var grainY2 = this.canvasHeight / 2 + p5.sin(angle2) * 266 * this.clockCircleScaleSize
                 p5.strokeWeight(3)
-                if (this.appMode == AppMode.Learn) {p5.stroke("pink")}
-            else if (this.appMode == AppMode.Play) {p5.stroke("#43BFC7")}
+                if (this.appMode == AppMode.Learn) {
+                    p5.stroke("pink")
+                } else if (this.appMode == AppMode.Play) {
+                    p5.stroke("#43BFC7")
+                }
                 p5.line(grainX2, grainY2, grainX2 + p5.cos(angle2) * 9, grainY2 + p5.sin(angle2) * 9)
                 angle2 += step2
             }
@@ -1071,7 +1092,7 @@ class MainSketchClass implements P5Sketch {
 
     public setAppMode(mode: AppMode) {
         this.appMode = mode
-console.log(this.appMode)
+        console.log(this.appMode)
         return this
     }
 }

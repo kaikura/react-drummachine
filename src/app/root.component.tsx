@@ -8,6 +8,7 @@ import { subscribeToTimer } from "../api"
 import { ModeSelection } from "../components/mode-selection/mode-selection.component"
 import { AppContext } from "./app-context"
 import { MainSketch } from "../sketches/sketch"
+import { Tutorial } from  "src/tutorial/tutorial.component"
 
 export enum AppMode {
     Play,
@@ -44,7 +45,9 @@ export class RootComponent extends React.Component<any, State> {
                 <div className="App">
                     {noModeSelected && <ModeSelection onClick={this.onClick} />}
                     {!noModeSelected && (
+                        
                         <div className="container-fluid">
+                            <Tutorial/>
                             <div className="row">
                                 <div className="col-2 control-column">
                                     <ControlPanel />
@@ -77,7 +80,7 @@ export class RootComponent extends React.Component<any, State> {
 
     private onClick = (mode: AppMode) => {
         this.setState({
-            appMode: mode 
+            appMode: mode
         })
         console.log(this.state.appMode)
         MainSketch.setAppMode(mode)
