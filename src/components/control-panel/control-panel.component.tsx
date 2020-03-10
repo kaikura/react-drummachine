@@ -14,18 +14,23 @@ export class ControlPanel extends React.Component<IProps, any> {
                 <ButtonWithPopover
                     id="test-popover"
                     placement="bottom"
-                    title="Test popover"
+                    title="Rhythm panel"
                     showIcon
                     btnText="Click me"
                     renderPopoverContent={this.renderPopoverContent as any}
                 />
                 <TimeForm layer={1} onSubmit={this.props.onFirstLayerSubmit} />
-                <TimeForm layer={2} onSubmit={this.props.onSecondLayerSubmit}/>
+                <TimeForm layer={2} onSubmit={this.props.onSecondLayerSubmit} />
             </div>
         )
     }
 
     private renderPopoverContent = () => {
-        return <p>Contenuto del popover</p>
+        return (
+            <p>
+                Here you can choose the time signature and the number of grains for the first layer and for
+                the second one, once you have added it.
+            </p>
+        )
     }
 }

@@ -4,6 +4,10 @@ import { AppMode } from "../app/root.component"
 import { Time } from "tone"
 import { Engines } from "src/engines"
 
+// SOCKETS
+import openSocket from "socket.io-client"
+const socket = openSocket("http://localhost:8000")
+
 export interface P5Sketch {
     setup(p5: P5, canvasParentRef: "centralSquare"): void
     draw(p5: P5, canvasParentRef: "centralSquare"): void
@@ -72,6 +76,7 @@ class MainSketchClass implements P5Sketch {
     private sounds2: any = []
     private measure: String = ""
     private measure_2: String = ""
+    private value_enc: String = ""
 
     constructor() {
         this.drumKit = this.Kit.drumKit
@@ -966,6 +971,28 @@ class MainSketchClass implements P5Sketch {
         }
         return "1:2"
         //end
+    }
+
+    public setEncoder(value: String) {
+        console.log(value)
+        /*
+        this.value_enc = value
+        console.log(this.value_enc);
+
+        socket.on('value', (data) => {
+            console.log(data);
+          })
+          */
+
+        if (value === "up") {
+            this.encoderInc()
+        } else if (value === "down") {
+            this.encoderDec()
+        } else if (value === "press") {
+            this.encoderButt()
+        }
+
+        return this
     }
 
     public stop_sequencer() {

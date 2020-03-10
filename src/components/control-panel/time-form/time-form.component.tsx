@@ -43,10 +43,9 @@ export class TimeForm extends React.Component<IProps, IState> {
                         <h5>Layer{layer}</h5>
                     </label>
                     <div className="col-sm-10">
-                        <input type="text" readOnly className="form-control-plaintext" id="polyrhytm"/>
+                        <input type="text" readOnly className="form-control-plaintext" id="polyrhytm" />
                     </div>
-                </div
-                >
+                </div>
                 <div className="form-group">
                     <label htmlFor="timeSignature">Time signature</label>
                     <select
@@ -75,8 +74,8 @@ export class TimeForm extends React.Component<IProps, IState> {
                                         onChange={this.onSelectNumberOfGrains}
                                     >
                                         {selectedTimeSignature &&
-                                        this.numberOfGrains[
-                                            (selectedTimeSignature as unknown) as string
+                                            this.numberOfGrains[
+                                                (selectedTimeSignature as unknown) as string
                                             ].map((o) => <option key={`option-${o}`}>{o}</option>)}
                                     </select>
                                 )}

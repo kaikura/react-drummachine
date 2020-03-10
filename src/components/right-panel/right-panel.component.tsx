@@ -4,6 +4,7 @@ import { MainSketch } from "../../sketches/sketch"
 import { Metro } from "../../sketches/metronome"
 import { Container } from "./right-panel.style"
 import { Sequencer } from "src/sketches/sequencer"
+import { ButtonWithPopover } from "../button-with-popover/button-with-popover.component"
 
 interface IProps {
     timeSignature1: string | null
@@ -16,11 +17,17 @@ export class RightPanel extends React.Component<IProps> {
 
         return (
             <div style={{ marginTop: "12px" }}>
-                <h5>Groove Shapes Control</h5>
-
+                <ButtonWithPopover
+                    id="test-popover"
+                    placement="bottom"
+                    title="Audio Panel"
+                    showIcon
+                    btnText="Click me"
+                    renderPopoverContent={this.renderPopoverContent as any}
+                />
                 <Container>
                     <div className="d-flex justify-content-center">
-                        <Sequencer/>
+                        <Sequencer />
                     </div>
 
                     <Button
@@ -56,8 +63,14 @@ export class RightPanel extends React.Component<IProps> {
                 </Container>
                 {timeSignature1 && (
                     <div>
-                        <p><b>Layer 1:</b>{timeSignature1}</p>
-                        <p><b>Layer 2:</b>{timeSignature2}</p>
+                        <p>
+                            <b>Layer 1:</b>
+                            {timeSignature1}
+                        </p>
+                        <p>
+                            <b>Layer 2:</b>
+                            {timeSignature2}
+                        </p>
                     </div>
                 )}
             </div>
@@ -80,5 +93,9 @@ export class RightPanel extends React.Component<IProps> {
 
     private onSoundClick = () => {
         MainSketch.chooseSound()
+    }
+
+    private renderPopoverContent = () => {
+        return <p>Here you can manage all the audio features of the interface.</p>
     }
 }
