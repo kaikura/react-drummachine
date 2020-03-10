@@ -5,8 +5,6 @@ import { Metro } from "../../sketches/metronome"
 import { Container } from "./right-panel.style"
 import { spacing } from "src/config/spacing"
 import { PlayPause } from "../play_button/play-pause"
-import {Tone} from 'tone'
-import { BPM } from "../bpm-component"
 import {MetroB} from "../metro_button/metro_button"
 import { ButtonWithPopover } from "../button-with-popover/button-with-popover.component"
 import {BpmContainer} from '../bpm.container'
