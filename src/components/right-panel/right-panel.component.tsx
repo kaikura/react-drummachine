@@ -78,7 +78,12 @@ export class RightPanel extends React.Component<IProps,any> {
                          <div>
                          <h6 style={{textAlign:'center'}}>clock_one</h6>
                          </div>
-                       
+                         <Container>
+                    <PlayPause play={this.play_1} pause={this.pause_1} />
+                    <div>
+                         <h6 style={{textAlign:'center'}}>Transport One</h6>
+                         </div>
+                    </Container>   
                          <Container>
                          <div>
                     
@@ -90,12 +95,7 @@ export class RightPanel extends React.Component<IProps,any> {
                          </div>
                          </Container>
                     
-                    <Container>
-                    <PlayPause play={this.play_1} pause={this.pause_1} />
-                    <div>
-                         <h6 style={{textAlign:'center'}}>Transport One</h6>
-                         </div>
-                    </Container>
+                    
                     <Container>
                     <PlayPause play={this.play_2} pause={this.pause_2} />
                     <div>
