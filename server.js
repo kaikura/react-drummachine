@@ -50,20 +50,17 @@ board.on('ready', () => {
     pressButton,
     onUp: () => {
       enc_val='down';
-      enc_change = true;
       console.log('down');
       sendVal(enc_val);
     },
     onDown: () => {
       enc_val='up';
-      console.log('up');
-      enc_change = true;
+      console.log('up');  
       sendVal(enc_val);
     },
     onPress: () => {
       enc_val='press';
-      console.log('press');
-      enc_change = true;
+      console.log('press');   
       sendVal(enc_val);
     },
   });

@@ -9,14 +9,17 @@ import {Tone} from 'tone'
 import { BPM } from "../bpm-component"
 import {MetroB} from "../metro_button/metro_button"
 import { ButtonWithPopover } from "../button-with-popover/button-with-popover.component"
+import {BpmContainer} from '../bpm.container'
+
 interface IProps {
     timeSignature1: string | null
     timeSignature2: string | null
+
+ 
 }
 
-export class RightPanel extends React.Component<IProps> {
+export class RightPanel extends React.Component<IProps,any> {
     
-    public bpm : number = 120
 
     private onMetroClick_1 = () => {
         Metro.handleClick_1()
@@ -48,11 +51,6 @@ export class RightPanel extends React.Component<IProps> {
     private play_2 = () => {
         MainSketch.updateGrains_2()
     }
-    private handleBPMChange = (bpm: number) => {
-        //console.log(this.time.state.selectedTimeSignature);
-        Tone.Transport.bpm.value = bpm
-        
-    }
 
 
     public render() {
@@ -70,12 +68,10 @@ export class RightPanel extends React.Component<IProps> {
                 />
                 <Container>
                     <div className="d-flex justify-content-center">
-                         <div>
-                    <BPM handleChange={this.handleBPMChange} value={this.bpm} />
-                         </div>
+                       <BpmContainer />
                     </div>
                     
-                        <Container>
+                        
                          <div>
                     
                     <MetroB play={this.onMetroClick_1} pause={this.metroPause} />
@@ -84,7 +80,7 @@ export class RightPanel extends React.Component<IProps> {
                          <div>
                          <h6 style={{textAlign:'center'}}>clock_one</h6>
                          </div>
-                         </Container>
+                       
                          <Container>
                          <div>
                     
