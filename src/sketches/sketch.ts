@@ -226,13 +226,9 @@ class MainSketchClass implements P5Sketch {
     }
 
     public draw(p5: P5): void {
-<<<<<<< HEAD
-
-=======
->>>>>>> 896062bc01d06a7fb8dc3129e28a9414b9d7f725
-        if (this.appMode == AppMode.Learn) {
+        if (this.appMode === AppMode.Learn) {
             p5.background("#17a2b8")
-        } else if (this.appMode == AppMode.Play) {
+        } else if (this.appMode === AppMode.Play) {
             p5.background("#348781")
         }
 
