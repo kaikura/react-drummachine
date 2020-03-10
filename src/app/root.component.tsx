@@ -18,6 +18,8 @@ export enum AppMode {
 interface State {
     appMode: AppMode | null
     timestamp: string
+    timeSignature1: string | null
+    timeSignature2: string | null
 }
 
 export class RootComponent extends React.Component<any, State> {
@@ -33,10 +35,12 @@ export class RootComponent extends React.Component<any, State> {
     public state = {
         appMode: null,
         timestamp: "no timestamp yet",
+        timeSignature1: null,
+        timeSignature2: null
     }
 
     public render() {
-        const { appMode } = this.state
+        const { appMode, timeSignature1, timeSignature2 } = this.state
         const noModeSelected = appMode === null
         const backgroundColor = appMode === AppMode.Learn ? "#17a2b8" : "#348781"
         MainSketch.setEncoder(String(this.state.timestamp))
@@ -49,7 +53,10 @@ export class RootComponent extends React.Component<any, State> {
                         <div className="container-fluid">
                             <div className="row">
                                 <div className="col-2 control-column">
-                                    <ControlPanel />
+                                    <ControlPanel
+                                        onFirstLayerSubmit={this.onFirstLayerSubmit}
+                                        onSecondLayerSubmit={this.onSecondLayerSubmit}
+                                    />
                                 </div>
 
                                 <div
@@ -61,7 +68,10 @@ export class RootComponent extends React.Component<any, State> {
                                 </div>
 
                                 <div className="col-2 control-column">
-                                    <RightPanel />
+                                    <RightPanel
+                                        timeSignature1={timeSignature1}
+                                        timeSignature2={timeSignature2}
+                                    />
                                 </div>
                             </div>
                             <div className="row">
@@ -69,12 +79,23 @@ export class RootComponent extends React.Component<any, State> {
                                     <FooterPanel />
                                 </div>
                             </div>
-                            <div> This is the encoder value: {this.state.timestamp}</div>
                         </div>
                     )}
                 </div>
             </AppContext.Provider>
         )
+    }
+
+    private onFirstLayerSubmit = (timeSignature) => {
+        this.setState({
+            timeSignature1: timeSignature
+        })
+    }
+
+    private onSecondLayerSubmit = (timeSignature) => {
+        this.setState({
+            timeSignature2: timeSignature
+        })
     }
 
     private onClick = (mode: AppMode) => {

@@ -2,17 +2,18 @@ import Tone from "tone"
 import { Tick } from "src/engines"
 
 import "./metronome.css"
+import { MainSketch } from "./sketch"
 
 class Metro_N {
     private tick: any
     private start_meaure_tick: any
     private tick_2: any
     private start_meaure_tick_2: any
-    private loopId_1: number
-    private loopId_2: number
+    public loopId_1: number
+    public loopId_2: number
 
-    private measure: String = "1:0"
-    private measure_2: String = "1:0"
+    private measure: String = ""
+    private measure_2: String = ""
     private num: number = 4
     private den: number = 4
     private num_2: number = 4
@@ -72,17 +73,14 @@ class Metro_N {
             }
             //DO DRAWINGS HERE
         } //the function callback "const loop" is called at the beginning of every measure (long as the time signature) at the choosen bpm, the trigger is scheduled in order to have a beat of metronome at EXACTLY Time('4n').toSeconds() that is the distance of quarter notes at any given bpm. The tracks and metronome are indipendent (for now).
-        this.loopId_1 = Tone.Transport.scheduleRepeat(loop, this.measure, "0")
+        if(this.measure !=="")this.loopId_1 = Tone.Transport.scheduleRepeat(loop, this.measure, "0")
     }
 
     public handleClick_1 = () => {
-        if (this.isPlaying_1) {
-            Tone.Transport.clear(this.loopId_1)
-        } else {
+     
             this.createLoop_1()
-        }
-
-        this.isPlaying_1 = !this.isPlaying_1
+            if(MainSketch.loop_1 ===0 && MainSketch.loop_2===0 )Tone.Transport.start()
+    
     }
     createLoop_2 = () => {
         const loop = (time: number) => {
@@ -96,17 +94,24 @@ class Metro_N {
             }
             //DO DRAWINGS HERE
         } //the function callback "const loop" is called at the beginning of every measure (long as the time signature) at the choosen bpm, the trigger is scheduled in order to have a beat of metronome at EXACTLY Time('4n').toSeconds() that is the distance of quarter notes at any given bpm. The tracks and metronome are indipendent (for now).
-        this.loopId_2 = Tone.Transport.scheduleRepeat(loop, this.measure_2, "0")
+        if(this.measure_2 !=="") this.loopId_2 = Tone.Transport.scheduleRepeat(loop, this.measure_2, "0")
     }
 
     public handleClick_2 = () => {
-        if (this.isPlaying_2) {
-            Tone.Transport.clear(this.loopId_2)
-        } else {
+       
             this.createLoop_2()
-        }
-
-        this.isPlaying_2 = !this.isPlaying_2
+            if(MainSketch.loop_1 ===0 && MainSketch.loop_2===0 )Tone.Transport.start()
+        
+     }
+    public metroPause = () => {
+       
+        Tone.Transport.clear(this.loopId_1)
+        
+     }
+    public metro2Pause = () => {
+     
+        Tone.Transport.clear(this.loopId_2)
+       
     }
 }
 

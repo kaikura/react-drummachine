@@ -2,7 +2,12 @@ import React from "react"
 import { TimeForm } from "./time-form/time-form.component"
 import { ButtonWithPopover } from "../button-with-popover/button-with-popover.component"
 
-export class ControlPanel extends React.Component<any, any> {
+interface IProps {
+    onFirstLayerSubmit(timeSignature: string, numberOfGrains: string): void
+    onSecondLayerSubmit(timeSignature: string, numberOfGrains: string): void
+}
+
+export class ControlPanel extends React.Component<IProps, any> {
     public render() {
         return (
             <div style={{ margin: "12px" }}>
@@ -14,13 +19,18 @@ export class ControlPanel extends React.Component<any, any> {
                     btnText="Click me"
                     renderPopoverContent={this.renderPopoverContent as any}
                 />
-                <TimeForm layer={1} />
-                <TimeForm layer={2} />
+                <TimeForm layer={1} onSubmit={this.props.onFirstLayerSubmit} />
+                <TimeForm layer={2} onSubmit={this.props.onSecondLayerSubmit} />
             </div>
         )
     }
 
     private renderPopoverContent = () => {
-        return <p>Here you can choose the time signature and the number of grains for the first layer and for the second one, once you have added it.</p>
+        return (
+            <p>
+                Here you can choose the time signature and the number of grains for the first layer and for
+                the second one, once you have added it.
+            </p>
+        )
     }
 }
