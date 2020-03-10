@@ -40,6 +40,7 @@ export class ModeSelection extends React.Component<Props> {
         return (event) => {
             this.props.onClick(mode)
             event.preventDefault()
+            
         }
     }
 }
