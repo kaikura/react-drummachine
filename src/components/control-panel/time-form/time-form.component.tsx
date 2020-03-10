@@ -11,6 +11,8 @@ export interface IState {
 
 export interface IProps {
     layer: 1 | 2
+
+    onSubmit(timeSignature: string, numberOfGrains: string)
 }
 
 export class TimeForm extends React.Component<IProps, IState> {
@@ -109,23 +111,23 @@ export class TimeForm extends React.Component<IProps, IState> {
     }
 
     private onSubmit = (event) => {
-        const { selectedNumberOfGrains } = this.state
+        const { selectedTimeSignature, selectedNumberOfGrains } = this.state
         const { layer } = this.props
 
         if (selectedNumberOfGrains) {
             switch (layer) {
                 case 1:
-                    MainSketch.setNGrain(Number(this.state.selectedNumberOfGrains))
-                    MainSketch.setTS1(String(this.state.selectedTimeSignature))
-                    Metro.setTS_1(String(this.state.selectedTimeSignature))
+                    MainSketch.setNGrain(Number(selectedNumberOfGrains))
+                    MainSketch.setTS1(String(selectedTimeSignature))
+                    Metro.setTS_1(String(selectedTimeSignature))
                     MainSketch.generateShapes()
                     MainSketch.updateArrays()
                     MainSketch.triggerer()
                     break
                 case 2:
-                    MainSketch.setNGrain2(Number(this.state.selectedNumberOfGrains))
-                    MainSketch.setTS2(String(this.state.selectedTimeSignature))
-                    Metro.setTS_2(String(this.state.selectedTimeSignature))
+                    MainSketch.setNGrain2(Number(selectedNumberOfGrains))
+                    MainSketch.setTS2(String(selectedTimeSignature))
+                    Metro.setTS_2(String(selectedTimeSignature))
                     MainSketch.generateShapes()
                     MainSketch.updateArrays()
                     MainSketch.triggerer()
@@ -133,6 +135,7 @@ export class TimeForm extends React.Component<IProps, IState> {
             }
         }
 
+        this.props.onSubmit(selectedTimeSignature, selectedNumberOfGrains)
         event.preventDefault()
     }
 }

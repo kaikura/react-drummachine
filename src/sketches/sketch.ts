@@ -5,6 +5,10 @@ import { Time } from "tone"
 import { Engines } from "src/engines"
 import { Metro } from "../sketches/metronome"
 
+// SOCKETS
+import openSocket from "socket.io-client"
+const socket = openSocket("http://localhost:8000")
+
 export interface P5Sketch {
     setup(p5: P5, canvasParentRef: "centralSquare"): void
     draw(p5: P5, canvasParentRef: "centralSquare"): void
@@ -75,6 +79,7 @@ class MainSketchClass implements P5Sketch {
     private measure_2: String = ""
     public loop_1 : number = 0
     public loop_2 : number = 0
+    private value_enc: String = ""
 
     constructor() {
         this.drumKit = this.Kit.drumKit
@@ -202,11 +207,12 @@ class MainSketchClass implements P5Sketch {
     }
 
     public draw(p5: P5): void {
-        /*if (this.appMode == AppMode.Learn) {
-            p5.background(23, 162, 184)
+        if (this.appMode == AppMode.Learn) {
+            p5.background("#17a2b8")
         } else if (this.appMode == AppMode.Play) {
-            p5.background(20, 53, 51)
-        }*/
+            p5.background("#348781")
+        }
+
         p5.fill(250, 250, 250, 70)
         p5.strokeWeight(2)
         p5.ellipse(this.canvasWidth / 2, this.canvasHeight / 2, this.circleLandW, this.circleLandW)
@@ -221,8 +227,11 @@ class MainSketchClass implements P5Sketch {
         if (this.counter > 0) {
             p5.noFill()
             p5.push()
-            if (this.appMode === AppMode.Learn) {p5.stroke("pink")}
-            else if (this.appMode === AppMode.Play) {p5.stroke("#43BFC7")}
+            if (this.appMode == AppMode.Learn) {
+                p5.stroke("pink")
+            } else if (this.appMode == AppMode.Play) {
+                p5.stroke("#43BFC7")
+            }
             p5.arc(
                 this.canvasWidth / 2,
                 this.canvasHeight / 2,
@@ -265,8 +274,11 @@ class MainSketchClass implements P5Sketch {
         if (this.counter === this.nGrain) {
             p5.noFill()
             p5.push()
-            if (this.appMode === AppMode.Learn) {p5.stroke("pink")}
-            else if (this.appMode === AppMode.Play) {p5.stroke("#43BFC7")}
+            if (this.appMode == AppMode.Learn) {
+                p5.stroke("pink")
+            } else if (this.appMode == AppMode.Play) {
+                p5.stroke("#43BFC7")
+            }
             p5.ellipse(
                 this.canvasWidth / 2,
                 this.canvasHeight / 2,
@@ -292,8 +304,11 @@ class MainSketchClass implements P5Sketch {
             p5.noFill()
             p5.strokeWeight(4)
             p5.push()
-            if (this.appMode == AppMode.Learn) {p5.stroke("pink")}
-            else if (this.appMode == AppMode.Play) {p5.stroke("#43BFC7")}
+            if (this.appMode == AppMode.Learn) {
+                p5.stroke("pink")
+            } else if (this.appMode == AppMode.Play) {
+                p5.stroke("#43BFC7")
+            }
             if (this.TS_Num <= this.TS_Num_2) {
                 p5.arc(
                     this.canvasWidth / 2,
@@ -337,8 +352,11 @@ class MainSketchClass implements P5Sketch {
         //draw ellipse for last connection clock ring arcs
         if (this.layerNumber === 2 && this.numMeasures === this.nGrain2) {
             p5.push()
-            if (this.appMode == AppMode.Learn) {p5.stroke("pink")}
-            else if (this.appMode == AppMode.Play) {p5.stroke("#43BFC7")}
+            if (this.appMode == AppMode.Learn) {
+                p5.stroke("pink")
+            } else if (this.appMode == AppMode.Play) {
+                p5.stroke("#43BFC7")
+            }
             p5.strokeWeight(4)
             p5.ellipse(
                 this.canvasWidth / 2,
@@ -369,8 +387,11 @@ class MainSketchClass implements P5Sketch {
             grainX = this.canvasWidth / 2 + p5.cos(angle) * (this.circleLandW / 2)
             grainY = this.canvasHeight / 2 + p5.sin(angle) * (this.circleLandW / 2)
             p5.strokeWeight(10)
-            if (this.appMode === AppMode.Learn) {p5.stroke("pink")}
-            else if (this.appMode === AppMode.Play) {p5.stroke("#48CCCD")}
+            if (this.appMode == AppMode.Learn) {
+                p5.stroke("pink")
+            } else if (this.appMode == AppMode.Play) {
+                p5.stroke("#48CCCD")
+            }
             p5.point(grainX, grainY)
             angle += step
         }
@@ -397,8 +418,11 @@ class MainSketchClass implements P5Sketch {
 
             //draws first layer shapes
             p5.beginShape()
-            if (this.appMode === AppMode.Learn) {p5.stroke("pink")}
-            else if (this.appMode === AppMode.Play) {p5.stroke("#43BFC7")}
+            if (this.appMode == AppMode.Learn) {
+                p5.stroke("pink")
+            } else if (this.appMode == AppMode.Play) {
+                p5.stroke("#43BFC7")
+            }
             for (let i = 0; i <= vert.length; i++) {
                 let corr_node = vert[i]
                 let count = 0
@@ -513,8 +537,11 @@ class MainSketchClass implements P5Sketch {
                 var grainX2 = this.canvasWidth / 2 + p5.cos(angle2) * 266 * this.clockCircleScaleSize //320 effects how much bigger the second circle is should be half the width and height of the elipse
                 var grainY2 = this.canvasHeight / 2 + p5.sin(angle2) * 266 * this.clockCircleScaleSize
                 p5.strokeWeight(3)
-                if (this.appMode == AppMode.Learn) {p5.stroke("pink")}
-            else if (this.appMode == AppMode.Play) {p5.stroke("#43BFC7")}
+                if (this.appMode == AppMode.Learn) {
+                    p5.stroke("pink")
+                } else if (this.appMode == AppMode.Play) {
+                    p5.stroke("#43BFC7")
+                }
                 p5.line(grainX2, grainY2, grainX2 + p5.cos(angle2) * 9, grainY2 + p5.sin(angle2) * 9)
                 angle2 += step2
             }
@@ -949,6 +976,28 @@ class MainSketchClass implements P5Sketch {
         //end
     }
 
+   
+    public setEncoder(value: String) {
+        console.log(value)
+        /*
+        this.value_enc = value
+        console.log(this.value_enc);
+
+        socket.on('value', (data) => {
+            console.log(data);
+          })
+          */
+
+        if (value === "up") {
+            this.encoderInc()
+        } else if (value === "down") {
+            this.encoderDec()
+        } else if (value === "press") {
+            this.encoderButt()
+        }
+
+        return this
+    }
     public stop_sequencer_1() {
         //active_seq = false;
         this.counter = -1
@@ -1090,7 +1139,7 @@ const repeat_l2 = (time:number) => {
 
     public setAppMode(mode: AppMode) {
         this.appMode = mode
-console.log(this.appMode)
+        console.log(this.appMode)
         return this
     }
 }

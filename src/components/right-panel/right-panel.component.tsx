@@ -8,16 +8,15 @@ import { PlayPause } from "../play_button/play-pause"
 import {Tone} from 'tone'
 import { BPM } from "../bpm-component"
 import {MetroB} from "../metro_button/metro_button"
+import { ButtonWithPopover } from "../button-with-popover/button-with-popover.component"
+interface IProps {
+    timeSignature1: string | null
+    timeSignature2: string | null
+}
 
-export class RightPanel extends React.Component<any, any> {
+export class RightPanel extends React.Component<IProps> {
     
-    constructor(props: any) {
-        super(props)
-
-        this.state = {
-            bpm: 120
-        }
-    }
+    public bpm : number = 120
 
     private onMetroClick_1 = () => {
         Metro.handleClick_1()
@@ -52,18 +51,27 @@ export class RightPanel extends React.Component<any, any> {
     private handleBPMChange = (bpm: number) => {
         //console.log(this.time.state.selectedTimeSignature);
         Tone.Transport.bpm.value = bpm
-        this.setState({ bpm })
+        
     }
 
-    public render() {
-        return (
-            <div style={{ marginTop: "1em",  marginBottom: "3em"  }}>
-                <h5 style={{textAlign:'center'}}>Groove Shapes Control</h5>
 
+    public render() {
+        const { timeSignature1, timeSignature2 } = this.props
+
+        return (
+            <div style={{ marginTop: "12px" }}>
+                <ButtonWithPopover
+                    id="test-popover"
+                    placement="bottom"
+                    title="Audio Panel"
+                    showIcon
+                    btnText="Click me"
+                    renderPopoverContent={this.renderPopoverContent as any}
+                />
                 <Container>
                     <div className="d-flex justify-content-center">
                          <div>
-                    <BPM handleChange={this.handleBPMChange} value={this.state.bpm} />
+                    <BPM handleChange={this.handleBPMChange} value={this.bpm} />
                          </div>
                     </div>
                     
@@ -109,7 +117,24 @@ export class RightPanel extends React.Component<any, any> {
                         style={{marginTop: "2em", marginBottom: "3pxem" }}
                     />
                 </Container>
+                {timeSignature1 && (
+                    <div>
+                        <p>
+                            <b>Layer 1:</b>
+                            {timeSignature1}
+                        </p>
+                        <p>
+                            <b>Layer 2:</b>
+                            {timeSignature2}
+                        </p>
+                    </div>
+                )}
             </div>
         )
+    }
+
+
+    private renderPopoverContent = () => {
+        return <p>Here you can manage all the audio features of the interface.</p>
     }
 }
