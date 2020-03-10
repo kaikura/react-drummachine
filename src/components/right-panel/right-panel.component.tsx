@@ -61,16 +61,14 @@ export class RightPanel extends React.Component<IProps> {
                         style={{ marginBottom: "12px" }}
                     />
                 </Container>
-                {timeSignature1 && (
+                {timeSignature1 && timeSignature2 && (
                     <div>
+                        <div className="alert alert-info" role="alert">
                         <p>
-                            <b>Layer 1:</b>
-                            {timeSignature1}
+                            <b><i>Polymeter   </i></b>
+                            <i>{timeSignature1} : {timeSignature2}</i>
                         </p>
-                        <p>
-                            <b>Layer 2:</b>
-                            {timeSignature2}
-                        </p>
+</div>
                     </div>
                 )}
             </div>
