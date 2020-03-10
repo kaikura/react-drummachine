@@ -10,6 +10,7 @@ export class Tick {
     }
 
     setup() {
+        this.sound.volume.value = -20
         this.sound.toMaster()
     }
 

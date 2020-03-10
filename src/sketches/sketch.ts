@@ -3,6 +3,7 @@ import { Transport } from "tone"
 import { AppMode } from "../app/root.component"
 import { Time } from "tone"
 import { Engines } from "src/engines"
+import { Metro } from "../sketches/metronome"
 
 export interface P5Sketch {
     setup(p5: P5, canvasParentRef: "centralSquare"): void
@@ -72,6 +73,8 @@ class MainSketchClass implements P5Sketch {
     private sounds2: any = []
     private measure: String = ""
     private measure_2: String = ""
+    public loop_1 : number = 0
+    public loop_2 : number = 0
 
     constructor() {
         this.drumKit = this.Kit.drumKit
@@ -218,8 +221,8 @@ class MainSketchClass implements P5Sketch {
         if (this.counter > 0) {
             p5.noFill()
             p5.push()
-            if (this.appMode == AppMode.Learn) {p5.stroke("pink")}
-            else if (this.appMode == AppMode.Play) {p5.stroke("#43BFC7")}
+            if (this.appMode === AppMode.Learn) {p5.stroke("pink")}
+            else if (this.appMode === AppMode.Play) {p5.stroke("#43BFC7")}
             p5.arc(
                 this.canvasWidth / 2,
                 this.canvasHeight / 2,
@@ -262,8 +265,8 @@ class MainSketchClass implements P5Sketch {
         if (this.counter === this.nGrain) {
             p5.noFill()
             p5.push()
-            if (this.appMode == AppMode.Learn) {p5.stroke("pink")}
-            else if (this.appMode == AppMode.Play) {p5.stroke("#43BFC7")}
+            if (this.appMode === AppMode.Learn) {p5.stroke("pink")}
+            else if (this.appMode === AppMode.Play) {p5.stroke("#43BFC7")}
             p5.ellipse(
                 this.canvasWidth / 2,
                 this.canvasHeight / 2,
@@ -366,8 +369,8 @@ class MainSketchClass implements P5Sketch {
             grainX = this.canvasWidth / 2 + p5.cos(angle) * (this.circleLandW / 2)
             grainY = this.canvasHeight / 2 + p5.sin(angle) * (this.circleLandW / 2)
             p5.strokeWeight(10)
-            if (this.appMode == AppMode.Learn) {p5.stroke("pink")}
-            else if (this.appMode == AppMode.Play) {p5.stroke("#48CCCD")}
+            if (this.appMode === AppMode.Learn) {p5.stroke("pink")}
+            else if (this.appMode === AppMode.Play) {p5.stroke("#48CCCD")}
             p5.point(grainX, grainY)
             angle += step
         }
@@ -394,8 +397,8 @@ class MainSketchClass implements P5Sketch {
 
             //draws first layer shapes
             p5.beginShape()
-            if (this.appMode == AppMode.Learn) {p5.stroke("pink")}
-            else if (this.appMode == AppMode.Play) {p5.stroke("#43BFC7")}
+            if (this.appMode === AppMode.Learn) {p5.stroke("pink")}
+            else if (this.appMode === AppMode.Play) {p5.stroke("#43BFC7")}
             for (let i = 0; i <= vert.length; i++) {
                 let corr_node = vert[i]
                 let count = 0
@@ -939,21 +942,25 @@ class MainSketchClass implements P5Sketch {
         } else {
             if (den === 8) {
                 if (num === 9) return "0:4:2"
-                if (num === 7) return "0:3:14"
+                if (num === 7) return "0:3:2"
             }
         }
         return "1:2"
         //end
     }
 
-    public stop_sequencer() {
+    public stop_sequencer_1() {
         //active_seq = false;
         this.counter = -1
-        this.counter2 = -1
         this.numMeasures = 0
+        Transport.clear(this.loop_1)
+        
+    }
+    public stop_sequencer_2() {
+        //active_seq = false;
+        this.counter2 = -1
         this.numMeasure2 = 0
-        Transport.stop()
-        Transport.cancel()
+        Transport.clear(this.loop_2)
     }
 
     public triggerer() {
@@ -1028,25 +1035,10 @@ class MainSketchClass implements P5Sketch {
         this.instrumentMode = 6
     }
 
-    public updateGrains() {
-        this.stop_sequencer()
-
-        //"1:0" is one measure at 4/4 (8/8) will associated to the Time Signature, also 16th can be added "1:0:0"
-        if (this.measure !== "") Transport.scheduleRepeat(this.repeat_l1, this.measure, "0")
-
-        //Scond layer has another schedule, with adjustable duration indipendent from BPM
-        if (this.measure_2 !== "") Transport.scheduleRepeat(this.repeat_l2, this.measure_2, "0")
-
-        Transport.start()
-    }
-
-    public getnGrains() {
-        return this.nGrain
-    }
-
-    // actual audio engine
-
-    repeat_l1 = (time:number) => {
+    public updateGrains_1() {
+        this.stop_sequencer_1()
+        
+    const repeat_l1 = (time:number) => {
         this.numMeasures++
     
         for(let i = 1; i <= this.shp1.length; i++){
@@ -1058,17 +1050,43 @@ class MainSketchClass implements P5Sketch {
             }
         }
 }
-    repeat_l2 = (time:number) => {
-        this.numMeasure2++
 
-        for(let i = 1; i <= this.shp2.length; i++){
-            for(let stp = 0 ; stp<this.nGrain2; stp++){
-                if(this.trig2[i-1][stp] === true){
-        this.drumKit[this.sounds2[i-1]].start(time+stp*(this.TS_Num_2/this.TS_Den_2)*Time(this.nGrain2+"n").toSeconds());
-                 }
-            }
+
+        //"1:0" is one measure at 4/4 (8/8) will associated to the Time Signature, also 16th can be added "1:0:0"
+         this.loop_1=Transport.scheduleRepeat(repeat_l1, this.measure, "0")
+
+   
+        if(this.measure!=="" && this.loop_2 === 0 && Metro.loopId_1 ===0 && Metro.loopId_2===0 ) Transport.start()
+    }
+    public updateGrains_2() {
+        this.stop_sequencer_2()
+        
+    
+const repeat_l2 = (time:number) => {
+    this.numMeasure2++
+
+    for(let i = 1; i <= this.shp2.length; i++){
+        for(let stp = 0 ; stp<this.nGrain2; stp++){
+            if(this.trig2[i-1][stp] === true){
+    this.drumKit[this.sounds2[i-1]].start(time+stp*(this.TS_Num_2/this.TS_Den_2)*Time(this.nGrain2+"n").toSeconds());
+             }
         }
     }
+}
+
+
+        //Scond layer has another schedule, with adjustable duration indipendent from BPM
+         this.loop_2=Transport.scheduleRepeat(repeat_l2, this.measure_2, "0")
+
+         if(this.measure_2!=="" && this.loop_1 === 0 && Metro.loopId_1 ===0 && Metro.loopId_2===0 ) Transport.start()
+    }
+
+    public getnGrains() {
+        return this.nGrain
+    }
+
+    // actual audio engine
+
 
     public setAppMode(mode: AppMode) {
         this.appMode = mode

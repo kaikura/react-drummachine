@@ -1,8 +1,8 @@
 import * as React from "react"
-import "../play_button/play.css"
+import "../metro_button/metro.css"
 
 
-export class PlayPause extends React.Component<any, any> {
+export class MetroB extends React.Component<any, any> {
     
     constructor(props) {
         super(props)
@@ -25,7 +25,7 @@ export class PlayPause extends React.Component<any, any> {
         })
     }
     render() {
-        const playClassName = "playButton" + (this.state.playing ? " pauseButton" : "")
+        const playClassName = "m_playButton" + (this.state.playing ? " m_pauseButton" : "")
         return <div onClick={this.handleClick} className={playClassName} />
     }
 }

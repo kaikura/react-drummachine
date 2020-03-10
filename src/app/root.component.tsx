@@ -67,7 +67,6 @@ export class RootComponent extends React.Component<any, State> {
                                     <FooterPanel />
                                 </div>
                             </div>
-                            <div> This is the encoder value: {this.state.timestamp}</div>
                         </div>
                     )}
                 </div>
