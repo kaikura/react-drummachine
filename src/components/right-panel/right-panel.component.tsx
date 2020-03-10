@@ -4,35 +4,23 @@ import { MainSketch } from "../../sketches/sketch"
 import { Metro } from "../../sketches/metronome"
 import { Container } from "./right-panel.style"
 import { Sequencer } from "src/sketches/sequencer"
-import { spacing } from "src/config/spacing"
 
-export class RightPanel extends React.Component<any, any> {
-    private onMetroClick_1 = () => {
-        Metro.handleClick_1()
-    }
-    private onMetroClick_2 = () => {
-        Metro.handleClick_2()
-    }
+interface IProps {
+    timeSignature1: string | null
+    timeSignature2: string | null
+}
 
-    private onPlayClick = () => {
-        MainSketch.updateGrains()
-    }
-    private onStopClick = () => {
-        MainSketch.stop_sequencer()
-    }
-
-    private onSoundClick = () => {
-        MainSketch.chooseSound()
-    }
-
+export class RightPanel extends React.Component<IProps> {
     public render() {
+        const { timeSignature1, timeSignature2 } = this.props
+
         return (
             <div style={{ marginTop: "12px" }}>
                 <h5>Groove Shapes Control</h5>
 
                 <Container>
                     <div className="d-flex justify-content-center">
-                        <Sequencer />
+                        <Sequencer/>
                     </div>
 
                     <Button
@@ -66,7 +54,31 @@ export class RightPanel extends React.Component<any, any> {
                         style={{ marginBottom: "12px" }}
                     />
                 </Container>
+                {timeSignature1 && (
+                    <div>
+                        <p><b>Layer 1:</b>{timeSignature1}</p>
+                        <p><b>Layer 2:</b>{timeSignature2}</p>
+                    </div>
+                )}
             </div>
         )
+    }
+
+    private onMetroClick_1 = () => {
+        Metro.handleClick_1()
+    }
+    private onMetroClick_2 = () => {
+        Metro.handleClick_2()
+    }
+
+    private onPlayClick = () => {
+        MainSketch.updateGrains()
+    }
+    private onStopClick = () => {
+        MainSketch.stop_sequencer()
+    }
+
+    private onSoundClick = () => {
+        MainSketch.chooseSound()
     }
 }

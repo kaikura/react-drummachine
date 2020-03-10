@@ -11,6 +11,8 @@ export interface IState {
 
 export interface IProps {
     layer: 1 | 2
+
+    onSubmit(timeSignature: string, numberOfGrains: string)
 }
 
 export class TimeForm extends React.Component<IProps, IState> {
@@ -41,9 +43,10 @@ export class TimeForm extends React.Component<IProps, IState> {
                         <h5>Layer{layer}</h5>
                     </label>
                     <div className="col-sm-10">
-                        <input type="text" readOnly className="form-control-plaintext" id="polyrhytm" />
+                        <input type="text" readOnly className="form-control-plaintext" id="polyrhytm"/>
                     </div>
-                </div>
+                </div
+                >
                 <div className="form-group">
                     <label htmlFor="timeSignature">Time signature</label>
                     <select
@@ -72,8 +75,8 @@ export class TimeForm extends React.Component<IProps, IState> {
                                         onChange={this.onSelectNumberOfGrains}
                                     >
                                         {selectedTimeSignature &&
-                                            this.numberOfGrains[
-                                                (selectedTimeSignature as unknown) as string
+                                        this.numberOfGrains[
+                                            (selectedTimeSignature as unknown) as string
                                             ].map((o) => <option key={`option-${o}`}>{o}</option>)}
                                     </select>
                                 )}
@@ -109,23 +112,23 @@ export class TimeForm extends React.Component<IProps, IState> {
     }
 
     private onSubmit = (event) => {
-        const { selectedNumberOfGrains } = this.state
+        const { selectedTimeSignature, selectedNumberOfGrains } = this.state
         const { layer } = this.props
 
         if (selectedNumberOfGrains) {
             switch (layer) {
                 case 1:
-                    MainSketch.setNGrain(Number(this.state.selectedNumberOfGrains))
-                    MainSketch.setTS1(String(this.state.selectedTimeSignature))
-                    Metro.setTS_1(String(this.state.selectedTimeSignature))
+                    MainSketch.setNGrain(Number(selectedNumberOfGrains))
+                    MainSketch.setTS1(String(selectedTimeSignature))
+                    Metro.setTS_1(String(selectedTimeSignature))
                     MainSketch.generateShapes()
                     MainSketch.updateArrays()
                     MainSketch.triggerer()
                     break
                 case 2:
-                    MainSketch.setNGrain2(Number(this.state.selectedNumberOfGrains))
-                    MainSketch.setTS2(String(this.state.selectedTimeSignature))
-                    Metro.setTS_2(String(this.state.selectedTimeSignature))
+                    MainSketch.setNGrain2(Number(selectedNumberOfGrains))
+                    MainSketch.setTS2(String(selectedTimeSignature))
+                    Metro.setTS_2(String(selectedTimeSignature))
                     MainSketch.generateShapes()
                     MainSketch.updateArrays()
                     MainSketch.triggerer()
@@ -133,6 +136,7 @@ export class TimeForm extends React.Component<IProps, IState> {
             }
         }
 
+        this.props.onSubmit(selectedTimeSignature, selectedNumberOfGrains)
         event.preventDefault()
     }
 }

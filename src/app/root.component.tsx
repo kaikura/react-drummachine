@@ -9,7 +9,6 @@ import { subscribeToTimer } from "../api"
 import { ModeSelection } from "../components/mode-selection/mode-selection.component"
 import { AppContext } from "./app-context"
 import { MainSketch } from "../sketches/sketch"
-import { Tutorial } from "src/tutorial/tutorial.component"
 
 export enum AppMode {
     Play,
@@ -19,6 +18,8 @@ export enum AppMode {
 interface State {
     appMode: AppMode | null
     timestamp: string
+    timeSignature1: string | null
+    timeSignature2: string | null
 }
 
 export class RootComponent extends React.Component<any, State> {
@@ -33,11 +34,13 @@ export class RootComponent extends React.Component<any, State> {
 
     public state = {
         appMode: null,
-        timestamp: "no timestamp yet"
+        timestamp: "no timestamp yet",
+        timeSignature1: null,
+        timeSignature2: null
     }
 
     public render() {
-        const { appMode } = this.state
+        const { appMode, timeSignature1, timeSignature2 } = this.state
         const noModeSelected = appMode === null
         const backgroundColor = appMode === AppMode.Learn ? "#17a2b8" : "#348781"
 
@@ -49,7 +52,10 @@ export class RootComponent extends React.Component<any, State> {
                         <div className="container-fluid">
                             <div className="row">
                                 <div className="col-2 control-column">
-                                    <ControlPanel />
+                                    <ControlPanel
+                                        onFirstLayerSubmit={this.onFirstLayerSubmit}
+                                        onSecondLayerSubmit={this.onSecondLayerSubmit}
+                                    />
                                 </div>
 
                                 <div
@@ -61,7 +67,10 @@ export class RootComponent extends React.Component<any, State> {
                                 </div>
 
                                 <div className="col-2 control-column">
-                                    <RightPanel />
+                                    <RightPanel
+                                        timeSignature1={timeSignature1}
+                                        timeSignature2={timeSignature2}
+                                    />
                                 </div>
                             </div>
                             <div className="row">
@@ -75,6 +84,18 @@ export class RootComponent extends React.Component<any, State> {
                 </div>
             </AppContext.Provider>
         )
+    }
+
+    private onFirstLayerSubmit = (timeSignature) => {
+        this.setState({
+            timeSignature1: timeSignature
+        })
+    }
+
+    private onSecondLayerSubmit = (timeSignature) => {
+        this.setState({
+            timeSignature2: timeSignature
+        })
     }
 
     private onClick = (mode: AppMode) => {
