@@ -222,7 +222,7 @@ class MainSketchClass implements P5Sketch {
         p5.createCanvas((p5.width = this.canvasWidth), (p5.height = this.canvasHeight)).parent(
             canvasParentRef
         ) // use parent to render canvas in this ref (without that p5 render this canvas outside your component)
-        
+        this.generateShapes()
     }
 
     public draw(p5: P5): void {
@@ -885,6 +885,8 @@ class MainSketchClass implements P5Sketch {
                 //splice(this.maxNumShapes, 0, this.polygon_array_c);
                 this.polygon_array.push(this.polygon_array_c)
                 this.shp1.push(this.polygon_array.length - 1)
+                this.rot1.push(0)
+                this.sounds1.push(0)
                 this.updateArrays()
             }
             if (this.layerNumber === 2) {
@@ -901,6 +903,8 @@ class MainSketchClass implements P5Sketch {
                 //splice(maxNumShapes, 0, polygon_array_c)
                 this.polygon_array2.push(this.polygon_array_c)
                 this.shp2.push(this.polygon_array2.length - 1)
+                this.rot2.push(0)
+                this.sounds2.push(0)
                 this.updateArrays()
             }
         }, 2000)
