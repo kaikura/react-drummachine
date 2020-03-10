@@ -649,7 +649,8 @@ class MainSketchClass implements P5Sketch {
 
         //INC TRACK SELECTION MODE
         if (this.instrumentMode === 2 && this.selectedShape !== 0 && this.layerNumber === 1) {
-            //change track
+            //esempio
+            this.sounds1[5].start()
             this.selectedShape++
             console.log("inc")
         }
@@ -739,11 +740,15 @@ class MainSketchClass implements P5Sketch {
 
         //TRACK SELECTION MODE
         if (this.layerNumber === 1 && this.instrumentMode === 2 && this.selectedShape !== (0 || 1)) {
+            //esempio
+            this.sounds1[5].start()
             this.selectedShape--
         } else if (this.instrumentMode === 2 && this.selectedShape === 1) {
             this.selectedShape = this.maxNumShapes
         }
         if (this.layerNumber === 2 && this.instrumentMode === 2 && this.selectedShape2 !== (0 || 1)) {
+            //esempio
+            this.sounds1[5].start()
             this.selectedShape2--
         } else if (this.instrumentMode === 2 && this.selectedShape2 === 1) {
             this.selectedShape2 = this.maxNumShape2
