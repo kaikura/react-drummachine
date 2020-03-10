@@ -30,8 +30,8 @@ class MainSketchClass implements P5Sketch {
     private clockCircleScaleSize = 0.95
     private currentGrain = 0
     private currentGrain2 = 0
-    private nGrain = 1
-    private nGrain2 = 1
+    private nGrain = 4
+    private nGrain2 = 4
     //private firstLayerLandW = 500
     private trig1: any[]
     private trig2: any[]
@@ -86,7 +86,6 @@ class MainSketchClass implements P5Sketch {
         this.compact_shp1 = []
         this.compact_shp2 = []
         this.initializeArrays()
-        this.generateShapes()
         this.updateArrays()
         this.triggerer()
     }
@@ -132,6 +131,7 @@ class MainSketchClass implements P5Sketch {
         }
     }
     public generateShapes() {
+        //GENERATE UNLIMITED SHAPES IN PLAY MODE
         for (let i = 2; i <= this.nGrain; i++) {
             //starts from 2 since we need a line as the simplest shape possible
             this.polygon_array[i - 2] = new Array(i)
@@ -151,6 +151,24 @@ class MainSketchClass implements P5Sketch {
                 )
             }
         }
+    
+    //GENERATE REGULAR SHAPE LEARN MODE
+        if (this.appMode == AppMode.Learn) {
+            for (let i = 0; i < this.polygon_array.length - 1; i++){
+                    if ((this.nGrain % this.polygon_array[i].length) !== 0 ){
+                    this.polygon_array.splice(i, 1);
+                    i--
+                    } 
+                } 
+                
+            for (let i = 0; i < this.polygon_array2.length - 1; i++){
+                if ((this.nGrain2 % this.polygon_array2[i].length) !== 0 ){
+                  this.polygon_array2.splice(i, 1);
+                  i--
+                } 
+            } 
+              
+        } 
     }
 
     //UPDATE ARRAYS
@@ -202,10 +220,11 @@ class MainSketchClass implements P5Sketch {
         p5.createCanvas((p5.width = this.canvasWidth), (p5.height = this.canvasHeight)).parent(
             canvasParentRef
         ) // use parent to render canvas in this ref (without that p5 render this canvas outside your component)
+        
     }
 
     public draw(p5: P5): void {
-        
+
         if (this.appMode == AppMode.Learn) {
             p5.background("#17a2b8")
         } else if (this.appMode == AppMode.Play) {
