@@ -79,7 +79,7 @@ class Metro_N {
     public handleClick_1 = () => {
      
             this.createLoop_1()
-            if(MainSketch.loop_1 ===0 && MainSketch.loop_2===0 )Tone.Transport.start()
+            if(this.measure!== '' && Tone.Transport.state !== 'started') Tone.Transport.start()
     
     }
     createLoop_2 = () => {
@@ -100,7 +100,7 @@ class Metro_N {
     public handleClick_2 = () => {
        
             this.createLoop_2()
-            if(MainSketch.loop_1 ===0 && MainSketch.loop_2===0 )Tone.Transport.start()
+            if(this.measure_2!== '' && Tone.Transport.state !== 'started') Tone.Transport.start()
         
      }
     public metroPause = () => {

@@ -1,5 +1,5 @@
 import * as P5 from "p5"
-import { Transport } from "tone"
+import  Tone  from "tone"
 import { AppMode } from "../app/root.component"
 import { Time } from "tone"
 import { Engines } from "src/engines"
@@ -55,8 +55,8 @@ class MainSketchClass implements P5Sketch {
 
     private degree = 0
     private canvas
-    private counter = 0
-    private counter2 = 0
+    private counter = -1
+    private counter2 = -1
     private numMeasures
     private numMeasure2
     private numSides1 = new Array()
@@ -79,6 +79,8 @@ class MainSketchClass implements P5Sketch {
     private measure_2: String = ""
     public loop_1 : number = 0
     public loop_2 : number = 0
+    public drawArcs : number = 0
+    public drawArcs_2 : number = 0
     private value_enc: String = ""
 
     constructor() {
@@ -741,14 +743,14 @@ class MainSketchClass implements P5Sketch {
         //TRACK SELECTION MODE
         if (this.layerNumber === 1 && this.instrumentMode === 2 && this.selectedShape !== (0 || 1)) {
             //esempio
-            this.sounds1[5].start()
+        
             this.selectedShape--
         } else if (this.instrumentMode === 2 && this.selectedShape === 1) {
             this.selectedShape = this.maxNumShapes
         }
         if (this.layerNumber === 2 && this.instrumentMode === 2 && this.selectedShape2 !== (0 || 1)) {
             //esempio
-            this.sounds1[5].start()
+          
             this.selectedShape2--
         } else if (this.instrumentMode === 2 && this.selectedShape2 === 1) {
             this.selectedShape2 = this.maxNumShape2
@@ -844,6 +846,7 @@ class MainSketchClass implements P5Sketch {
 
     //TRACK SELECTION/ADD TRACK FUNCTION
     public selectShape() {
+      
         this.instrumentMode = 2 // we are in track_mode!
         if (this.layerNumber === 1) {
             this.selectedShape = this.maxNumShapes
@@ -1026,14 +1029,16 @@ class MainSketchClass implements P5Sketch {
         //active_seq = false;
         this.counter = -1
         this.numMeasures = 0
-        Transport.clear(this.loop_1)
+        Tone.Transport.clear(this.loop_1)
+        Tone.Transport.clear(this.drawArcs)
         
     }
     public stop_sequencer_2() {
         //active_seq = false;
         this.counter2 = -1
         this.numMeasure2 = 0
-        Transport.clear(this.loop_2)
+        Tone.Transport.clear(this.loop_2)
+        Tone.Transport.clear(this.drawArcs_2)
     }
 
     public triggerer() {
@@ -1109,7 +1114,7 @@ class MainSketchClass implements P5Sketch {
     }
 
     public updateGrains_1() {
-        this.stop_sequencer_1()
+       //this.stop_sequencer_1()
         
     const repeat_l1 = (time:number) => {
         this.numMeasures++
@@ -1118,21 +1123,25 @@ class MainSketchClass implements P5Sketch {
             for(let stp = 0 ; stp<this.nGrain; stp++){
             
                 if(this.trig1[i-1][stp] === true){
+                    console.log(this.sounds1)
+                    console.log(this.trig1)
         this.drumKit[this.sounds1[i-1]].start(time+stp*(this.TS_Num/this.TS_Den)*Time(this.nGrain+"n").toSeconds());
                  }
             }
         }
 }
-
+        const drawAr = () => {this.counter++}
 
         //"1:0" is one measure at 4/4 (8/8) will associated to the Time Signature, also 16th can be added "1:0:0"
-         this.loop_1=Transport.scheduleRepeat(repeat_l1, this.measure, "0")
+         this.loop_1=Tone.Transport.scheduleRepeat(repeat_l1, this.measure, "0")
+         console.log(this.loop_1)
+         this.drawArcs = Tone.Transport.scheduleRepeat( drawAr ,(this.TS_Num/this.TS_Den)*Time(this.nGrain+"n").toSeconds(),"0")
 
    
-        if(this.measure!=="" && this.loop_2 === 0 && Metro.loopId_1 ===0 && Metro.loopId_2===0 ) Transport.start()
+        if(this.measure!=="" && Tone.Transport.state !== 'started') Tone.Transport.start()
     }
     public updateGrains_2() {
-        this.stop_sequencer_2()
+       //this.stop_sequencer_2()
         
     
 const repeat_l2 = (time:number) => {
@@ -1146,12 +1155,14 @@ const repeat_l2 = (time:number) => {
         }
     }
 }
-
+        const drawAr = () => {this.counter2++}
 
         //Scond layer has another schedule, with adjustable duration indipendent from BPM
-         this.loop_2=Transport.scheduleRepeat(repeat_l2, this.measure_2, "0")
+         this.loop_2=Tone.Transport.scheduleRepeat(repeat_l2, this.measure_2, "0")
+         console.log(this.loop_2)
+         this.drawArcs_2 = Tone.Transport.scheduleRepeat( drawAr ,(this.TS_Num_2/this.TS_Den_2)*Time(this.nGrain2+"n").toSeconds(),"0")
 
-         if(this.measure_2!=="" && this.loop_1 === 0 && Metro.loopId_1 ===0 && Metro.loopId_2===0 ) Transport.start()
+         if(this.measure_2!=="" && Tone.Transport.state !== 'started') Tone.Transport.start()
     }
 
     public getnGrains() {
