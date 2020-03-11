@@ -1138,14 +1138,8 @@ class MainSketchClass implements P5Sketch {
        //this.stop_sequencer_1()
         
     const repeat_l1 = (time:number) => {
-<<<<<<< HEAD
-        this.numMeasures++
-        this.isStarted = true
-
-=======
         
     
->>>>>>> 9689ee5dfaea57361b22cff476b07ec2525517e7
         for(let i = 1; i <= this.shp1.length; i++){
             this.numMeasures++
             for(let stp = 0 ; stp<this.nGrain; stp++){
