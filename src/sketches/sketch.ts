@@ -757,14 +757,16 @@ class MainSketchClass implements P5Sketch {
         //then CHANGE SHAPE MODE
         if (this.layerNumber === 1 && this.instrumentMode === 3 && this.shp1[this.selectedShape - 1] !== 0) {
             this.shp1[this.selectedShape - 1] = this.shp1[this.selectedShape - 1] - 1
-        } else if (this.instrumentMode === 3 && this.shp1[this.selectedShape - 1] === 0) {
+        } else if (this.layerNumber === 1 && this.instrumentMode === 3 && this.shp1[this.selectedShape - 1] === 0) {
             this.shp1[this.selectedShape - 1] = this.polygon_array.length - 1
         }
-        if (this.layerNumber === 2 && this.instrumentMode === 3 && this.shp1[this.selectedShape - 1] !== 0) {
+
+        if (this.layerNumber === 2 && this.instrumentMode === 3 && this.shp2[this.selectedShape2 - 1] !== 0) {
             this.shp2[this.selectedShape2 - 1] = this.shp2[this.selectedShape2 - 1] - 1
-        } else if (this.instrumentMode === 3 && this.shp2[this.selectedShape2 - 1] === 0) {
+        } else if (this.layerNumber === 2 && this.instrumentMode === 3 && this.shp2[this.selectedShape2 - 1] === 0) {
             this.shp2[this.selectedShape2 - 1] = this.polygon_array2.length - 1
         }
+
 
         //CUSTOM SHAPE MODE
         if (this.layerNumber === 1 && this.instrumentMode === 7) {
