@@ -1,7 +1,7 @@
 import React from "react"
 import "./mode-selection.component.scss"
 import { AppMode } from "../../app/root.component"
-import logo from "src/img/Polyknob.png"
+import logo from "src/img/Polyknob2.png"
 
 interface Props {
     onClick(mode: AppMode): void
