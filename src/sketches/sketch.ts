@@ -30,8 +30,8 @@ class MainSketchClass implements P5Sketch {
     private clockCircleScaleSize = 0.95
     private currentGrain = 0
     private currentGrain2 = 0
-    private nGrain = 4
-    private nGrain2 = 4
+    public nGrain = 4
+    public nGrain2 = 4
     //private firstLayerLandW = 500
     private trig1: any[]
     private trig2: any[]
@@ -59,7 +59,7 @@ class MainSketchClass implements P5Sketch {
     private counter2 = -1
     private numMeasures
     private numMeasure2
-    private numSides1 = new Array()
+    public numSides1 = new Array()
     private verRegular = false
     private ver = 0
     private active_seq = false
@@ -155,24 +155,23 @@ class MainSketchClass implements P5Sketch {
                 )
             }
         }
-    
-    //GENERATE REGULAR SHAPE LEARN MODE
+
+        //GENERATE REGULAR SHAPE LEARN MODE
         if (this.appMode == AppMode.Learn) {
-            for (let i = 0; i < this.polygon_array.length - 1; i++){
-                    if ((this.nGrain % this.polygon_array[i].length) !== 0 ){
-                    this.polygon_array.splice(i, 1);
+            for (let i = 0; i < this.polygon_array.length - 1; i++) {
+                if (this.nGrain % this.polygon_array[i].length !== 0) {
+                    this.polygon_array.splice(i, 1)
                     i--
-                    } 
-                } 
-                
-            for (let i = 0; i < this.polygon_array2.length - 1; i++){
-                if ((this.nGrain2 % this.polygon_array2[i].length) !== 0 ){
-                  this.polygon_array2.splice(i, 1);
-                  i--
-                } 
-            } 
-              
-        } 
+                }
+            }
+
+            for (let i = 0; i < this.polygon_array2.length - 1; i++) {
+                if (this.nGrain2 % this.polygon_array2[i].length !== 0) {
+                    this.polygon_array2.splice(i, 1)
+                    i--
+                }
+            }
+        }
     }
 
     //UPDATE ARRAYS
@@ -224,7 +223,7 @@ class MainSketchClass implements P5Sketch {
         p5.createCanvas((p5.width = this.canvasWidth), (p5.height = this.canvasHeight)).parent(
             canvasParentRef
         ) // use parent to render canvas in this ref (without that p5 render this canvas outside your component)
-        
+        this.generateShapes()
     }
 
     public draw(p5: P5): void {
@@ -642,6 +641,9 @@ class MainSketchClass implements P5Sketch {
     }
 
     public encoderInc() {
+        console.log("pol_arr_c is: " + this.polygon_array_c)
+        console.log("pol_arr is: " + this.polygon_array[this.polygon_array.length - 1])
+
         //INC LAYER SELECTION MODE
         if (this.instrumentMode === 1 && this.layerNumber === 1) {
             this.layerNumber = 2
@@ -652,10 +654,10 @@ class MainSketchClass implements P5Sketch {
         //INC TRACK SELECTION MODE
         if (this.instrumentMode === 2 && this.selectedShape !== 0 && this.layerNumber === 1) {
             //esempio
-            this.sounds1[5].start()
+
             this.selectedShape++
-            console.log("inc")
         }
+
         if (this.instrumentMode === 2 && this.layerNumber === 2) {
             this.selectedShape = 0
             this.selectedShape2++
@@ -742,15 +744,11 @@ class MainSketchClass implements P5Sketch {
 
         //TRACK SELECTION MODE
         if (this.layerNumber === 1 && this.instrumentMode === 2 && this.selectedShape !== (0 || 1)) {
-            //esempio
-        
             this.selectedShape--
         } else if (this.instrumentMode === 2 && this.selectedShape === 1) {
             this.selectedShape = this.maxNumShapes
         }
         if (this.layerNumber === 2 && this.instrumentMode === 2 && this.selectedShape2 !== (0 || 1)) {
-            //esempio
-          
             this.selectedShape2--
         } else if (this.instrumentMode === 2 && this.selectedShape2 === 1) {
             this.selectedShape2 = this.maxNumShape2
@@ -832,6 +830,7 @@ class MainSketchClass implements P5Sketch {
                 return a - b
             })
         }
+        this.triggerer()
     }
 
     //CREATE NEW LAYER FUNCTION
@@ -861,13 +860,11 @@ class MainSketchClass implements P5Sketch {
                 this.maxNumShapes++
                 this.updateArrays()
                 this.triggerer()
-                console.log(this.maxNumShapes)
             }
             if (this.layerNumber === 2) {
                 this.maxNumShape2++
                 this.updateArrays()
                 this.triggerer()
-                console.log(this.maxNumShape2)
             }
         }, 2000)
         this.triggerer()
@@ -893,6 +890,8 @@ class MainSketchClass implements P5Sketch {
                 //splice(this.maxNumShapes, 0, this.polygon_array_c);
                 this.polygon_array.push(this.polygon_array_c)
                 this.shp1.push(this.polygon_array.length - 1)
+                this.rot1.push(0)
+                this.sounds1.push(this.trig1.length + 1)
                 this.updateArrays()
             }
             if (this.layerNumber === 2) {
@@ -909,6 +908,8 @@ class MainSketchClass implements P5Sketch {
                 //splice(maxNumShapes, 0, polygon_array_c)
                 this.polygon_array2.push(this.polygon_array_c)
                 this.shp2.push(this.polygon_array2.length - 1)
+                this.rot2.push(0)
+                this.sounds2.push(this.trig1.length + 1)
                 this.updateArrays()
             }
         }, 2000)
@@ -928,6 +929,8 @@ class MainSketchClass implements P5Sketch {
         if (this.layerNumber === 1) {
             this.shp1.splice(this.selectedShape - 1, 1)
             this.rot1.splice(this.selectedShape - 1, 1)
+            this.sounds1.splice(this.selectedShape - 1, 1)
+            this.trig1.splice(this.selectedShape - 1, 1)
             this.maxNumShapes--
             //start from skratch
             if (this.maxNumShapes === 0) {
@@ -937,7 +940,9 @@ class MainSketchClass implements P5Sketch {
         }
         if (this.layerNumber === 2) {
             this.shp2.splice(this.selectedShape2 - 1, 1)
-            this.rot1.splice(this.selectedShape2 - 1, 1)
+            this.rot2.splice(this.selectedShape2 - 1, 1)
+            this.sounds2.splice(this.selectedShape2 - 1, 1)
+            this.trig2.splice(this.selectedShape2 - 1, 1)
             this.maxNumShape2--
             //start from skratch
             if (this.maxNumShape2 === 0) {
@@ -945,7 +950,7 @@ class MainSketchClass implements P5Sketch {
             }
             this.selectedShape2 = this.maxNumShape2
         }
-        this.updateArrays()
+        //this.updateArrays()
         this.triggerer()
     }
 
@@ -1003,7 +1008,6 @@ class MainSketchClass implements P5Sketch {
         //end
     }
 
-   
     public setEncoder(value: String) {
         console.log(value)
         /*
@@ -1171,11 +1175,14 @@ const repeat_l2 = (time:number) => {
 
     // actual audio engine
 
-
     public setAppMode(mode: AppMode) {
         this.appMode = mode
-        console.log(this.appMode)
+        //console.log(this.appMode)
         return this
+    }
+
+    public getNumSides(): number[] {
+        return this.numSides1
     }
 }
 

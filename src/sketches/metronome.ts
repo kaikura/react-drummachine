@@ -2,7 +2,7 @@ import Tone from "tone"
 import { Tick } from "src/engines"
 
 import "./metronome.css"
-import { MainSketch } from "./sketch"
+
 
 class Metro_N {
     private tick: any
@@ -66,20 +66,19 @@ class Metro_N {
             for (let i = 0; i < this.num; i++) {
                 if (i === 0) {
                     this.start_meaure_tick.trigger(time)
-                    //metronome
                 } else {
                     this.tick.trigger(time + i * Tone.Time(this.den + "n").toSeconds())
                 }
             }
             //DO DRAWINGS HERE
         } //the function callback "const loop" is called at the beginning of every measure (long as the time signature) at the choosen bpm, the trigger is scheduled in order to have a beat of metronome at EXACTLY Time('4n').toSeconds() that is the distance of quarter notes at any given bpm. The tracks and metronome are indipendent (for now).
-        if(this.measure !=="")this.loopId_1 = Tone.Transport.scheduleRepeat(loop, this.measure, "0")
+        if (this.measure !== "") this.loopId_1 = Tone.Transport.scheduleRepeat(loop, this.measure, "0")
     }
 
     public handleClick_1 = () => {
      
             this.createLoop_1()
-            if(this.measure!== '' && Tone.Transport.state !== 'started') Tone.Transport.start()
+            if(Tone.Transport.state !== 'started') Tone.Transport.start()
     
     }
     createLoop_2 = () => {
@@ -94,24 +93,20 @@ class Metro_N {
             }
             //DO DRAWINGS HERE
         } //the function callback "const loop" is called at the beginning of every measure (long as the time signature) at the choosen bpm, the trigger is scheduled in order to have a beat of metronome at EXACTLY Time('4n').toSeconds() that is the distance of quarter notes at any given bpm. The tracks and metronome are indipendent (for now).
-        if(this.measure_2 !=="") this.loopId_2 = Tone.Transport.scheduleRepeat(loop, this.measure_2, "0")
+        if (this.measure_2 !== "") this.loopId_2 = Tone.Transport.scheduleRepeat(loop, this.measure_2, "0")
     }
 
     public handleClick_2 = () => {
        
             this.createLoop_2()
-            if(this.measure_2!== '' && Tone.Transport.state !== 'started') Tone.Transport.start()
+            if(Tone.Transport.state !== 'started') Tone.Transport.start()
         
      }
     public metroPause = () => {
-       
         Tone.Transport.clear(this.loopId_1)
-        
-     }
+    }
     public metro2Pause = () => {
-     
         Tone.Transport.clear(this.loopId_2)
-       
     }
 }
 
