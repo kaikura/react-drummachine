@@ -53,6 +53,9 @@ class MainSketchClass implements P5Sketch {
 
     private secondLayer_activated = false
 
+    private isStarted = false
+    private isStarted2 = false
+
     private degree = 0
     private canvas
     private counter = -1
@@ -1035,16 +1038,20 @@ class MainSketchClass implements P5Sketch {
         //active_seq = false;
         this.counter = -1
         this.numMeasures = 0
+        this.isStarted = false
         Tone.Transport.clear(this.loop_1)
         Tone.Transport.clear(this.drawArcs)
+        Tone.Transport.stop()
         
     }
     public stop_sequencer_2() {
         //active_seq = false;
         this.counter2 = -1
         this.numMeasure2 = 0
+        this.isStarted2 = false
         Tone.Transport.clear(this.loop_2)
         Tone.Transport.clear(this.drawArcs_2)
+        Tone.Transport.stop()
     }
 
     public triggerer() {
@@ -1124,24 +1131,31 @@ class MainSketchClass implements P5Sketch {
         
     const repeat_l1 = (time:number) => {
         this.numMeasures++
-    
+        this.isStarted = true
+
         for(let i = 1; i <= this.shp1.length; i++){
             for(let stp = 0 ; stp<this.nGrain; stp++){
-            
+
                 if(this.trig1[i-1][stp] === true){
-                    console.log(this.sounds1)
-                    console.log(this.trig1)
+                    
         this.drumKit[this.sounds1[i-1]].start(time+stp*(this.TS_Num/this.TS_Den)*Time(this.nGrain+"n").toSeconds());
                  }
             }
         }
 }
-        const drawAr = () => {this.counter++}
+        const drawAr = () => {
+            //console.log("this is loop 1: " + this.loop_1)
+            if(this.isStarted){
+            this.counter++}
+            console.log("this is counter " + this.counter)
+            //console.log(Time(this.nGrain+"n").toSeconds())
+        }
+        
 
         //"1:0" is one measure at 4/4 (8/8) will associated to the Time Signature, also 16th can be added "1:0:0"
          this.loop_1=Tone.Transport.scheduleRepeat(repeat_l1, this.measure, "0")
-         console.log(this.loop_1)
-         this.drawArcs = Tone.Transport.scheduleRepeat( drawAr ,(this.TS_Num/this.TS_Den)*Time(this.nGrain+"n").toSeconds(),"0")
+         
+         this.drawArcs = Tone.Transport.scheduleRepeat(drawAr, (this.TS_Num/this.TS_Den)*Time(this.nGrain+"n").toSeconds(),"0")
 
    
         if(this.measure!=="" && Tone.Transport.state !== 'started') Tone.Transport.start()
@@ -1161,12 +1175,14 @@ const repeat_l2 = (time:number) => {
         }
     }
 }
-        const drawAr = () => {this.counter2++}
+        const drawAr2 = () => {
+            if(this.isStarted2){
+                this.counter2++}}
 
         //Scond layer has another schedule, with adjustable duration indipendent from BPM
          this.loop_2=Tone.Transport.scheduleRepeat(repeat_l2, this.measure_2, "0")
          console.log(this.loop_2)
-         this.drawArcs_2 = Tone.Transport.scheduleRepeat( drawAr ,(this.TS_Num_2/this.TS_Den_2)*Time(this.nGrain2+"n").toSeconds(),"0")
+         this.drawArcs_2 = Tone.Transport.scheduleRepeat( drawAr2 ,(this.TS_Num_2/this.TS_Den_2)*Time(this.nGrain2+"n").toSeconds(),"0")
 
          if(this.measure_2!=="" && Tone.Transport.state !== 'started') Tone.Transport.start()
     }
