@@ -34,7 +34,7 @@ export class RootComponent extends React.Component<any, State> {
 
     public state = {
         appMode: null,
-        timestamp: "no timestamp yet",
+        timestamp: "",
         timeSignature1: null,
         timeSignature2: null
     }
