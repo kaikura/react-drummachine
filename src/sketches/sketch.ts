@@ -935,6 +935,8 @@ class MainSketchClass implements P5Sketch {
         if (this.layerNumber === 1) {
             this.shp1.splice(this.selectedShape - 1, 1)
             this.rot1.splice(this.selectedShape - 1, 1)
+            this.sounds1.splice(this.selectedShape -1, 1)
+            this.trig1.splice(this.selectedShape - 1, 1)
             this.maxNumShapes--
             //start from skratch
             if (this.maxNumShapes === 0) {
@@ -944,7 +946,9 @@ class MainSketchClass implements P5Sketch {
         }
         if (this.layerNumber === 2) {
             this.shp2.splice(this.selectedShape2 - 1, 1)
-            this.rot1.splice(this.selectedShape2 - 1, 1)
+            this.rot2.splice(this.selectedShape2 - 1, 1)
+            this.sounds2.splice(this.selectedShape2 -1, 1)
+            this.trig2.splice(this.selectedShape2 - 1, 1)
             this.maxNumShape2--
             //start from skratch
             if (this.maxNumShape2 === 0) {
