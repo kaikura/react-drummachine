@@ -640,6 +640,8 @@ class MainSketchClass implements P5Sketch {
     }
 
     public encoderInc() {
+        console.log("pol_arr_c is: " + this.polygon_array_c)
+        console.log("pol_arr is: " + this.polygon_array[this.polygon_array.length-1])
 
         //INC LAYER SELECTION MODE
         if (this.instrumentMode === 1 && this.layerNumber === 1) {
@@ -654,12 +656,6 @@ class MainSketchClass implements P5Sketch {
             //esempio
   
             this.selectedShape++
-
-            //console.log("pol_arr_c is: " + this.polygon_array_c)
-
-            //console.log("pol_arr is: " + this.polygon_array)
-                
-
         }
         
         if (this.instrumentMode === 2 && this.layerNumber === 2) {
@@ -739,6 +735,8 @@ class MainSketchClass implements P5Sketch {
     }
 
     public encoderDec() {
+
+
         //LAYER SELECTION MODE
         if (this.instrumentMode === 1 && this.layerNumber === 1) {
             this.layerNumber = 2
@@ -810,6 +808,7 @@ class MainSketchClass implements P5Sketch {
     }
 
     public encoderButt() {
+
         if (this.layerNumber === 1 && this.instrumentMode === 7) {
             if (this.polygon_array_c.includes(this.currentGrain)) {
                 for (let i = 0; i < this.polygon_array_c.length; i++) {
@@ -838,6 +837,7 @@ class MainSketchClass implements P5Sketch {
                 return a - b
             })
         }
+        this.triggerer()
     }
 
     //CREATE NEW LAYER FUNCTION
@@ -915,7 +915,7 @@ class MainSketchClass implements P5Sketch {
                 this.polygon_array2.push(this.polygon_array_c)
                 this.shp2.push(this.polygon_array2.length - 1)
                 this.rot2.push(0)
-                this.sounds2.push(this.trig1.length)
+                this.sounds2.push(this.trig1.length+1)
                 this.updateArrays()
             }
         }, 2000)
@@ -952,7 +952,7 @@ class MainSketchClass implements P5Sketch {
             }
             this.selectedShape2 = this.maxNumShape2
         }
-        this.updateArrays()
+        //this.updateArrays()
         this.triggerer()
     }
 
