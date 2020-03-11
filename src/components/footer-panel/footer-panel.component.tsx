@@ -12,7 +12,11 @@ enum ButtonType {
     DeleteShape
 }
 
-export class FooterPanel extends React.Component<any, any> {
+interface IProps {
+    onChangeShape(numSides: number[]): void
+}
+
+export class FooterPanel extends React.Component<IProps> {
     public render() {
         return (
             <div className="footer-panel">
@@ -123,6 +127,7 @@ export class FooterPanel extends React.Component<any, any> {
     }
     private onShapeClick = () => {
         MainSketch.changeShape()
+        this.props.onChangeShape(MainSketch.getNumSides())
     }
 
     private onRotateClick = () => {

@@ -3,22 +3,18 @@ import { Button } from "../button/button.component"
 import { MainSketch } from "../../sketches/sketch"
 import { Metro } from "../../sketches/metronome"
 import { Container } from "./right-panel.style"
-import { spacing } from "src/config/spacing"
 import { PlayPause } from "../play_button/play-pause"
-import {MetroB} from "../metro_button/metro_button"
+import { MetroB } from "../metro_button/metro_button"
 import { ButtonWithPopover } from "../button-with-popover/button-with-popover.component"
-import {BpmContainer} from '../bpm.container'
+import { BpmContainer } from "../bpm.container"
 
 interface IProps {
+    numSides: number[]
     timeSignature1: string | null
     timeSignature2: string | null
-
- 
 }
 
-export class RightPanel extends React.Component<IProps,any> {
-    
-
+export class RightPanel extends React.Component<IProps, any> {
     private onMetroClick_1 = () => {
         Metro.handleClick_1()
     }
@@ -50,9 +46,13 @@ export class RightPanel extends React.Component<IProps,any> {
         MainSketch.updateGrains_2()
     }
 
+    get numSides(): number[] {
+        return MainSketch.getNumSides()
+    }
 
     public render() {
-        const { timeSignature1, timeSignature2 } = this.props
+        const { numSides, timeSignature1, timeSignature2 } = this.props
+        console.log("render rightPanel", this.numSides)
 
         return (
             <div style={{ marginTop: "12px" }}>
@@ -66,65 +66,69 @@ export class RightPanel extends React.Component<IProps,any> {
                 />
                 <Container>
                     <div className="d-flex justify-content-center">
-                       <BpmContainer />
+                        <BpmContainer />
                     </div>
-                    
-                        
-                         <div>
-                    
-                    <MetroB play={this.onMetroClick_1} pause={this.metroPause} />
-                         
-                         </div>
-                         <div>
-                         <h6 style={{textAlign:'center'}}>clock_one</h6>
-                         </div>
-                         <Container>
-                    <PlayPause play={this.play_1} pause={this.pause_1} />
+
                     <div>
-                         <h6 style={{textAlign:'center'}}>Transport One</h6>
-                         </div>
-                    </Container>   
-                         <Container>
-                         <div>
-                    
-                    <MetroB play={this.onMetroClick_2} pause={this.metro2Pause} />
-                         
-                         </div>
-                         <div>
-                         <h6 style={{textAlign:'center'}}>clock_two</h6>
-                         </div>
-                         </Container>
-                    
-                    
+                        <MetroB play={this.onMetroClick_1} pause={this.metroPause} />
+                    </div>
+                    <div>
+                        <h6 style={{ textAlign: "center" }}>clock_one</h6>
+                    </div>
                     <Container>
-                    <PlayPause play={this.play_2} pause={this.pause_2} />
-                    <div>
-                         <h6 style={{textAlign:'center'}}>Transport Two</h6>
-                         </div>
+                        <PlayPause play={this.play_1} pause={this.pause_1} />
+                        <div>
+                            <h6 style={{ textAlign: "center" }}>Transport One</h6>
+                        </div>
                     </Container>
-                 
-                 
+                    <Container>
+                        <div>
+                            <MetroB play={this.onMetroClick_2} pause={this.metro2Pause} />
+                        </div>
+                        <div>
+                            <h6 style={{ textAlign: "center" }}>clock_two</h6>
+                        </div>
+                    </Container>
+
+                    <Container>
+                        <PlayPause play={this.play_2} pause={this.pause_2} />
+                        <div>
+                            <h6 style={{ textAlign: "center" }}>Transport Two</h6>
+                        </div>
+                    </Container>
+
                     <Button
                         text="Instrument"
                         icon="music player fill"
                         onMouseDown={this.onSoundClick}
-                        style={{marginTop: "2em", marginBottom: "3pxem" }}
+                        style={{ marginTop: "2em", marginBottom: "3pxem" }}
                     />
                 </Container>
                 {timeSignature1 && timeSignature2 && (
                     <div>
                         <div className="alert alert-info" role="alert">
-                        <p>
-                            <b><i>Polymeter   </i></b>
-                            <i>{timeSignature1} : {timeSignature2}</i>
-                        </p>
-</div>
+                            <p>
+                                <b>
+                                    <i>Polymeter </i>
+                                </b>
+                                <i>
+                                    {timeSignature1} : {timeSignature2}
+                                </i>
+                            </p>
+                        </div>
+                    </div>
+                )}
+                {!!numSides.length && (
+                    <div>
+                        <b>Number of sides:</b>
+                        {numSides.map((num) => (
+                            <i>{num},</i>
+                        ))}
                     </div>
                 )}
             </div>
         )
     }
-
 
     private renderPopoverContent = () => {
         return <p>Here you can manage all the audio features of the interface.</p>

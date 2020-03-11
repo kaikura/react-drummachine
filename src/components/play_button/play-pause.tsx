@@ -1,9 +1,7 @@
 import * as React from "react"
 import "../play_button/play.css"
 
-
 export class PlayPause extends React.Component<any, any> {
-    
     constructor(props) {
         super(props)
 
@@ -13,8 +11,6 @@ export class PlayPause extends React.Component<any, any> {
     }
 
     public handleClick = () => {
-   
-
         if (this.state.playing) {
             this.props.pause()
         } else {

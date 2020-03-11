@@ -77,8 +77,8 @@ class MainSketchClass implements P5Sketch {
     private sounds2: any = []
     private measure: String = ""
     private measure_2: String = ""
-    public loop_1 : number = 0
-    public loop_2 : number = 0
+    public loop_1: number = 0
+    public loop_2: number = 0
     private value_enc: String = ""
 
     constructor() {
@@ -153,24 +153,23 @@ class MainSketchClass implements P5Sketch {
                 )
             }
         }
-    
-    //GENERATE REGULAR SHAPE LEARN MODE
+
+        //GENERATE REGULAR SHAPE LEARN MODE
         if (this.appMode == AppMode.Learn) {
-            for (let i = 0; i < this.polygon_array.length - 1; i++){
-                    if ((this.nGrain % this.polygon_array[i].length) !== 0 ){
-                    this.polygon_array.splice(i, 1);
+            for (let i = 0; i < this.polygon_array.length - 1; i++) {
+                if (this.nGrain % this.polygon_array[i].length !== 0) {
+                    this.polygon_array.splice(i, 1)
                     i--
-                    } 
-                } 
-                
-            for (let i = 0; i < this.polygon_array2.length - 1; i++){
-                if ((this.nGrain2 % this.polygon_array2[i].length) !== 0 ){
-                  this.polygon_array2.splice(i, 1);
-                  i--
-                } 
-            } 
-              
-        } 
+                }
+            }
+
+            for (let i = 0; i < this.polygon_array2.length - 1; i++) {
+                if (this.nGrain2 % this.polygon_array2[i].length !== 0) {
+                    this.polygon_array2.splice(i, 1)
+                    i--
+                }
+            }
+        }
     }
 
     //UPDATE ARRAYS
@@ -257,7 +256,7 @@ class MainSketchClass implements P5Sketch {
                 this.circleLandW + 20,
                 this.circleLandW + 20,
                 3 * p5.HALF_PI,
-                3 * p5.HALF_PI + (p5.TWO_PI / this.nGrain) * (this.counter) 
+                3 * p5.HALF_PI + (p5.TWO_PI / this.nGrain) * this.counter
             )
             p5.pop()
             //Second Layer Arc
@@ -641,7 +640,7 @@ class MainSketchClass implements P5Sketch {
 
     public encoderInc() {
         console.log("pol_arr_c is: " + this.polygon_array_c)
-        console.log("pol_arr is: " + this.polygon_array[this.polygon_array.length-1])
+        console.log("pol_arr is: " + this.polygon_array[this.polygon_array.length - 1])
 
         //INC LAYER SELECTION MODE
         if (this.instrumentMode === 1 && this.layerNumber === 1) {
@@ -650,14 +649,13 @@ class MainSketchClass implements P5Sketch {
             this.layerNumber = 1
         }
 
-        
         //INC TRACK SELECTION MODE
         if (this.instrumentMode === 2 && this.selectedShape !== 0 && this.layerNumber === 1) {
             //esempio
-  
+
             this.selectedShape++
         }
-        
+
         if (this.instrumentMode === 2 && this.layerNumber === 2) {
             this.selectedShape = 0
             this.selectedShape2++
@@ -735,8 +733,6 @@ class MainSketchClass implements P5Sketch {
     }
 
     public encoderDec() {
-
-
         //LAYER SELECTION MODE
         if (this.instrumentMode === 1 && this.layerNumber === 1) {
             this.layerNumber = 2
@@ -744,21 +740,17 @@ class MainSketchClass implements P5Sketch {
             this.layerNumber = 1
         }
 
-        
         //TRACK SELECTION MODE
         if (this.layerNumber === 1 && this.instrumentMode === 2 && this.selectedShape !== (0 || 1)) {
-
             this.selectedShape--
         } else if (this.instrumentMode === 2 && this.selectedShape === 1) {
             this.selectedShape = this.maxNumShapes
         }
         if (this.layerNumber === 2 && this.instrumentMode === 2 && this.selectedShape2 !== (0 || 1)) {
-
             this.selectedShape2--
         } else if (this.instrumentMode === 2 && this.selectedShape2 === 1) {
             this.selectedShape2 = this.maxNumShape2
         }
-        
 
         //then CHANGE SHAPE MODE
         if (this.layerNumber === 1 && this.instrumentMode === 3 && this.shp1[this.selectedShape - 1] !== 0) {
@@ -808,7 +800,6 @@ class MainSketchClass implements P5Sketch {
     }
 
     public encoderButt() {
-
         if (this.layerNumber === 1 && this.instrumentMode === 7) {
             if (this.polygon_array_c.includes(this.currentGrain)) {
                 for (let i = 0; i < this.polygon_array_c.length; i++) {
@@ -897,7 +888,7 @@ class MainSketchClass implements P5Sketch {
                 this.polygon_array.push(this.polygon_array_c)
                 this.shp1.push(this.polygon_array.length - 1)
                 this.rot1.push(0)
-                this.sounds1.push(this.trig1.length+1)
+                this.sounds1.push(this.trig1.length + 1)
                 this.updateArrays()
             }
             if (this.layerNumber === 2) {
@@ -915,7 +906,7 @@ class MainSketchClass implements P5Sketch {
                 this.polygon_array2.push(this.polygon_array_c)
                 this.shp2.push(this.polygon_array2.length - 1)
                 this.rot2.push(0)
-                this.sounds2.push(this.trig1.length+1)
+                this.sounds2.push(this.trig1.length + 1)
                 this.updateArrays()
             }
         }, 2000)
@@ -935,7 +926,7 @@ class MainSketchClass implements P5Sketch {
         if (this.layerNumber === 1) {
             this.shp1.splice(this.selectedShape - 1, 1)
             this.rot1.splice(this.selectedShape - 1, 1)
-            this.sounds1.splice(this.selectedShape -1, 1)
+            this.sounds1.splice(this.selectedShape - 1, 1)
             this.trig1.splice(this.selectedShape - 1, 1)
             this.maxNumShapes--
             //start from skratch
@@ -947,7 +938,7 @@ class MainSketchClass implements P5Sketch {
         if (this.layerNumber === 2) {
             this.shp2.splice(this.selectedShape2 - 1, 1)
             this.rot2.splice(this.selectedShape2 - 1, 1)
-            this.sounds2.splice(this.selectedShape2 -1, 1)
+            this.sounds2.splice(this.selectedShape2 - 1, 1)
             this.trig2.splice(this.selectedShape2 - 1, 1)
             this.maxNumShape2--
             //start from skratch
@@ -1014,7 +1005,6 @@ class MainSketchClass implements P5Sketch {
         //end
     }
 
-   
     public setEncoder(value: String) {
         console.log(value)
         /*
@@ -1041,7 +1031,6 @@ class MainSketchClass implements P5Sketch {
         this.counter = -1
         this.numMeasures = 0
         Transport.clear(this.loop_1)
-        
     }
     public stop_sequencer_2() {
         //active_seq = false;
@@ -1124,48 +1113,50 @@ class MainSketchClass implements P5Sketch {
 
     public updateGrains_1() {
         this.stop_sequencer_1()
-        
-    const repeat_l1 = (time:number) => {
-        this.numMeasures++
-    
-        for(let i = 1; i <= this.trig1.length; i++){
-            for(let stp = 0 ; stp<this.nGrain; stp++){
-            
-                if(this.trig1[i-1][stp] === true){
-        this.drumKit[this.sounds1[i-1]].start(time+stp*(this.TS_Num/this.TS_Den)*Time(this.nGrain+"n").toSeconds());
-                 }
+
+        const repeat_l1 = (time: number) => {
+            this.numMeasures++
+
+            for (let i = 1; i <= this.trig1.length; i++) {
+                for (let stp = 0; stp < this.nGrain; stp++) {
+                    if (this.trig1[i - 1][stp] === true) {
+                        this.drumKit[this.sounds1[i - 1]].start(
+                            time + stp * (this.TS_Num / this.TS_Den) * Time(this.nGrain + "n").toSeconds()
+                        )
+                    }
+                }
             }
         }
-}
-
 
         //"1:0" is one measure at 4/4 (8/8) will associated to the Time Signature, also 16th can be added "1:0:0"
-         this.loop_1=Transport.scheduleRepeat(repeat_l1, this.measure, "0")
+        this.loop_1 = Transport.scheduleRepeat(repeat_l1, this.measure, "0")
 
-   
-        if(this.measure!=="" && this.loop_2 === 0 && Metro.loopId_1 ===0 && Metro.loopId_2===0 ) Transport.start()
+        if (this.measure !== "" && this.loop_2 === 0 && Metro.loopId_1 === 0 && Metro.loopId_2 === 0)
+            Transport.start()
     }
     public updateGrains_2() {
         this.stop_sequencer_2()
-        
-    
-const repeat_l2 = (time:number) => {
-    this.numMeasure2++
 
-    for(let i = 1; i <= this.shp2.length; i++){
-        for(let stp = 0 ; stp<this.nGrain2; stp++){
-            if(this.trig2[i-1][stp] === true){
-    this.drumKit[this.sounds2[i-1]].start(time+stp*(this.TS_Num_2/this.TS_Den_2)*Time(this.nGrain2+"n").toSeconds());
-             }
+        const repeat_l2 = (time: number) => {
+            this.numMeasure2++
+
+            for (let i = 1; i <= this.shp2.length; i++) {
+                for (let stp = 0; stp < this.nGrain2; stp++) {
+                    if (this.trig2[i - 1][stp] === true) {
+                        this.drumKit[this.sounds2[i - 1]].start(
+                            time +
+                                stp * (this.TS_Num_2 / this.TS_Den_2) * Time(this.nGrain2 + "n").toSeconds()
+                        )
+                    }
+                }
+            }
         }
-    }
-}
-
 
         //Scond layer has another schedule, with adjustable duration indipendent from BPM
-         this.loop_2=Transport.scheduleRepeat(repeat_l2, this.measure_2, "0")
+        this.loop_2 = Transport.scheduleRepeat(repeat_l2, this.measure_2, "0")
 
-         if(this.measure_2!=="" && this.loop_1 === 0 && Metro.loopId_1 ===0 && Metro.loopId_2===0 ) Transport.start()
+        if (this.measure_2 !== "" && this.loop_1 === 0 && Metro.loopId_1 === 0 && Metro.loopId_2 === 0)
+            Transport.start()
     }
 
     public getnGrains() {
@@ -1174,11 +1165,14 @@ const repeat_l2 = (time:number) => {
 
     // actual audio engine
 
-
     public setAppMode(mode: AppMode) {
         this.appMode = mode
         //console.log(this.appMode)
         return this
+    }
+
+    public getNumSides(): number[] {
+        return this.numSides1
     }
 }
 
