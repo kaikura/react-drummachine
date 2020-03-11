@@ -69,33 +69,30 @@ export class RightPanel extends React.Component<IProps, any> {
                         <BpmContainer />
                     </div>
 
-                    <div>
+                    <div className="row">
                         <MetroB play={this.onMetroClick_1} pause={this.metroPause} />
+                    
+                        <h6 style={{ marginTop:"1.6em" }}>Clock 1</h6>
                     </div>
-                    <div>
-                        <h6 style={{ textAlign: "center" }}>clock_one</h6>
-                    </div>
-                    <Container>
+                   
+                    <div className="row">
                         <PlayPause play={this.play_1} pause={this.pause_1} />
-                        <div>
-                            <h6 style={{ textAlign: "center" }}>Transport One</h6>
+                       
+                            <h6 style={{ marginTop:"1.6em" }}>Transport 1</h6>
                         </div>
-                    </Container>
-                    <Container>
-                        <div>
+                   
+                        <div className="row">
                             <MetroB play={this.onMetroClick_2} pause={this.metro2Pause} />
+                       
+                            <h6 style={{ marginTop:"1.6em" }}>Clock 2</h6>
                         </div>
-                        <div>
-                            <h6 style={{ textAlign: "center" }}>clock_two</h6>
-                        </div>
-                    </Container>
-
-                    <Container>
+                   
+                    <div className="row">
                         <PlayPause play={this.play_2} pause={this.pause_2} />
-                        <div>
-                            <h6 style={{ textAlign: "center" }}>Transport Two</h6>
+                        
+                            <h6 style={{ marginTop:"1.6em" }}>Transport 2</h6>
                         </div>
-                    </Container>
+                   
 
                     <Button
                         text="Instrument"
@@ -104,9 +101,20 @@ export class RightPanel extends React.Component<IProps, any> {
                         style={{ marginTop: "2em", marginBottom: "3pxem" }}
                     />
                 </Container>
+                
+                {numSides.length >=2 && (
+                    <div>
+                        <div className="alert alert-info" role="alert" style={{ marginTop:"1.5em" }}>
+                        <b><i style={{ marginTop:"1.6em" }}>Polyrhythm </i></b>
+                        {numSides.map((num) => (
+                            <i>{num}/</i>
+                        ))}
+                    </div>
+                    </div>
+                )}
                 {timeSignature1 && timeSignature2 && (
                     <div>
-                        <div className="alert alert-info" role="alert">
+                        <div className="alert alert-info" role="alert" style={{ marginTop:"1.5em" }}>
                             <p>
                                 <b>
                                     <i>Polymeter </i>
@@ -116,14 +124,6 @@ export class RightPanel extends React.Component<IProps, any> {
                                 </i>
                             </p>
                         </div>
-                    </div>
-                )}
-                {!!numSides.length && (
-                    <div>
-                        <b>Number of sides:</b>
-                        {numSides.map((num) => (
-                            <i>{num},</i>
-                        ))}
                     </div>
                 )}
             </div>
