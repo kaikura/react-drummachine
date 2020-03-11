@@ -62,10 +62,13 @@ class Metro_N {
         //end
     }
     createLoop_1 = () => {
+        
         const loop = (time: number) => {
             for (let i = 0; i < this.num; i++) {
+                MainSketch.counter++
                 if (i === 0) {
                     this.start_meaure_tick.trigger(time)
+                    MainSketch.counter = 0
                     //metronome
                 } else {
                     this.tick.trigger(time + i * Tone.Time(this.den + "n").toSeconds())
@@ -84,6 +87,7 @@ class Metro_N {
     }
     createLoop_2 = () => {
         const loop = (time: number) => {
+            MainSketch.counter2++
             for (let i = 0; i < this.num_2; i++) {
                 if (i === 0) {
                     this.start_meaure_tick_2.trigger(time)

@@ -30,8 +30,8 @@ class MainSketchClass implements P5Sketch {
     private clockCircleScaleSize = 0.95
     private currentGrain = 0
     private currentGrain2 = 0
-    private nGrain = 4
-    private nGrain2 = 4
+    public nGrain = 4
+    public nGrain2 = 4
     //private firstLayerLandW = 500
     private trig1: any[]
     private trig2: any[]
@@ -55,11 +55,11 @@ class MainSketchClass implements P5Sketch {
 
     private degree = 0
     private canvas
-    private counter = 0
-    private counter2 = 0
+    public counter = 0
+    public counter2 = 0
     private numMeasures
     private numMeasure2
-    private numSides1 = new Array()
+    public numSides1 = new Array()
     private verRegular = false
     private ver = 0
     private active_seq = false
@@ -257,7 +257,7 @@ class MainSketchClass implements P5Sketch {
                 this.circleLandW + 20,
                 this.circleLandW + 20,
                 3 * p5.HALF_PI,
-                3 * p5.HALF_PI + (p5.TWO_PI / this.nGrain) * this.counter
+                3 * p5.HALF_PI + (p5.TWO_PI / this.nGrain) * (this.counter) 
             )
             p5.pop()
             //Second Layer Arc
