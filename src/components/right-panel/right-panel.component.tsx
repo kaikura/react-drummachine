@@ -33,17 +33,19 @@ export class RightPanel extends React.Component<IProps, any> {
     }
     private pause_1 = () => {
         MainSketch.stop_sequencer_1()
+        MainSketch.stop_sequencer_2()
     }
 
     private play_1 = () => {
         MainSketch.updateGrains_1()
+        MainSketch.updateGrains_2()
     }
     private pause_2 = () => {
-        MainSketch.stop_sequencer_2()
+        //MainSketch.stop_sequencer_2()
     }
 
     private play_2 = () => {
-        MainSketch.updateGrains_2()
+        //MainSketch.updateGrains_2()
     }
 
     get numSides(): number[] {
@@ -71,28 +73,27 @@ export class RightPanel extends React.Component<IProps, any> {
 
                     <div className="row">
                         <MetroB play={this.onMetroClick_1} pause={this.metroPause} />
-                    
-                        <h6 style={{ marginTop:"1.6em" }}>Clock 1</h6>
+
+                        <h6 style={{ marginTop: "1.6em" }}>Clock 1</h6>
                     </div>
-                   
+
                     <div className="row">
                         <PlayPause play={this.play_1} pause={this.pause_1} />
-                       
-                            <h6 style={{ marginTop:"1.6em" }}>Transport 1</h6>
-                        </div>
-                   
-                        <div className="row">
-                            <MetroB play={this.onMetroClick_2} pause={this.metro2Pause} />
-                       
-                            <h6 style={{ marginTop:"1.6em" }}>Clock 2</h6>
-                        </div>
-                   
+
+                        <h6 style={{ marginTop: "1.6em" }}>Transport 1</h6>
+                    </div>
+
+                    <div className="row">
+                        <MetroB play={this.onMetroClick_2} pause={this.metro2Pause} />
+
+                        <h6 style={{ marginTop: "1.6em" }}>Clock 2</h6>
+                    </div>
+
                     <div className="row">
                         <PlayPause play={this.play_2} pause={this.pause_2} />
-                        
-                            <h6 style={{ marginTop:"1.6em" }}>Transport 2</h6>
-                        </div>
-                   
+
+                        <h6 style={{ marginTop: "1.6em" }}>Transport 2</h6>
+                    </div>
 
                     <Button
                         text="Instrument"
@@ -101,20 +102,22 @@ export class RightPanel extends React.Component<IProps, any> {
                         style={{ marginTop: "2em", marginBottom: "3pxem" }}
                     />
                 </Container>
-                
-                {numSides.length >=2 && (
+
+                {numSides.length >= 2 && (
                     <div>
-                        <div className="alert alert-info" role="alert" style={{ marginTop:"1.5em" }}>
-                        <b><i style={{ marginTop:"1.6em" }}>Polyrhythm </i></b>
-                        {numSides.map((num) => (
-                            <i>{num}/</i>
-                        ))}
-                    </div>
+                        <div className="alert alert-info" role="alert" style={{ marginTop: "1.5em" }}>
+                            <b>
+                                <i style={{ marginTop: "1.6em" }}>Polyrhythm </i>
+                            </b>
+                            {numSides.map((num) => (
+                                <i>{num}/</i>
+                            ))}
+                        </div>
                     </div>
                 )}
                 {timeSignature1 && timeSignature2 && (
                     <div>
-                        <div className="alert alert-info" role="alert" style={{ marginTop:"1.5em" }}>
+                        <div className="alert alert-info" role="alert" style={{ marginTop: "1.5em" }}>
                             <p>
                                 <b>
                                     <i>Polymeter </i>
