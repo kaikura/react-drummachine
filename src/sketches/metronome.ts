@@ -2,7 +2,6 @@ import Tone from "tone"
 import { Tick } from "src/engines"
 
 import "./metronome.css"
-import { MainSketch } from "./sketch"
 
 class Metro_N {
     private tick: any
@@ -76,10 +75,8 @@ class Metro_N {
     }
 
     public handleClick_1 = () => {
-     
-            this.createLoop_1()
-            if(Tone.Transport.state !== 'started') Tone.Transport.start()
-    
+        this.createLoop_1()
+        if (Tone.Transport.state !== "started") Tone.Transport.start()
     }
     createLoop_2 = () => {
         const loop = (time: number) => {
@@ -97,11 +94,9 @@ class Metro_N {
     }
 
     public handleClick_2 = () => {
-       
-            this.createLoop_2()
-            if(Tone.Transport.state !== 'started') Tone.Transport.start()
-        
-     }
+        this.createLoop_2()
+        if (Tone.Transport.state !== "started") Tone.Transport.start()
+    }
     public metroPause = () => {
         Tone.Transport.clear(this.loopId_1)
     }
