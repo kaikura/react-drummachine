@@ -115,7 +115,7 @@ export class RightPanel extends React.Component<IProps, any> {
                         </div>
                     </div>
                 )}
-                {timeSignature1 && timeSignature2 && (
+                {timeSignature1 && timeSignature2 && timeSignature1 != timeSignature2 && (
                     <div>
                         <div className="alert alert-info" role="alert" style={{ marginTop: "1.5em" }}>
                             <p>

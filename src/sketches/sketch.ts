@@ -1,5 +1,5 @@
 import * as P5 from "p5"
-import  Tone  from "tone"
+import Tone from "tone"
 import { AppMode } from "../app/root.component"
 import { Time } from "tone"
 import { Engines } from "src/engines"
@@ -77,10 +77,10 @@ class MainSketchClass implements P5Sketch {
     private sounds2: any = []
     private measure: String = ""
     private measure_2: String = ""
-    public loop_1 : number = 0
-    public loop_2 : number = 0
-    public drawArcs : number = 0
-    public drawArcs_2 : number = 0
+    public loop_1: number = 0
+    public loop_2: number = 0
+    public drawArcs: number = 0
+    public drawArcs_2: number = 0
     private value_enc: String = ""
 
     constructor() {
@@ -845,7 +845,6 @@ class MainSketchClass implements P5Sketch {
 
     //TRACK SELECTION/ADD TRACK FUNCTION
     public selectShape() {
-      
         this.instrumentMode = 2 // we are in track_mode!
         if (this.layerNumber === 1) {
             this.selectedShape = this.maxNumShapes
@@ -1035,7 +1034,6 @@ class MainSketchClass implements P5Sketch {
         this.numMeasures = 0
         Tone.Transport.clear(this.loop_1)
         Tone.Transport.clear(this.drawArcs)
-        
     }
     public stop_sequencer_2() {
         //active_seq = false;
@@ -1118,55 +1116,69 @@ class MainSketchClass implements P5Sketch {
     }
 
     public updateGrains_1() {
-       //this.stop_sequencer_1()
-        
-    const repeat_l1 = (time:number) => {
-        this.numMeasures++
-    
-        for(let i = 1; i <= this.shp1.length; i++){
-            for(let stp = 0 ; stp<this.nGrain; stp++){
-            
-                if(this.trig1[i-1][stp] === true){
-                    console.log(this.sounds1)
-                    console.log(this.trig1)
-        this.drumKit[this.sounds1[i-1]].start(time+stp*(this.TS_Num/this.TS_Den)*Time(this.nGrain+"n").toSeconds());
-                 }
+        //this.stop_sequencer_1()
+
+        const repeat_l1 = (time: number) => {
+            this.numMeasures++
+
+            for (let i = 1; i <= this.shp1.length; i++) {
+                for (let stp = 0; stp < this.nGrain; stp++) {
+                    if (this.trig1[i - 1][stp] === true) {
+                        console.log(this.sounds1)
+                        console.log(this.trig1)
+                        this.drumKit[this.sounds1[i - 1]].start(
+                            time + stp * (this.TS_Num / this.TS_Den) * Time(this.nGrain + "n").toSeconds()
+                        )
+                    }
+                }
             }
         }
-}
-        const drawAr = () => {this.counter++}
+        const drawAr = () => {
+            this.counter++
+        }
 
         //"1:0" is one measure at 4/4 (8/8) will associated to the Time Signature, also 16th can be added "1:0:0"
-         this.loop_1=Tone.Transport.scheduleRepeat(repeat_l1, this.measure, "0")
-         console.log(this.loop_1)
-         this.drawArcs = Tone.Transport.scheduleRepeat( drawAr ,(this.TS_Num/this.TS_Den)*Time(this.nGrain+"n").toSeconds(),"0")
+        this.loop_1 = Tone.Transport.scheduleRepeat(repeat_l1, this.measure, "0")
+        console.log(this.loop_1)
+        this.drawArcs = Tone.Transport.scheduleRepeat(
+            drawAr,
+            (this.TS_Num / this.TS_Den) * Time(this.nGrain + "n").toSeconds(),
+            "0"
+        )
 
-   
-        if(this.measure!=="" && Tone.Transport.state !== 'started') Tone.Transport.start()
+        if (this.measure !== "" && Tone.Transport.state !== "started") Tone.Transport.start()
     }
     public updateGrains_2() {
-       //this.stop_sequencer_2()
-        
-    
-const repeat_l2 = (time:number) => {
-    this.numMeasure2++
+        //this.stop_sequencer_2()
 
-    for(let i = 1; i <= this.shp2.length; i++){
-        for(let stp = 0 ; stp<this.nGrain2; stp++){
-            if(this.trig2[i-1][stp] === true){
-    this.drumKit[this.sounds2[i-1]].start(time+stp*(this.TS_Num_2/this.TS_Den_2)*Time(this.nGrain2+"n").toSeconds());
-             }
+        const repeat_l2 = (time: number) => {
+            this.numMeasure2++
+
+            for (let i = 1; i <= this.shp2.length; i++) {
+                for (let stp = 0; stp < this.nGrain2; stp++) {
+                    if (this.trig2[i - 1][stp] === true) {
+                        this.drumKit[this.sounds2[i - 1]].start(
+                            time +
+                                stp * (this.TS_Num_2 / this.TS_Den_2) * Time(this.nGrain2 + "n").toSeconds()
+                        )
+                    }
+                }
+            }
         }
-    }
-}
-        const drawAr = () => {this.counter2++}
+        const drawAr = () => {
+            this.counter2++
+        }
 
         //Scond layer has another schedule, with adjustable duration indipendent from BPM
-         this.loop_2=Tone.Transport.scheduleRepeat(repeat_l2, this.measure_2, "0")
-         console.log(this.loop_2)
-         this.drawArcs_2 = Tone.Transport.scheduleRepeat( drawAr ,(this.TS_Num_2/this.TS_Den_2)*Time(this.nGrain2+"n").toSeconds(),"0")
+        this.loop_2 = Tone.Transport.scheduleRepeat(repeat_l2, this.measure_2, "0")
+        console.log(this.loop_2)
+        this.drawArcs_2 = Tone.Transport.scheduleRepeat(
+            drawAr,
+            (this.TS_Num_2 / this.TS_Den_2) * Time(this.nGrain2 + "n").toSeconds(),
+            "0"
+        )
 
-         if(this.measure_2!=="" && Tone.Transport.state !== 'started') Tone.Transport.start()
+        if (this.measure_2 !== "" && Tone.Transport.state !== "started") Tone.Transport.start()
     }
 
     public getnGrains() {
