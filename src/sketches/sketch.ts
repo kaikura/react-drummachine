@@ -79,8 +79,8 @@ class MainSketchClass implements P5Sketch {
     private drumKit: any = []
     private sounds1: any = []
     private sounds2: any = []
-    private measure: String = ""
-    private measure_2: String = ""
+    public measure: String = ""
+    public measure_2: String = ""
     public loop_1: number = 0
     public loop_2: number = 0
     public drawArcs: number = 0

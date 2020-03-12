@@ -100,6 +100,13 @@ export class TimeForm extends React.Component<IProps, IState> {
     }
 
     private onSelectTimeSignature = (event) => {
+        if(MainSketch.measure!=="" &&MainSketch.measure_2!==""){
+            MainSketch.stop_sequencer_1()
+            MainSketch.stop_sequencer_2()
+            Metro.metroPause()
+            Metro.metro2Pause()
+            
+        }
         this.setState({
             selectedTimeSignature: event.target.value,
             selectedNumberOfGrains: this.numberOfGrains[event.target.value][0]
@@ -113,24 +120,36 @@ export class TimeForm extends React.Component<IProps, IState> {
     private onSubmit = (event) => {
         const { selectedTimeSignature, selectedNumberOfGrains } = this.state
         const { layer } = this.props
-
+            
+       
+        
         if (selectedNumberOfGrains) {
             switch (layer) {
                 case 1:
+           
+                
                     MainSketch.setNGrain(Number(selectedNumberOfGrains))
                     MainSketch.setTS1(String(selectedTimeSignature))
                     Metro.setTS_1(String(selectedTimeSignature))
                     MainSketch.generateShapes()
                     MainSketch.updateArrays()
                     MainSketch.triggerer()
+
+                   
+               
                     break
                 case 2:
+                    
                     MainSketch.setNGrain2(Number(selectedNumberOfGrains))
                     MainSketch.setTS2(String(selectedTimeSignature))
                     Metro.setTS_2(String(selectedTimeSignature))
                     MainSketch.generateShapes()
                     MainSketch.updateArrays()
                     MainSketch.triggerer()
+                   
+                  
+                   
+                  
                     break
             }
         }
