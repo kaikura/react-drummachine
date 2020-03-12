@@ -1,5 +1,5 @@
 import * as P5 from "p5"
-import  Tone  from "tone"
+import Tone from "tone"
 import { AppMode } from "../app/root.component"
 import { Time } from "tone"
 import { Engines } from "src/engines"
@@ -60,8 +60,8 @@ class MainSketchClass implements P5Sketch {
     private canvas
     private counter = -1
     private counter2 = -1
-    private numMeasures = 0 
-    private numMeasure2 = 0 
+    private numMeasures = 0
+    private numMeasure2 = 0
     public numSides1 = new Array()
     private verRegular = false
     private ver = 0
@@ -80,10 +80,10 @@ class MainSketchClass implements P5Sketch {
     private sounds2: any = []
     private measure: String = ""
     private measure_2: String = ""
-    public loop_1 : number = 0
-    public loop_2 : number = 0
-    public drawArcs : number = 0
-    public drawArcs_2 : number = 0
+    public loop_1: number = 0
+    public loop_2: number = 0
+    public drawArcs: number = 0
+    public drawArcs_2: number = 0
     private value_enc: String = ""
 
     constructor() {
@@ -238,56 +238,48 @@ class MainSketchClass implements P5Sketch {
         let angle = (p5.TWO_PI / 4) * 3
         let step = p5.TWO_PI / this.nGrain
 
-        if (this.layerNumber === 1){
-        //First Layer Circle
+        if (this.layerNumber === 1) {
+            //First Layer Circle
             p5.fill(250, 250, 250, 70)
             p5.strokeWeight(2)
             p5.ellipse(this.canvasWidth / 2, this.canvasHeight / 2, this.circleLandW, this.circleLandW)
-        //First Layer Arc
+            //First Layer Arc
             if (this.counter > 0) {
-            p5.noFill()
-            p5.push()
-            if (this.appMode == AppMode.Learn) {
-                p5.stroke("pink")
-            } else if (this.appMode == AppMode.Play) {
-                p5.stroke("#43BFC7")
+                p5.noFill()
+                p5.push()
+                if (this.appMode == AppMode.Learn) {
+                    p5.stroke("pink")
+                } else if (this.appMode == AppMode.Play) {
+                    p5.stroke("#43BFC7")
+                }
+                p5.arc(
+                    this.canvasWidth / 2,
+                    this.canvasHeight / 2,
+                    this.circleLandW + 20,
+                    this.circleLandW + 20,
+                    3 * p5.HALF_PI,
+                    3 * p5.HALF_PI + (p5.TWO_PI / this.nGrain) * this.counter
+                )
+                p5.pop()
             }
-            p5.arc(
-                this.canvasWidth / 2,
-                this.canvasHeight / 2,
-                this.circleLandW + 20,
-                this.circleLandW + 20,
-                3 * p5.HALF_PI,
-                3 * p5.HALF_PI + (p5.TWO_PI / this.nGrain) * this.counter
-            )
-            p5.pop()
-            }
-        //draw ellipse on last connection first layer arc
+            //draw ellipse on last connection first layer arc
             if (this.counter === this.nGrain) {
-            p5.noFill()
-            p5.push()
-            if (this.appMode == AppMode.Learn) {
-                p5.stroke("pink")
-            } else if (this.appMode == AppMode.Play) {
-                p5.stroke("#43BFC7")
+                p5.noFill()
+                p5.push()
+                if (this.appMode == AppMode.Learn) {
+                    p5.stroke("pink")
+                } else if (this.appMode == AppMode.Play) {
+                    p5.stroke("#43BFC7")
+                }
+                p5.ellipse(
+                    this.canvasWidth / 2,
+                    this.canvasHeight / 2,
+                    this.circleLandW + 20,
+                    this.circleLandW + 20
+                )
+                p5.pop()
             }
-            p5.ellipse(
-                this.canvasWidth / 2,
-                this.canvasHeight / 2,
-                this.circleLandW + 20,
-                this.circleLandW + 20
-            )
-            p5.pop()
         }
-
-        }
-        
-        
-
-        
-
-        
-
 
         //Clock Ring Arcs
         if (this.layerNumber === 2 && this.numMeasures > 0) {
@@ -454,45 +446,47 @@ class MainSketchClass implements P5Sketch {
 
         // THIS IS EVERYTHING DRAWN IF LAYER NUMBER 2
         if (this.layerNumber === 2) {
-        //Second Layer Arc
+            //Second Layer Arc
             if (this.counter2 > 0) {
-    
-            p5.push()
-            p5.stroke("darkslategrey")
-            if (this.TS_Num <= this.TS_Num_2) {
-             p5.arc(
-                this.canvasWidth / 2,
-                this.canvasHeight / 2,
-                this.circleLandW + 40,
-                this.circleLandW + 40,
-                3 * p5.HALF_PI,
-                3 * p5.HALF_PI + (p5.TWO_PI / this.nGrain2) * this.counter2)
-            } else {
-            p5.arc(
-                this.canvasWidth / 2,
-                this.canvasHeight / 2,
-                this.circleLandW + 40,
-                this.circleLandW + 40,
-                3 * p5.HALF_PI,
-                3 * p5.HALF_PI +
-                (p5.TWO_PI / this.nGrain2) *
-                Math.ceil(this.TS_Num / this.TS_Num_2) *
-                this.counter2)
+                p5.push()
+                p5.stroke("darkslategrey")
+                if (this.TS_Num <= this.TS_Num_2) {
+                    p5.arc(
+                        this.canvasWidth / 2,
+                        this.canvasHeight / 2,
+                        this.circleLandW + 40,
+                        this.circleLandW + 40,
+                        3 * p5.HALF_PI,
+                        3 * p5.HALF_PI + (p5.TWO_PI / this.nGrain2) * this.counter2
+                    )
+                } else {
+                    p5.arc(
+                        this.canvasWidth / 2,
+                        this.canvasHeight / 2,
+                        this.circleLandW + 40,
+                        this.circleLandW + 40,
+                        3 * p5.HALF_PI,
+                        3 * p5.HALF_PI +
+                            (p5.TWO_PI / this.nGrain2) *
+                                Math.ceil(this.TS_Num / this.TS_Num_2) *
+                                this.counter2
+                    )
+                }
+                p5.pop()
             }
-            p5.pop()
-            }
-        //draw ellipse on last connection second layer arc
+            //draw ellipse on last connection second layer arc
             if (this.layerNumber === 2 && this.counter2 === this.nGrain2) {
-            p5.stroke("darkslategrey")
-            p5.ellipse(
-            this.canvasWidth / 2,
-            this.canvasHeight / 2,
-            this.circleLandW + 40,
-            this.circleLandW + 40)
+                p5.stroke("darkslategrey")
+                p5.ellipse(
+                    this.canvasWidth / 2,
+                    this.canvasHeight / 2,
+                    this.circleLandW + 40,
+                    this.circleLandW + 40
+                )
             }
 
             //Second Layer Circle
-            p5.fill('lightblue')
+            p5.fill("lightblue")
             p5.stroke(0)
             p5.strokeWeight(2)
             p5.ellipse(this.canvasWidth / 2, this.canvasHeight / 2, this.circleLandW, this.circleLandW)
@@ -664,7 +658,7 @@ class MainSketchClass implements P5Sketch {
             //esempio
 
             this.selectedShape++
-            this.updateArrays()
+            
         }
 
         if (this.instrumentMode === 2 && this.layerNumber === 2) {
@@ -754,10 +748,10 @@ class MainSketchClass implements P5Sketch {
         //TRACK SELECTION MODE
         if (this.layerNumber === 1 && this.instrumentMode === 2 && this.selectedShape !== (0 || 1)) {
             this.selectedShape--
-            this.updateArrays()
+            
         } else if (this.instrumentMode === 2 && this.selectedShape === 1) {
             this.selectedShape = this.maxNumShapes
-            this.updateArrays()
+            
         }
         if (this.layerNumber === 2 && this.instrumentMode === 2 && this.selectedShape2 !== (0 || 1)) {
             this.selectedShape2--
@@ -768,16 +762,23 @@ class MainSketchClass implements P5Sketch {
         //then CHANGE SHAPE MODE
         if (this.layerNumber === 1 && this.instrumentMode === 3 && this.shp1[this.selectedShape - 1] !== 0) {
             this.shp1[this.selectedShape - 1] = this.shp1[this.selectedShape - 1] - 1
-        } else if (this.layerNumber === 1 && this.instrumentMode === 3 && this.shp1[this.selectedShape - 1] === 0) {
+        } else if (
+            this.layerNumber === 1 &&
+            this.instrumentMode === 3 &&
+            this.shp1[this.selectedShape - 1] === 0
+        ) {
             this.shp1[this.selectedShape - 1] = this.polygon_array.length - 1
         }
 
         if (this.layerNumber === 2 && this.instrumentMode === 3 && this.shp2[this.selectedShape2 - 1] !== 0) {
             this.shp2[this.selectedShape2 - 1] = this.shp2[this.selectedShape2 - 1] - 1
-        } else if (this.layerNumber === 2 && this.instrumentMode === 3 && this.shp2[this.selectedShape2 - 1] === 0) {
+        } else if (
+            this.layerNumber === 2 &&
+            this.instrumentMode === 3 &&
+            this.shp2[this.selectedShape2 - 1] === 0
+        ) {
             this.shp2[this.selectedShape2 - 1] = this.polygon_array2.length - 1
         }
-
 
         //CUSTOM SHAPE MODE
         if (this.layerNumber === 1 && this.instrumentMode === 7) {
@@ -858,7 +859,6 @@ class MainSketchClass implements P5Sketch {
 
     //TRACK SELECTION/ADD TRACK FUNCTION
     public selectShape() {
-      
         this.instrumentMode = 2 // we are in track_mode!
         if (this.layerNumber === 1) {
             this.selectedShape = this.maxNumShapes
@@ -1050,7 +1050,6 @@ class MainSketchClass implements P5Sketch {
         Tone.Transport.clear(this.loop_1)
         Tone.Transport.clear(this.drawArcs)
         Tone.Transport.stop()
-        
     }
     public stop_sequencer_2() {
         //active_seq = false;
@@ -1135,64 +1134,76 @@ class MainSketchClass implements P5Sketch {
     }
 
     public updateGrains_1() {
-       //this.stop_sequencer_1()
-        
-    const repeat_l1 = (time:number) => {
-        
-    
-        for(let i = 1; i <= this.shp1.length; i++){
-            this.numMeasures++
-            for(let stp = 0 ; stp<this.nGrain; stp++){
+        //this.stop_sequencer_1()
 
-                if(this.trig1[i-1][stp] === true){
-                    
-        this.drumKit[this.sounds1[i-1]].start(time+stp*(this.TS_Num/this.TS_Den)*Time(this.nGrain+"n").toSeconds());
-                 }
+        const repeat_l1 = (time: number) => {
+            this.numMeasures++
+            this.isStarted = true 
+
+            for (let i = 1; i <= this.shp1.length; i++) {
+                
+                for (let stp = 0; stp < this.nGrain; stp++) {
+                    if (this.trig1[i - 1][stp] === true) {
+                        this.drumKit[this.sounds1[i - 1]].start(
+                            time + stp * (this.TS_Num / this.TS_Den) * Time(this.nGrain + "n").toSeconds()
+                        )
+                    }
+                }
             }
         }
-}
         const drawAr = () => {
             //console.log("this is loop 1: " + this.loop_1)
-            if(this.isStarted){
-            this.counter++}
+            if (this.isStarted) {
+                this.counter++
+            }
             console.log("this is counter " + this.counter)
             //console.log(Time(this.nGrain+"n").toSeconds())
         }
-        
 
         //"1:0" is one measure at 4/4 (8/8) will associated to the Time Signature, also 16th can be added "1:0:0"
-         this.loop_1=Tone.Transport.scheduleRepeat(repeat_l1, this.measure, "0")
-         
-         this.drawArcs = Tone.Transport.scheduleRepeat(drawAr, (this.TS_Num/this.TS_Den)*Time(this.nGrain+"n").toSeconds(),"0")
+        this.loop_1 = Tone.Transport.scheduleRepeat(repeat_l1, this.measure, "0")
 
-   
-        if(this.measure!=="" && Tone.Transport.state !== 'started') Tone.Transport.start()
+        this.drawArcs = Tone.Transport.scheduleRepeat(
+            drawAr,
+            (this.TS_Num / this.TS_Den) * Time(this.nGrain + "n").toSeconds(),
+            "0"
+        )
+
+        if (this.measure !== "" && Tone.Transport.state !== "started") Tone.Transport.start()
     }
     public updateGrains_2() {
-       //this.stop_sequencer_2()
-        
-    
-const repeat_l2 = (time:number) => {
-    this.numMeasure2++
+        //this.stop_sequencer_2()
 
-    for(let i = 1; i <= this.shp2.length; i++){
-        for(let stp = 0 ; stp<this.nGrain2; stp++){
-            if(this.trig2[i-1][stp] === true){
-    this.drumKit[this.sounds2[i-1]].start(time+stp*(this.TS_Num_2/this.TS_Den_2)*Time(this.nGrain2+"n").toSeconds());
-             }
+        const repeat_l2 = (time: number) => {
+            this.numMeasure2++
+
+            for (let i = 1; i <= this.shp2.length; i++) {
+                for (let stp = 0; stp < this.nGrain2; stp++) {
+                    if (this.trig2[i - 1][stp] === true) {
+                        this.drumKit[this.sounds2[i - 1]].start(
+                            time +
+                                stp * (this.TS_Num_2 / this.TS_Den_2) * Time(this.nGrain2 + "n").toSeconds()
+                        )
+                    }
+                }
+            }
         }
-    }
-}
         const drawAr2 = () => {
-            if(this.isStarted2){
-                this.counter2++}}
+            if (this.isStarted2) {
+                this.counter2++
+            }
+        }
 
         //Scond layer has another schedule, with adjustable duration indipendent from BPM
-         this.loop_2=Tone.Transport.scheduleRepeat(repeat_l2, this.measure_2, "0")
-         console.log(this.loop_2)
-         this.drawArcs_2 = Tone.Transport.scheduleRepeat( drawAr2 ,(this.TS_Num_2/this.TS_Den_2)*Time(this.nGrain2+"n").toSeconds(),"0")
+        this.loop_2 = Tone.Transport.scheduleRepeat(repeat_l2, this.measure_2, "0")
+        console.log(this.loop_2)
+        this.drawArcs_2 = Tone.Transport.scheduleRepeat(
+            drawAr2,
+            (this.TS_Num_2 / this.TS_Den_2) * Time(this.nGrain2 + "n").toSeconds(),
+            "0"
+        )
 
-         if(this.measure_2!=="" && Tone.Transport.state !== 'started') Tone.Transport.start()
+        if (this.measure_2 !== "" && Tone.Transport.state !== "started") Tone.Transport.start()
     }
 
     public getnGrains() {
