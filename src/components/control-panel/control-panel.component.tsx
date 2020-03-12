@@ -1,6 +1,7 @@
 import React from "react"
 import { TimeForm } from "./time-form/time-form.component"
 import { ButtonWithPopover } from "../button-with-popover/button-with-popover.component"
+import { AppMode } from "src/app/root.component"
 
 interface IProps {
     onFirstLayerSubmit(timeSignature: string, numberOfGrains: string): void
