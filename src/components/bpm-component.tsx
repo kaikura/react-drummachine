@@ -8,7 +8,6 @@ export interface BPMProps {
 }
 
 export class BPM extends React.Component<BPMProps> {
-
     handleChange = (e) => {
         const val = e.target.value
 
