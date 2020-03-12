@@ -40,13 +40,6 @@ export class RightPanel extends React.Component<IProps, any> {
         MainSketch.updateGrains_1()
         MainSketch.updateGrains_2()
     }
-    private pause_2 = () => {
-        //MainSketch.stop_sequencer_2()
-    }
-
-    private play_2 = () => {
-        //MainSketch.updateGrains_2()
-    }
 
     get numSides(): number[] {
         return MainSketch.getNumSides()
@@ -77,23 +70,19 @@ export class RightPanel extends React.Component<IProps, any> {
                         <h6 style={{ marginTop: "1.6em" }}>Clock 1</h6>
                     </div>
 
-                    <div className="row">
-                        <PlayPause play={this.play_1} pause={this.pause_1} />
-
-                        <h6 style={{ marginTop: "1.6em" }}>Transport 1</h6>
-                    </div>
-
+                    
                     <div className="row">
                         <MetroB play={this.onMetroClick_2} pause={this.metro2Pause} />
 
                         <h6 style={{ marginTop: "1.6em" }}>Clock 2</h6>
                     </div>
-
                     <div className="row">
-                        <PlayPause play={this.play_2} pause={this.pause_2} />
+                        <PlayPause play={this.play_1} pause={this.pause_1} />
 
-                        <h6 style={{ marginTop: "1.6em" }}>Transport 2</h6>
+                        <h6 style={{ marginTop: "1.6em" }}>Global Transport</h6>
                     </div>
+
+
 
                     <Button
                         text="Instrument"
@@ -115,7 +104,7 @@ export class RightPanel extends React.Component<IProps, any> {
                         </div>
                     </div>
                 )}
-                {timeSignature1 && timeSignature2 && (
+                {timeSignature1 && timeSignature2 && timeSignature1 != timeSignature2 && (
                     <div>
                         <div className="alert alert-info" role="alert" style={{ marginTop: "1.5em" }}>
                             <p>
