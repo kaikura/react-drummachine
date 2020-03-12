@@ -33,17 +33,19 @@ export class RightPanel extends React.Component<IProps, any> {
     }
     private pause_1 = () => {
         MainSketch.stop_sequencer_1()
+        MainSketch.stop_sequencer_2()
     }
 
     private play_1 = () => {
         MainSketch.updateGrains_1()
+        MainSketch.updateGrains_2()
     }
     private pause_2 = () => {
-        MainSketch.stop_sequencer_2()
+        //MainSketch.stop_sequencer_2()
     }
 
     private play_2 = () => {
-        MainSketch.updateGrains_2()
+        //MainSketch.updateGrains_2()
     }
 
     get numSides(): number[] {
