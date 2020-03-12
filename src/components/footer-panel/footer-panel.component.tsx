@@ -103,13 +103,13 @@ export class FooterPanel extends React.Component<IProps> {
         return () => {
             const map = {
                 [ButtonType.Layer]:
-                    "Hold to add a layer, press to enter the layer mode. Then you can switch between them with the encoder.",
+                    "Hold to add a layer, press to enter the layer mode. Then you can switch between them with the increasing and decreasing buttons.",
                 [ButtonType.Track]:
-                    "Hold to add a track, press to enter the track mode. Then you can switch between them with the encoder.",
+                    "Hold to add a track, press to enter the track mode. Then you can switch between them with the increasing and decreasing buttons. Remember that each track can accomodate just one polygon.",
                 [ButtonType.Rotate]:
-                    "Press to enter the rotation mode. Then you can rotate shapes with the encoder",
+                    "Press to enter the rotation mode. Then you can rotate shapes with the increasing and decreasing buttons.",
                 [ButtonType.Shape]:
-                    "Hold to add a shape. press to enter the shape mode. Then you can switch between them with the encoder.",
+                    "Press to enter the shape mode. Then you can switch between them with the increasing and decreasing buttons. Hold to enter the custom shape mode. Scroll the dots with the increasing and decreasing buttons and select them with the encoder one.",
                 [ButtonType.DeleteShape]: "Press to delete the shape selected."
             }
 

@@ -229,23 +229,29 @@ class MainSketchClass implements P5Sketch {
     public setup(p5: P5, canvasParentRef: "centralSquare"): void {
         p5.createCanvas((p5.width = this.canvasWidth), (p5.height = this.canvasHeight)).parent(
             canvasParentRef
-        ) // use parent to render canvas in this ref (without that p5 render this canvas outside your component)
+        )
+        // use parent to render canvas in this ref (without that p5 render this canvas outside your component)
         this.generateShapes()
     }
 
     public draw(p5: P5): void {
         if (this.appMode === AppMode.Learn) {
             p5.background("#17a2b8")
+            p5.textSize(30)
+            p5.text("Learn Mode", 318, 30)
+            p5.fill(0, 102, 153)
         } else if (this.appMode === AppMode.Play) {
             p5.background("#348781")
+            p5.textSize(30)
+            p5.text("Play Mode", 318, 30)
+            p5.fill(0, 102, 153)
         }
         let angle = (p5.TWO_PI / 4) * 3
         let step = p5.TWO_PI / this.nGrain
 
-
-////COMPUTATIONS FOR ARCs
-        if(this.TS_Den === this.TS_Den_2){
-            if(this.TS_Num === this.TS_Num_2){
+        ////COMPUTATIONS FOR ARCs
+        if (this.TS_Den === this.TS_Den_2) {
+            if (this.TS_Num === this.TS_Num_2) {
                 this.divisionAngle = this.TS_Num
                 this.minTS_Den = this.TS_Den
             } else {
@@ -298,19 +304,19 @@ class MainSketchClass implements P5Sketch {
 
             //Draws Layer 1 Grains
             p5.push()
-                let grainX
-                let grainY
-                for (let i = 0; i < this.nGrain; i++) {
+            let grainX
+            let grainY
+            for (let i = 0; i < this.nGrain; i++) {
                 grainX = this.canvasWidth / 2 + p5.cos(angle) * (this.circleLandW / 2)
                 grainY = this.canvasHeight / 2 + p5.sin(angle) * (this.circleLandW / 2)
                 p5.strokeWeight(10)
-            if (this.appMode == AppMode.Learn) {
-                p5.stroke("pink")
-            } else if (this.appMode == AppMode.Play) {
-                p5.stroke("#48CCCD")
-            }
-            p5.point(grainX, grainY)
-            angle += step
+                if (this.appMode == AppMode.Learn) {
+                    p5.stroke("pink")
+                } else if (this.appMode == AppMode.Play) {
+                    p5.stroke("#48CCCD")
+                }
+                p5.point(grainX, grainY)
+                angle += step
             }
             p5.pop()
         }
@@ -325,20 +331,17 @@ class MainSketchClass implements P5Sketch {
             } else if (this.appMode == AppMode.Play) {
                 p5.stroke("#43BFC7")
             }
-                p5.arc(
-                    this.canvasWidth / 2,
-                    this.canvasHeight / 2,
-                    530 * this.clockCircleScaleSize,
-                    530 * this.clockCircleScaleSize,
-                    3 * p5.HALF_PI,
-                    3 * p5.HALF_PI + (p5.TWO_PI / this.divisionAngle) * this.extCounter
-                )
-            
+            p5.arc(
+                this.canvasWidth / 2,
+                this.canvasHeight / 2,
+                530 * this.clockCircleScaleSize,
+                530 * this.clockCircleScaleSize,
+                3 * p5.HALF_PI,
+                3 * p5.HALF_PI + (p5.TWO_PI / this.divisionAngle) * this.extCounter
+            )
+
             p5.pop()
-        
-    }
-
-
+        }
 
         //draw ellipse for last connection clock ring arc
         if (this.layerNumber === 2 && this.extCounter === this.divisionAngle) {
@@ -357,11 +360,8 @@ class MainSketchClass implements P5Sketch {
             )
             p5.pop()
         }
-    
-       
 
         /// END DRAW EXTERNAL CLOCK ARC
-        
 
         //Custom Shape Mode
         if (this.instrumentMode === 7 && this.layerNumber === 1) {
@@ -437,31 +437,31 @@ class MainSketchClass implements P5Sketch {
                 p5.strokeWeight(2)
                 p5.stroke("darkslategrey")
                 //if (this.TS_Num <= this.TS_Num_2) {
-                    p5.arc(
-                        this.canvasWidth / 2,
-                        this.canvasHeight / 2,
-                        this.circleLandW + 40,
-                        this.circleLandW + 40,
-                        3 * p5.HALF_PI,
-                        3 * p5.HALF_PI + (p5.TWO_PI / this.nGrain2) * this.counter2
-                    )
-                p5.pop()
-            
-            //draw ellipse on last connection second layer arc
-            if (this.layerNumber === 2 && this.counter2 === this.nGrain2) {
-                p5.noFill()
-                p5.push()
-                p5.stroke("darkslategrey")
-                p5.strokeWeight(2)
-                p5.ellipse(
+                p5.arc(
                     this.canvasWidth / 2,
                     this.canvasHeight / 2,
                     this.circleLandW + 40,
-                    this.circleLandW + 40
+                    this.circleLandW + 40,
+                    3 * p5.HALF_PI,
+                    3 * p5.HALF_PI + (p5.TWO_PI / this.nGrain2) * this.counter2
                 )
                 p5.pop()
+
+                //draw ellipse on last connection second layer arc
+                if (this.layerNumber === 2 && this.counter2 === this.nGrain2) {
+                    p5.noFill()
+                    p5.push()
+                    p5.stroke("darkslategrey")
+                    p5.strokeWeight(2)
+                    p5.ellipse(
+                        this.canvasWidth / 2,
+                        this.canvasHeight / 2,
+                        this.circleLandW + 40,
+                        this.circleLandW + 40
+                    )
+                    p5.pop()
+                }
             }
-        }
 
             //Second Layer Circle
             p5.fill("lightblue")
@@ -636,7 +636,6 @@ class MainSketchClass implements P5Sketch {
             //esempio
 
             this.selectedShape++
-            
         }
 
         if (this.instrumentMode === 2 && this.layerNumber === 2) {
@@ -726,10 +725,8 @@ class MainSketchClass implements P5Sketch {
         //TRACK SELECTION MODE
         if (this.layerNumber === 1 && this.instrumentMode === 2 && this.selectedShape !== (0 || 1)) {
             this.selectedShape--
-            
         } else if (this.instrumentMode === 2 && this.selectedShape === 1) {
             this.selectedShape = this.maxNumShapes
-            
         }
         if (this.layerNumber === 2 && this.instrumentMode === 2 && this.selectedShape2 !== (0 || 1)) {
             this.selectedShape2--
@@ -1124,10 +1121,9 @@ class MainSketchClass implements P5Sketch {
 
         const repeat_l1 = (time: number) => {
             this.numMeasures++
-            this.isStarted = true 
+            this.isStarted = true
 
             for (let i = 1; i <= this.shp1.length; i++) {
-                
                 for (let stp = 0; stp < this.nGrain; stp++) {
                     if (this.trig1[i - 1][stp] === true) {
                         this.drumKit[this.sounds1[i - 1]].start(
@@ -1144,21 +1140,21 @@ class MainSketchClass implements P5Sketch {
                 this.counter++
                 //console.log("this is counter " + this.counter)
             }
-            
+
             //console.log(Time(this.nGrain+"n").toSeconds())
         }
 
         const drawExtArcs = () => {
-            if(this.isStarted && this.isStarted2){
-            this.extCounter++
-            console.log("this is extCounter: " + this.extCounter)}
+            if (this.isStarted && this.isStarted2) {
+                this.extCounter++
+                console.log("this is extCounter: " + this.extCounter)
+            }
             console.log(this.divisionAngle)
             //console.log(Time(this.nGrain+"n").toSeconds())
         }
 
         //"1:0" is one measure at 4/4 (8/8) will associated to the Time Signature, also 16th can be added "1:0:0"
         this.loop_1 = Tone.Transport.scheduleRepeat(repeat_l1, this.measure, "0")
-
 
         //function to draw INTERNAL arc
         this.drawArcs = Tone.Transport.scheduleRepeat(
