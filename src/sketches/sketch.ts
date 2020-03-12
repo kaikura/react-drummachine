@@ -279,6 +279,24 @@ class MainSketchClass implements P5Sketch {
                 )
                 p5.pop()
             }
+
+            //Draws Layer 1 Grains
+            p5.push()
+                let grainX
+                let grainY
+                for (let i = 0; i < this.nGrain; i++) {
+                grainX = this.canvasWidth / 2 + p5.cos(angle) * (this.circleLandW / 2)
+                grainY = this.canvasHeight / 2 + p5.sin(angle) * (this.circleLandW / 2)
+                p5.strokeWeight(10)
+            if (this.appMode == AppMode.Learn) {
+                p5.stroke("pink")
+            } else if (this.appMode == AppMode.Play) {
+                p5.stroke("#48CCCD")
+            }
+            p5.point(grainX, grainY)
+            angle += step
+            }
+            p5.pop()
         }
 
         //Clock Ring Arcs
@@ -361,23 +379,7 @@ class MainSketchClass implements P5Sketch {
             p5.pop()
         }
 
-        //Draws Layer 1 Grains
-        p5.push()
-        let grainX
-        let grainY
-        for (let i = 0; i < this.nGrain; i++) {
-            grainX = this.canvasWidth / 2 + p5.cos(angle) * (this.circleLandW / 2)
-            grainY = this.canvasHeight / 2 + p5.sin(angle) * (this.circleLandW / 2)
-            p5.strokeWeight(10)
-            if (this.appMode == AppMode.Learn) {
-                p5.stroke("pink")
-            } else if (this.appMode == AppMode.Play) {
-                p5.stroke("#48CCCD")
-            }
-            p5.point(grainX, grainY)
-            angle += step
-        }
-        p5.pop()
+        
 
         //Custom Shape Mode
         if (this.instrumentMode === 7 && this.layerNumber === 1) {
@@ -448,9 +450,11 @@ class MainSketchClass implements P5Sketch {
         if (this.layerNumber === 2) {
             //Second Layer Arc
             if (this.counter2 > 0) {
+                p5.noFill()
                 p5.push()
+                p5.strokeWeight(2)
                 p5.stroke("darkslategrey")
-                if (this.TS_Num <= this.TS_Num_2) {
+                //if (this.TS_Num <= this.TS_Num_2) {
                     p5.arc(
                         this.canvasWidth / 2,
                         this.canvasHeight / 2,
@@ -459,31 +463,23 @@ class MainSketchClass implements P5Sketch {
                         3 * p5.HALF_PI,
                         3 * p5.HALF_PI + (p5.TWO_PI / this.nGrain2) * this.counter2
                     )
-                } else {
-                    p5.arc(
-                        this.canvasWidth / 2,
-                        this.canvasHeight / 2,
-                        this.circleLandW + 40,
-                        this.circleLandW + 40,
-                        3 * p5.HALF_PI,
-                        3 * p5.HALF_PI +
-                            (p5.TWO_PI / this.nGrain2) *
-                                Math.ceil(this.TS_Num / this.TS_Num_2) *
-                                this.counter2
-                    )
-                }
                 p5.pop()
-            }
+            
             //draw ellipse on last connection second layer arc
             if (this.layerNumber === 2 && this.counter2 === this.nGrain2) {
+                p5.noFill()
+                p5.push()
                 p5.stroke("darkslategrey")
+                p5.strokeWeight(2)
                 p5.ellipse(
                     this.canvasWidth / 2,
                     this.canvasHeight / 2,
                     this.circleLandW + 40,
                     this.circleLandW + 40
                 )
+                p5.pop()
             }
+        }
 
             //Second Layer Circle
             p5.fill("lightblue")
@@ -1176,6 +1172,7 @@ class MainSketchClass implements P5Sketch {
 
         const repeat_l2 = (time: number) => {
             this.numMeasure2++
+            this.isStarted2 = true
 
             for (let i = 1; i <= this.shp2.length; i++) {
                 for (let stp = 0; stp < this.nGrain2; stp++) {
