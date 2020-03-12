@@ -1216,7 +1216,7 @@ class MainSketchClass implements P5Sketch {
         return this.nGrain
     }
 
-    // actual audio engine
+    
 
     public setAppMode(mode: AppMode) {
         this.appMode = mode
