@@ -88,6 +88,8 @@ class MainSketchClass implements P5Sketch {
     public drawExtArcs: number = 0
     public divisionAngle: number = 4
     public minTS_Den
+    public lcm
+    public lcm_arc
     private value_enc: String = ""
 
     constructor() {
@@ -254,9 +256,24 @@ class MainSketchClass implements P5Sketch {
             if (this.TS_Num === this.TS_Num_2) {
                 this.divisionAngle = this.TS_Num
                 this.minTS_Den = this.TS_Den
+                
             } else {
-                this.divisionAngle = this.TS_Num * this.TS_Num_2
+
+                this.lcm_arc = this.lcm_two_numbers(this.TS_Num, this.TS_Num_2)
+                this.divisionAngle = this.lcm_arc
                 this.minTS_Den = this.TS_Den
+                
+            }
+        } else {
+            this.minTS_Den = Math.max(this.TS_Den, this.TS_Den_2)
+            if(this.TS_Den > this.TS_Den_2){
+                this.lcm_arc = this.lcm_two_numbers(this.TS_Num_2 * (this.TS_Den / this.TS_Den_2), this.TS_Num)
+                this.divisionAngle = this.lcm_arc
+                
+            } else {
+                this.lcm_arc = this.lcm_two_numbers(this.TS_Num * (this.TS_Den_2 / this.TS_Den), this.TS_Num_2)
+                this.divisionAngle = this.lcm_arc
+                
             }
         }
 
@@ -324,12 +341,12 @@ class MainSketchClass implements P5Sketch {
         //Clock Ring Arcs
         if (this.layerNumber === 2 && this.extCounter > 0) {
             p5.noFill()
-            p5.strokeWeight(4)
             p5.push()
+            p5.strokeWeight(4)
             if (this.appMode == AppMode.Learn) {
                 p5.stroke("pink")
             } else if (this.appMode == AppMode.Play) {
-                p5.stroke("#43BFC7")
+                p5.stroke("black")
             }
             p5.arc(
                 this.canvasWidth / 2,
@@ -435,7 +452,7 @@ class MainSketchClass implements P5Sketch {
                 p5.noFill()
                 p5.push()
                 p5.strokeWeight(2)
-                p5.stroke("darkslategrey")
+                p5.stroke("darkslategray")
                 //if (this.TS_Num <= this.TS_Num_2) {
                 p5.arc(
                     this.canvasWidth / 2,
@@ -478,7 +495,7 @@ class MainSketchClass implements P5Sketch {
                 let grainY2 = this.canvasHeight / 2 + (p5.sin(angle2) * this.circleLandW) / 2
                 //let grains2 = p5.createVector(grainX2, grainY2)
                 p5.strokeWeight(10)
-                p5.stroke("darkslategrey")
+                p5.stroke("darkslategray")
                 p5.point(grainX2, grainY2)
                 angle2 += step2
             }
@@ -487,7 +504,7 @@ class MainSketchClass implements P5Sketch {
             //CLOCK RING
             p5.noFill()
             p5.strokeWeight(17)
-            p5.stroke(250, 250, 250, 80)
+            p5.stroke(250, 250, 250, 70)
             p5.ellipse(
                 this.canvasWidth / 2,
                 this.canvasHeight / 2,
@@ -496,7 +513,7 @@ class MainSketchClass implements P5Sketch {
             )
             p5.strokeWeight(1)
 
-            p5.stroke(0.5)
+            p5.stroke(0.3)
             p5.ellipse(
                 this.canvasWidth / 2,
                 this.canvasHeight / 2,
@@ -530,10 +547,42 @@ class MainSketchClass implements P5Sketch {
 
             //CLOCK RING "GRAINS"
             p5.push()
-            step2 = p5.TWO_PI / this.TS_Num_2
-            step = p5.TWO_PI / this.TS_Num
+            if(this.TS_Den === this.TS_Den_2){
+                if(this.TS_Num === this.TS_Num_2){
+                    //same time signature
+                    step2 = 0
+                    step = 0
+                } else {
+                    // same denominator, different numerator
+                    step = p5.TWO_PI / this.TS_Num_2
+                    step2 = p5.TWO_PI / this.TS_Num
+                }
+            } else { /// DIFFERENT DENOMINATORS
+                if(this.TS_Num === this.TS_Num_2){
+                    // different deno, same numerator
+                    if(this.TS_Den < this.TS_Den_2){
+                        // only case 3/2 and 3/4
+                        step = 0
+                        step2 = p5.TWO_PI / 2
+                    } else {
+                        step = p5.TWO_PI / 2
+                        step2 = 0
+                    }
+                } else {
+                    if(this.TS_Den > this.TS_Den_2){
+                        this.lcm = this.lcm_two_numbers(this.TS_Num, ((this.TS_Den/this.TS_Den_2) * this.TS_Num_2))
+                        
+                        step = p5.TWO_PI / (this.lcm / this.TS_Num)
+                        step2 = p5.TWO_PI / (this.lcm / ((this.TS_Den/this.TS_Den_2) * this.TS_Num_2))
+                    } else {
+                        this.lcm = this.lcm_two_numbers(this.TS_Num_2, ((this.TS_Den_2/this.TS_Den) * this.TS_Num))
+                        step = p5.TWO_PI / (this.lcm / ((this.TS_Den_2/this.TS_Den) * this.TS_Num))
+                        step2 = p5.TWO_PI / (this.lcm / this.TS_Num_2)
+                    }
+                }
+            }
 
-            for (let j = 0; j < this.TS_Num_2; j++) {
+            for (let j = 0; j < Math.max(this.TS_Num_2, this.TS_Num_2 * Math.floor(this.TS_Den/this.TS_Den_2)); j++) {
                 var grainX2 = this.canvasWidth / 2 + p5.cos(angle2) * 266 * this.clockCircleScaleSize //320 effects how much bigger the second circle is should be half the width and height of the elipse
                 var grainY2 = this.canvasHeight / 2 + p5.sin(angle2) * 266 * this.clockCircleScaleSize
                 p5.strokeWeight(3)
@@ -543,15 +592,15 @@ class MainSketchClass implements P5Sketch {
                     p5.stroke("#43BFC7")
                 }
                 p5.line(grainX2, grainY2, grainX2 + p5.cos(angle2) * 9, grainY2 + p5.sin(angle2) * 9)
-                angle2 += step2
+                angle2 += step
             }
-            for (let j = 0; j < this.TS_Num; j++) {
+            for (let j = 0; j < Math.max(this.TS_Num, this.TS_Num * Math.floor(this.TS_Den_2/this.TS_Den)); j++) {
                 grainX2 = this.canvasWidth / 2 + p5.cos(angle) * 275 * this.clockCircleScaleSize //320 effects how much bigger the second circle is should be half the width and height of the elipse
                 grainY2 = this.canvasHeight / 2 + p5.sin(angle) * 275 * this.clockCircleScaleSize
                 p5.strokeWeight(3)
-                p5.stroke("darkslategrey")
+                p5.stroke("darkslategray")
                 p5.line(grainX2, grainY2, grainX2 + p5.cos(angle) * 9, grainY2 + p5.sin(angle) * 9)
-                angle += step
+                angle += step2
             }
             p5.pop()
 
@@ -578,7 +627,7 @@ class MainSketchClass implements P5Sketch {
 
                 //draws second layer shapes
                 p5.beginShape()
-                p5.stroke("darkslategrey")
+                p5.stroke("darkslategray")
                 for (let i = 0; i <= vert.length; i++) {
                     let corr_node = vert[i]
                     let count = 0
@@ -942,6 +991,24 @@ class MainSketchClass implements P5Sketch {
         this.triggerer()
     }
 
+    /// LEAST COMMON MULTIPLE
+    private lcm_two_numbers(x, y) {
+        if ((typeof x !== 'number') || (typeof y !== 'number')) 
+         return false;
+       return (!x || !y) ? 0 : Math.abs((x * y) / this.gcd_two_numbers(x, y));
+     }
+     
+     private gcd_two_numbers(x, y) {
+       x = Math.abs(x);
+       y = Math.abs(y);
+       while(y) {
+         var t = y;
+         y = x % y;
+         x = t;
+       }
+       return x;
+     }
+
     public mouseReleased() {
         clearTimeout(this.myTimeout)
     }
@@ -1212,7 +1279,7 @@ class MainSketchClass implements P5Sketch {
         return this.nGrain
     }
 
-    // actual audio engine
+    
 
     public setAppMode(mode: AppMode) {
         this.appMode = mode
