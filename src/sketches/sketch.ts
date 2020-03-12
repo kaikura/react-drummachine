@@ -238,15 +238,15 @@ class MainSketchClass implements P5Sketch {
 
     public draw(p5: P5): void {
         if (this.appMode === AppMode.Learn) {
-            p5.background("#17a2b8")
-            p5.textSize(30)
-            p5.text("Learn Mode", 318, 30)
-            p5.fill(0, 102, 153)
+           p5.background("#17a2b8")
+            //p5.textSize(30)
+            //p5.text("Learn Mode", 318, 30)
+            //p5.fill(0, 102, 153)
         } else if (this.appMode === AppMode.Play) {
             p5.background("#348781")
-            p5.textSize(30)
-            p5.text("Play Mode", 318, 30)
-            p5.fill(0, 102, 153)
+            //p5.textSize(30)
+            //p5.text("Play Mode", 318, 30)
+            //p5.fill(0, 102, 153)
         }
         let angle = (p5.TWO_PI / 4) * 3
         let step = p5.TWO_PI / this.nGrain
