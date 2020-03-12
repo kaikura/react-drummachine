@@ -243,16 +243,16 @@ class MainSketchClass implements P5Sketch {
         let step = p5.TWO_PI / this.nGrain
 
 
-////COMPUTATIONS FOR ARCs
-        if(this.TS_Den === this.TS_Den_2){
-            if(this.TS_Num === this.TS_Num_2){
-                this.divisionAngle = this.TS_Num
-                this.minTS_Den = this.TS_Den
-            } else {
-                this.divisionAngle = this.TS_Num * this.TS_Num_2
-                this.minTS_Den = this.TS_Den
-            }
+    ////COMPUTATIONS FOR ARCs
+    if(this.TS_Den === this.TS_Den_2){
+        if(this.TS_Num === this.TS_Num_2){
+            this.divisionAngle = this.TS_Num
+            this.minTS_Den = this.TS_Den
+        } else {
+            this.divisionAngle = this.TS_Num * this.TS_Num_2
+            this.minTS_Den = this.TS_Den
         }
+    }
 
         if (this.layerNumber === 1) {
             //First Layer Circle
@@ -313,7 +313,7 @@ class MainSketchClass implements P5Sketch {
             angle += step
             }
             p5.pop()
-        }
+        } //END OF DRAW IF LAYER ONE
 
         //Clock Ring Arcs
         if (this.layerNumber === 2 && this.extCounter > 0) {
@@ -357,11 +357,11 @@ class MainSketchClass implements P5Sketch {
             )
             p5.pop()
         }
-    
-       
-
-        /// END DRAW EXTERNAL CLOCK ARC
         
+
+      
+                /// END DRAW EXTERNAL CLOCK ARC
+
 
         //Custom Shape Mode
         if (this.instrumentMode === 7 && this.layerNumber === 1) {
@@ -487,7 +487,7 @@ class MainSketchClass implements P5Sketch {
             //CLOCK RING
             p5.noFill()
             p5.strokeWeight(17)
-            p5.stroke(250, 250, 250, 80)
+            p5.stroke(250, 250, 250, 90)
             p5.ellipse(
                 this.canvasWidth / 2,
                 this.canvasHeight / 2,
@@ -530,8 +530,19 @@ class MainSketchClass implements P5Sketch {
 
             //CLOCK RING "GRAINS"
             p5.push()
-            step2 = p5.TWO_PI / this.TS_Num_2
-            step = p5.TWO_PI / this.TS_Num
+            if (this.TS_Den === this.TS_Den_2){
+                if(this.TS_Num === this.TS_Num_2){
+                step = 0
+                step2 = 0
+                }
+                else {
+                step = p5.TWO_PI / this.TS_Num_2
+                step2 = p5.TWO_PI / this.TS_Num
+                }
+            }
+
+            //step2 = p5.TWO_PI / this.TS_Num_2
+            //step = p5.TWO_PI / this.TS_Num
 
             for (let j = 0; j < this.TS_Num_2; j++) {
                 var grainX2 = this.canvasWidth / 2 + p5.cos(angle2) * 266 * this.clockCircleScaleSize //320 effects how much bigger the second circle is should be half the width and height of the elipse
@@ -543,7 +554,7 @@ class MainSketchClass implements P5Sketch {
                     p5.stroke("#43BFC7")
                 }
                 p5.line(grainX2, grainY2, grainX2 + p5.cos(angle2) * 9, grainY2 + p5.sin(angle2) * 9)
-                angle2 += step2
+                angle += step
             }
             for (let j = 0; j < this.TS_Num; j++) {
                 grainX2 = this.canvasWidth / 2 + p5.cos(angle) * 275 * this.clockCircleScaleSize //320 effects how much bigger the second circle is should be half the width and height of the elipse
@@ -551,7 +562,7 @@ class MainSketchClass implements P5Sketch {
                 p5.strokeWeight(3)
                 p5.stroke("darkslategrey")
                 p5.line(grainX2, grainY2, grainX2 + p5.cos(angle) * 9, grainY2 + p5.sin(angle) * 9)
-                angle += step
+                angle2 += step2
             }
             p5.pop()
 
@@ -1144,7 +1155,8 @@ class MainSketchClass implements P5Sketch {
                 this.counter++
                 //console.log("this is counter " + this.counter)
             }
-            
+
+            //console.log("this is counter " + this.counter)
             //console.log(Time(this.nGrain+"n").toSeconds())
         }
 
@@ -1158,8 +1170,8 @@ class MainSketchClass implements P5Sketch {
 
         //"1:0" is one measure at 4/4 (8/8) will associated to the Time Signature, also 16th can be added "1:0:0"
         this.loop_1 = Tone.Transport.scheduleRepeat(repeat_l1, this.measure, "0")
-
-
+        
+        
         //function to draw INTERNAL arc
         this.drawArcs = Tone.Transport.scheduleRepeat(
             drawAr,
@@ -1169,7 +1181,7 @@ class MainSketchClass implements P5Sketch {
 
         //function to draw EXTERNAL arc
         this.drawExtArcs = Tone.Transport.scheduleRepeat(
-            drawExtArcs,
+             drawExtArcs,
             Time(this.minTS_Den + "n").toSeconds(),
             "0"
         )
