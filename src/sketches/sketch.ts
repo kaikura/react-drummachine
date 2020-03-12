@@ -240,7 +240,6 @@ class MainSketchClass implements P5Sketch {
         //  p5.stroke(195, 195, 195);
         //}
 
-<<<<<<< HEAD
     ////COMPUTATIONS FOR ARCs
     if(this.TS_Den === this.TS_Den_2){
         if(this.TS_Num === this.TS_Num_2){
@@ -251,10 +250,6 @@ class MainSketchClass implements P5Sketch {
             this.minTS_Den = this.TS_Den
         }
     }
-=======
-        let angle = (p5.TWO_PI / 4) * 3
-        let step = p5.TWO_PI / this.nGrain
->>>>>>> 85f2ffa042d92c53488c8d3889c04031eb4c539c
 
         //First Layer Arc
         if (this.counter > 0) {
@@ -399,9 +394,6 @@ class MainSketchClass implements P5Sketch {
             )
             p5.pop()
         }
-<<<<<<< HEAD
-        
-=======
         if (this.layerNumber === 2 && this.numMeasure2 === this.nGrain) {
             p5.push()
             p5.stroke("darkslategrey")
@@ -432,7 +424,6 @@ class MainSketchClass implements P5Sketch {
             angle += step
         }
         p5.pop()
->>>>>>> 85f2ffa042d92c53488c8d3889c04031eb4c539c
 
       
                 /// END DRAW EXTERNAL CLOCK ARC
@@ -1166,7 +1157,6 @@ class MainSketchClass implements P5Sketch {
             }
         }
         const drawAr = () => {
-<<<<<<< HEAD
             //console.log("this is loop 1: " + this.loop_1)
             if (this.isStarted) {
                 this.counter++
@@ -1183,27 +1173,17 @@ class MainSketchClass implements P5Sketch {
             console.log("this is extCounter: " + this.extCounter)}
             console.log(this.divisionAngle)
             //console.log(Time(this.nGrain+"n").toSeconds())
-=======
-            this.counter++
->>>>>>> 85f2ffa042d92c53488c8d3889c04031eb4c539c
         }
 
         //"1:0" is one measure at 4/4 (8/8) will associated to the Time Signature, also 16th can be added "1:0:0"
         this.loop_1 = Tone.Transport.scheduleRepeat(repeat_l1, this.measure, "0")
-<<<<<<< HEAD
-        
-        
-        //function to draw INTERNAL arc
-=======
         console.log(this.loop_1)
->>>>>>> 85f2ffa042d92c53488c8d3889c04031eb4c539c
         this.drawArcs = Tone.Transport.scheduleRepeat(
             drawAr,
             (this.TS_Num / this.TS_Den) * Time(this.nGrain + "n").toSeconds(),
             "0"
         )
 
-<<<<<<< HEAD
         //function to draw EXTERNAL arc
         this.drawExtArcs = Tone.Transport.scheduleRepeat(
              drawExtArcs,
@@ -1211,8 +1191,6 @@ class MainSketchClass implements P5Sketch {
             "0"
         )
 
-=======
->>>>>>> 85f2ffa042d92c53488c8d3889c04031eb4c539c
         if (this.measure !== "" && Tone.Transport.state !== "started") Tone.Transport.start()
     }
     public updateGrains_2() {

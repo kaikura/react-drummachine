@@ -110,7 +110,7 @@ export class RightPanel extends React.Component<IProps, any> {
                                 <i style={{ marginTop: "1.6em" }}>Polyrhythm </i>
                             </b>
                             {numSides.map((num) => (
-                                <i>{num}/</i>
+                                <i>{num+1}/</i>
                             ))}
                         </div>
                     </div>
