@@ -2,6 +2,8 @@
 
 *Polyknob* is an interface that helps the user to easily create and visualize polyrhythms and more complex rhythmic structures as polymeters using as a unique tool geometrical shapes.
 
+Check it out here http://polyknob.surge.sh/
+
 ### The Control Panel
 
 *Pushing* a button means enter that mode
