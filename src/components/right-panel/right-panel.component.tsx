@@ -123,6 +123,6 @@ export class RightPanel extends React.Component<IProps, any> {
     }
 
     private renderPopoverContent = () => {
-        return <p>Here you can manage all the audio features of the interface.</p>
+        return <p>Here you can manage all the audio features of the interface, the default BPM is set to 120.</p>
     }
 }
