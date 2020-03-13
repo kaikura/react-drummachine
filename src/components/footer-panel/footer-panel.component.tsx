@@ -122,12 +122,10 @@ export class FooterPanel extends React.Component<IProps> {
     }
 
     private onTrackClick = () => {
-        //console.log("yes")
         MainSketch.selectShape()
     }
     private onShapeClick = () => {
         MainSketch.changeShape()
-        this.props.onChangeShape(MainSketch.getNumSides())
     }
 
     private onRotateClick = () => {
@@ -136,6 +134,7 @@ export class FooterPanel extends React.Component<IProps> {
 
     private onShapeDeleteClick = () => {
         MainSketch.deleteShape()
+        this.props.onChangeShape(MainSketch.getNumSides())
     }
     private encoderClick = () => {
         MainSketch.encoderButt()
@@ -143,13 +142,16 @@ export class FooterPanel extends React.Component<IProps> {
 
     private plusOneClick = () => {
         MainSketch.encoderInc()
+        this.props.onChangeShape(MainSketch.getNumSides())
     }
 
     private minusOneClick = () => {
         MainSketch.encoderDec()
+        this.props.onChangeShape(MainSketch.getNumSides())
     }
 
     private onMouseReleased = () => {
         MainSketch.mouseReleased()
+        this.props.onChangeShape(MainSketch.getNumSides())
     }
 }

@@ -214,17 +214,21 @@ class MainSketchClass implements P5Sketch {
             this.sounds2.push(this.maxNumShape2 - 1)
         }
 
-        this.numSides1 = new Array()
-
-        for (let i = 0; i <= this.shp1.length - 1; i++) {
-            this.numSides1.push(this.shp1[i] + 2)
-        }
-
         this.ver = 0
         for (let i = 0; i <= this.numSides1.length - 1; i++) {
             if (this.nGrain % this.numSides1[i] === 0) {
                 this.ver++
             }
+        }
+    }
+
+    public change_numSides() {
+        this.numSides1 = new Array()
+
+        for (let i = 0; i <= this.shp1.length - 1; i++) {
+            this.numSides1[i] = this.shp1[i]+2
+            console.log(this.numSides1)
+            console.log("shp1 : " + this.shp1)
         }
     }
 
@@ -768,6 +772,7 @@ class MainSketchClass implements P5Sketch {
         }
 
         this.triggerer()
+        this.change_numSides()
     }
 
     public encoderDec() {
@@ -844,6 +849,7 @@ class MainSketchClass implements P5Sketch {
                 (this.sounds2[this.selectedShape2 - 1] - 1) % this.drumKit.length
         }
         this.triggerer()
+        this.change_numSides()
     }
 
     public encoderButt() {
@@ -911,6 +917,7 @@ class MainSketchClass implements P5Sketch {
                 this.updateArrays()
                 this.triggerer()
             }
+            this.change_numSides()
         }, 2000)
         this.triggerer()
     }
@@ -997,6 +1004,7 @@ class MainSketchClass implements P5Sketch {
         }
         //this.updateArrays()
         this.triggerer()
+        this.change_numSides()
     }
 
     /// LEAST COMMON MULTIPLE

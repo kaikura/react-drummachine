@@ -96,10 +96,10 @@ export class RightPanel extends React.Component<IProps, any> {
                     <div>
                         <div className="alert alert-info" role="alert" style={{ marginTop: "1.5em" }}>
                             <b>
-                                <i style={{ marginTop: "1.6em" }}>Polyrhythm </i>
+                                <i style={{ marginTop: "1.6em" }}>Polyrhythm Layer 1</i>
                             </b>
                             {numSides.map((num) => (
-                                <i>{num + 1}/</i>
+                                <i>: {num} </i>
                             ))}
                         </div>
                     </div>
