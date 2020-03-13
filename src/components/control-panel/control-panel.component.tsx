@@ -30,7 +30,7 @@ export class ControlPanel extends React.Component<IProps, any> {
         return (
             <p>
                 Here you can choose the time signature and the number of grains for the first layer and for
-                the second one, once you have added it.
+                the second one, once you have added it. The default time signature for each layer is 4/4.
             </p>
         )
     }

@@ -2,7 +2,19 @@
 
 *Polyknob* is an interface that helps the user to easily create and visualize polyrhythms and more complex rhythmic structures as polymeters using as a unique tool geometrical shapes.
 
+Check it out here http://polyknob.surge.sh/
+
 ### The Control Panel
+
+*Pushing* a button means enter that mode
+*Holding* a button means add that feature
+
+
+* *TrackButton* & *ShapeButton* - Each Track can accomplish a shape
+* *LayerButton* - To be added to create polymeters
+* *-1* & *+1* - To move inside each mode as with the Encoder (the Knob)
+
+![](imgs/Controlbuttons.png)
 
 ## Create Polyrythms
 
@@ -13,11 +25,25 @@ Definition of Kramer (UCB):
 
 Cross-Rhythm is a specific form of a polyrhythm. It refers to when the rhythmic conflict found in polyrhythms is the basis of an entire musical piece.
 
+![](imgs/polyr-gif.gif)
+
 ## Creating Polymeters
 
 Rhythm in music is characterized by a repeating sequence of stressed and unstressed beats (strong vs. weak; upbeat vs. downbeat) and divided into bars organized by time signature and tempo indications. In music, time signature always occurs at start of a paper sheet, it represents the rhythm of the piece.
 
 Polymeters are rhythms with different time signatures played in step with each other.
+
+
+![](imgs/polyM-gif.gif)
+
+
+
+### Future Development (work in progress)
+
+En Encoder is already working, helping you to be faster in the creation/rotation/change of sample mode.
+Also a complete box will be available which will be a physical rapresentation of the ControlButtons Panel
+
+The app will be connected to a virtual MIDI Bus, in order to trigger software or hardware synths.
 
 ## App Modes
 
