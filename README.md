@@ -4,6 +4,14 @@
 
 ### The Control Panel
 
+*Pushing* a button means enter that mode
+*Holding* a button means add that feature
+
+
+* *TrackButton* & *ShapeButton* - Each Track can accomplish a shape
+* *LayerButton* - To be added to create polymeters
+* *-1* & *+1* - To move inside each mode as with the Encoder (the Knob)
+
 ![](imgs/Controlbuttons.png)
 
 ## Create Polyrythms
@@ -23,7 +31,17 @@ Rhythm in music is characterized by a repeating sequence of stressed and unstres
 
 Polymeters are rhythms with different time signatures played in step with each other.
 
+
 ![](imgs/polyM-gif.gif)
+
+
+
+### Future Development (work in progress)
+
+En Encoder is already working, helping you to be faster in the creation/rotation/change of sample mode.
+Also a complete box will be available which will be a physical rapresentation of the ControlButtons Panel
+
+The app will be connected to a virtual MIDI Bus, in order to trigger software or hardware synths.
 
 ## App Modes
 
