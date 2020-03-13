@@ -4,6 +4,8 @@
 
 ### The Control Panel
 
+![](imgs/Controlbuttons.png)
+
 ## Create Polyrythms
 
 Polyrhythms indicate the simultaneous use of two or more conflicting rhythms, that are not readily perceived as deriving from one another, or as simple manifestations of the same meter.
@@ -13,11 +15,15 @@ Definition of Kramer (UCB):
 
 Cross-Rhythm is a specific form of a polyrhythm. It refers to when the rhythmic conflict found in polyrhythms is the basis of an entire musical piece.
 
+![](imgs/polyr-gif.gif)
+
 ## Creating Polymeters
 
 Rhythm in music is characterized by a repeating sequence of stressed and unstressed beats (strong vs. weak; upbeat vs. downbeat) and divided into bars organized by time signature and tempo indications. In music, time signature always occurs at start of a paper sheet, it represents the rhythm of the piece.
 
 Polymeters are rhythms with different time signatures played in step with each other.
+
+![](imgs/polyM-gif.gif)
 
 ## App Modes
 
