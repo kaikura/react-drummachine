@@ -1,3 +1,66 @@
+# PolyKnob
+
+*Polyknob* is an interface that helps the user to easily create and visualize polyrhythms and more complex rhythmic structures as polymeters using as a unique tool geometrical shapes.
+
+### The Control Panel
+
+*Pushing* a button means enter that mode
+*Holding* a button means add that feature
+
+
+* *TrackButton* & *ShapeButton* - Each Track can accomplish a shape
+* *LayerButton* - To be added to create polymeters
+* *-1* & *+1* - To move inside each mode as with the Encoder (the Knob)
+
+![](imgs/Controlbuttons.png)
+
+## Create Polyrythms
+
+Polyrhythms indicate the simultaneous use of two or more conflicting rhythms, that are not readily perceived as deriving from one another, or as simple manifestations of the same meter.
+
+Definition of Kramer (UCB): 
+“Polyrhythm is the simultaneous existence of different rhythmic groups in different voices”
+
+Cross-Rhythm is a specific form of a polyrhythm. It refers to when the rhythmic conflict found in polyrhythms is the basis of an entire musical piece.
+
+![](imgs/polyr-gif.gif)
+
+## Creating Polymeters
+
+Rhythm in music is characterized by a repeating sequence of stressed and unstressed beats (strong vs. weak; upbeat vs. downbeat) and divided into bars organized by time signature and tempo indications. In music, time signature always occurs at start of a paper sheet, it represents the rhythm of the piece.
+
+Polymeters are rhythms with different time signatures played in step with each other.
+
+
+![](imgs/polyM-gif.gif)
+
+
+
+### Future Development (work in progress)
+
+En Encoder is already working, helping you to be faster in the creation/rotation/change of sample mode.
+Also a complete box will be available which will be a physical rapresentation of the ControlButtons Panel
+
+The app will be connected to a virtual MIDI Bus, in order to trigger software or hardware synths.
+
+## App Modes
+
+At first, the user can choose between two different modes:
+
+In *LEARN MODE* the user is led into the creation of regular polyrhythms and polymeters with restrictions thought for learning reasons.
+* Just some time-signatures considered musically important are took into account
+* Just some number of grains are allowed for each time signatures
+* Just regular shapes are allowed into the circle
+
+In *PLAY MODE* the user can freely create different musical constructions.
+* The user can choose whatever number of grains he wants
+
+
+## Getting Started
+
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
@@ -65,7 +128,11 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 
 and use 
 
-### node server.js
+### `node server.js` 
+
+
 and 
-### npm start 
+
+### `npm start` 
+ 
 in order to run the server first and then our application
