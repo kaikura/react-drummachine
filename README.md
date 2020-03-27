@@ -4,6 +4,8 @@
 
 Check it out here http://polyknob.surge.sh/
 
+See the tutorial here https://youtu.be/ICfPkmAi8yI
+
 ### The Control Panel
 
 *Pushing* a button means enter that mode
